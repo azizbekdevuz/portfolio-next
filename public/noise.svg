@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 200 200">
+  <defs>
+    <!-- Base noise -->
+    <filter id="techNoise" x="-100%" y="-100%" width="300%" height="300%">
+      <feTurbulence 
+        type="fractalNoise" 
+        baseFrequency="0.8" 
+        numOctaves="4" 
+        seed="1" 
+        stitchTiles="stitch"
+      />
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncR type="discrete" tableValues="0 0.1 0.2"/>
+        <feFuncG type="discrete" tableValues="0 0.1 0.2"/>
+        <feFuncB type="discrete" tableValues="0 0.1 0.2"/>
+      </feComponentTransfer>
+    </filter>
+
+    <!-- Digital lines effect -->
+    <filter id="digitalLines">
+      <feTurbulence 
+        type="fractalNoise" 
+        baseFrequency="0.01 0.2" 
+        numOctaves="2" 
+        seed="2"
+      />
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncR type="discrete" tableValues="0 1"/>
+        <feFuncG type="discrete" tableValues="0 1"/>
+        <feFuncB type="discrete" tableValues="0 1"/>
+      </feComponentTransfer>
+    </filter>
+
+    <!-- Composite filter -->
+    <filter id="compositeNoise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.003" numOctaves="5" seed="3"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 0.5 0"/>
+      <feBlend mode="soft-light" in2="SourceGraphic"/>
+      <feGaussianBlur stdDeviation="0.5"/>
+    </filter>
+
+    <!-- Gradient map -->
+    <linearGradient id="techGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(20, 157, 221, 0.05)"/>
+      <stop offset="50%" stop-color="rgba(20, 157, 221, 0.02)"/>
+      <stop offset="100%" stop-color="rgba(20, 157, 221, 0.08)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base layer with tech noise -->
+  <rect width="100%" height="100%" filter="url(#techNoise)" opacity="0.1"/>
+  
+  <!-- Digital lines layer -->
+  <rect width="100%" height="100%" filter="url(#digitalLines)" opacity="0.05"/>
+  
+  <!-- Gradient overlay -->
+  <rect width="100%" height="100%" fill="url(#techGradient)" filter="url(#compositeNoise)"/>
+</svg>
