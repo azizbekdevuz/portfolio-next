@@ -1,21 +1,21 @@
-import type { Metadata } from 'next'
-import { ThemeProvider } from '@/components/providers/ThemeProvider'
-import { ProgressProvider } from '@/components/providers/ProgressProvider'
-import { Cursor } from '@/components/ui/Cursor'
-import { BackgroundGradient } from '@/components/ui/BackgroundGradient'
-import { NavigationDots } from '@/components/navigation/NavigationDots'
-import { fonts } from '@/libs/fonts'
-import './globals.css'
+import type { Metadata } from "next";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { ProgressProvider } from "@/components/providers/ProgressProvider";
+import { OptimizedCursor } from "@/components/ui/Cursor";
+import { BackgroundGradient } from "@/components/ui/BackgroundGradient";
+import { NavigationDots } from "@/components/navigation/NavigationDots";
+import { fonts } from "@/libs/fonts";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: 'Portfolio - Azizbek Arzikulov',
-  description: 'Web Developer portfolio showcasing projects and skills',
-}
+  title: "Portfolio - Azizbek Arzikulov",
+  description: "Web Developer portfolio showcasing projects and skills",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" className={fonts} suppressHydrationWarning>
@@ -23,21 +23,19 @@ export default function RootLayout({
         <ThemeProvider>
           <ProgressProvider>
             {/* Custom cursor */}
-            <Cursor />
-            
+            <OptimizedCursor />
+
             {/* Animated background gradient */}
             <BackgroundGradient />
-            
+
             {/* Dynamic navigation dots */}
             <NavigationDots />
-            
+
             {/* Main content */}
-            <main className="relative min-h-screen">
-              {children}
-            </main>
+            <main className="relative min-h-screen">{children}</main>
           </ProgressProvider>
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

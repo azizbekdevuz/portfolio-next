@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
 export function useSmoothScroll() {
   const scrollTo = (elementId: string) => {
-    const element = document.getElementById(elementId)
-    if (!element) return
+    const element = document.getElementById(elementId);
+    if (!element) return;
 
     window.scrollTo({
       top: element.offsetTop,
-      behavior: 'smooth'
-    })
-  }
+      behavior: "smooth",
+    });
+  };
 
-  return scrollTo
+  return scrollTo;
 }

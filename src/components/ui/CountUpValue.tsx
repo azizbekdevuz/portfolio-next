@@ -1,33 +1,36 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { useSpring } from 'framer-motion'
+import { useEffect, useState } from "react";
+import { useSpring } from "framer-motion";
 
 interface CountUpProps {
-  start: number
-  end: number
-  duration: number
+  start: number;
+  end: number;
+  duration: number;
 }
 
-export function CountUpValue({ start, end, duration }: CountUpProps): React.ReactElement {
+export function CountUpValue({
+  start,
+  end,
+  duration,
+}: CountUpProps): React.ReactElement {
+  const [value, setValue] = useState(start);
 
-  const [value, setValue] = useState(start)
-  
   const springValue = useSpring(start, {
     stiffness: 100,
     damping: 30,
-    duration
-  })
+    duration,
+  });
 
   useEffect(() => {
-    springValue.set(end)
-    
-    const unsubscribe = springValue.on('change', (v) => {
-      setValue(Math.floor(v))
-    })
-    
-    return () => unsubscribe()
-  }, [end, springValue])
+    springValue.set(end);
 
-  return <>{value}</>
+    const unsubscribe = springValue.on("change", (v) => {
+      setValue(Math.floor(v));
+    });
+
+    return () => unsubscribe();
+  }, [end, springValue]);
+
+  return <>{value}</>;
 }

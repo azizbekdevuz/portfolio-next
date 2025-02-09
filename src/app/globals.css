@@ -6,8 +6,13 @@
   body {
     @apply bg-light dark:bg-dark text-text-primary dark:text-text-light;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading;
   }
 }
@@ -54,8 +59,13 @@
 
 /* Animations */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .animate-float {
@@ -93,42 +103,44 @@
 }
 
 @layer utilities {
-    .bg-gradient-radial {
-      background-image: radial-gradient(var(--tw-gradient-stops));
-    }
+  .bg-gradient-radial {
+    background-image: radial-gradient(var(--tw-gradient-stops));
   }
-  
-  /* Particle animations */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
-  }
-  
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  /* Glow effect */
-  @keyframes glow {
-    0%, 100% {
-      opacity: 0.5;
-      filter: blur(20px);
-    }
-    50% {
-      opacity: 0.7;
-      filter: blur(25px);
-    }
-  }
-  
-  .animate-glow {
-    animation: glow 4s ease-in-out infinite;
-  }
+}
 
-  /* Add to globals.css */
+/* Particle animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Glow effect */
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    filter: blur(20px);
+  }
+  50% {
+    opacity: 0.7;
+    filter: blur(25px);
+  }
+}
+
+.animate-glow {
+  animation: glow 4s ease-in-out infinite;
+}
+
+/* Add to globals.css */
 @layer components {
   .profile-glow {
     @apply absolute -inset-2 bg-primary/20 rounded-full blur-xl;
@@ -153,7 +165,8 @@
 }
 
 @keyframes profile-glow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(1);
   }
@@ -214,5 +227,132 @@
   100% {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     transform: translate(0);
+  }
+}
+
+/* Book Animation Core Styles */
+@layer components {
+  .book-container {
+    @apply relative mx-auto;
+    perspective: 2000px;
+    transform-style: preserve-3d;
+    height: 80vh;
+    width: 90%;
+    max-width: 1200px;
+  }
+
+  /* Common styles for all book parts */
+  .book-cover,
+  .book-page,
+  .book-back-cover {
+    @apply absolute inset-0 bg-dark-light/20 backdrop-blur-md 
+           border border-primary/20 rounded-lg overflow-hidden;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Initial state and origins */
+  .book-cover {
+    transform-origin: left;
+    transform: translateZ(2px); /* Slight offset for layering */
+  }
+
+  .book-page {
+    transform-origin: left;
+    @apply opacity-100 transition-opacity duration-300;
+  }
+
+  .book-back-cover {
+    transform-origin: right;
+    transform: translateZ(-2px); /* Slight offset for layering */
+  }
+
+  .book-pages {
+    @apply absolute inset-0;
+    transform-style: preserve-3d;
+  }
+
+  /* Content handling */
+  .page-content {
+    @apply p-8 h-full overflow-y-auto;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  /* State classes */
+  .book-initial {
+    transform: perspective(2000px) rotateX(10deg) rotateY(45deg) scale(0.6)
+      translateZ(-1000px);
+    opacity: 0.6;
+  }
+
+  .book-entering {
+    transform: perspective(2000px) rotateX(0deg) rotateY(0deg) scale(1)
+      translateZ(0);
+    opacity: 1;
+    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .book-closed {
+    transform: rotateY(0deg);
+  }
+
+  .book-open {
+    .book-cover {
+      transform: rotateY(-180deg);
+    }
+  }
+
+  .book-exiting {
+    transform: perspective(2000px) rotateX(-10deg) rotateY(-45deg) scale(0.6)
+      translateZ(-1000px);
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Page turning states */
+  .page-turning {
+    .page-content {
+      opacity: 0;
+    }
+  }
+
+  .book-finished {
+    .book-page {
+      transform: rotateY(-180deg);
+    }
+    .book-back-cover {
+      transform: rotateY(0) translateZ(-2px);
+    }
+  }
+
+  /* Visual enhancements */
+  .book-shadow {
+    @apply absolute inset-0 opacity-50;
+    box-shadow:
+      0 10px 30px -10px rgba(0, 0, 0, 0.5),
+      0 5px 10px -5px rgba(var(--color-primary), 0.2);
+  }
+
+  .page-edge {
+    @apply absolute top-0 bottom-0 right-0 w-[1px];
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(var(--color-primary), 0.2),
+      transparent
+    );
+  }
+
+  /* Cyberpunk accents */
+  .cyber-glow {
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    box-shadow: 0 0 20px rgba(var(--color-primary), 0.2);
+  }
+
+  .book-container:hover .cyber-glow {
+    opacity: 1;
   }
 }

@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
 
 export default function Loading() {
   return (
@@ -11,5 +11,5 @@ export default function Loading() {
         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
       />
     </div>
-  )
+  );
 }

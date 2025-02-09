@@ -1,33 +1,33 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 interface Skill {
-  name: string
-  percentage: number
+  name: string;
+  percentage: number;
 }
 
 const skills: Skill[] = [
-  { name: 'HTML', percentage: 100 },
-  { name: 'CSS', percentage: 100 },
-  { name: 'JavaScript', percentage: 80 },
-  { name: 'PHP', percentage: 80 },
-  { name: 'C', percentage: 60 },
-  { name: 'C++', percentage: 60 },
-  { name: 'Java', percentage: 60 },
-  { name: 'Python', percentage: 30 }
-]
+  { name: "HTML", percentage: 100 },
+  { name: "CSS", percentage: 100 },
+  { name: "JavaScript", percentage: 80 },
+  { name: "PHP", percentage: 80 },
+  { name: "C", percentage: 60 },
+  { name: "C++", percentage: 60 },
+  { name: "Java", percentage: 60 },
+  { name: "Python", percentage: 30 },
+];
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2
-    }
-  }
-}
+      staggerChildren: 0.2,
+    },
+  },
+};
 
 const skillVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -35,16 +35,16 @@ const skillVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5
-    }
-  }
-}
+      duration: 0.5,
+    },
+  },
+};
 
 export default function Skills() {
   const [ref, inView] = useInView({
     triggerOnce: true,
-    threshold: 0.1
-  })
+    threshold: 0.1,
+  });
 
   return (
     <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-900">
@@ -91,5 +91,5 @@ export default function Skills() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

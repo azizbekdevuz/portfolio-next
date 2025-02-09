@@ -1,81 +1,86 @@
-'use client'
+"use client";
 
-import { useState, useEffect, useRef } from 'react'
-import { motion, MotionValue, useTransform } from 'framer-motion'
-import Image from 'next/image'
+import { useState, useEffect, useRef } from "react";
+import { motion, MotionValue, useTransform } from "framer-motion";
+import Image from "next/image";
 
 interface Props {
-  isHovered: boolean
-  onHoverChange: (hovered: boolean) => void
-  mouseX: MotionValue<number>
-  mouseY: MotionValue<number>
+  isHovered: boolean;
+  onHoverChange: (hovered: boolean) => void;
+  mouseX: MotionValue<number>;
+  mouseY: MotionValue<number>;
 }
 
 interface Particle {
-  id: number
-  x: number
-  y: number
+  id: number;
+  x: number;
+  y: number;
 }
 
 function generateInitialParticles(count: number): Particle[] {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
     x: (i * 5) % 100,
-    y: (i * 7) % 100
-  }))
+    y: (i * 7) % 100,
+  }));
 }
 
-export function InteractiveProfile({ isHovered, onHoverChange, mouseX, mouseY }: Props) {
-  const [mounted, setMounted] = useState(false)
-  const [glitchActive, setGlitchActive] = useState(false)
-  const particlesRef = useRef(generateInitialParticles(20))
-  const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 })
+export function InteractiveProfile({
+  isHovered,
+  onHoverChange,
+  mouseX,
+  mouseY,
+}: Props) {
+  const [mounted, setMounted] = useState(false);
+  const [glitchActive, setGlitchActive] = useState(false);
+  const particlesRef = useRef(generateInitialParticles(20));
+  const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
 
   useEffect(() => {
-    setMounted(true)
+    setMounted(true);
     setDimensions({
       width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight
-    })
+      height: document.documentElement.clientHeight,
+    });
 
     // Randomize particles after mount
-    particlesRef.current = particlesRef.current.map(particle => ({
+    particlesRef.current = particlesRef.current.map((particle) => ({
       ...particle,
       x: Math.random() * 100,
-      y: Math.random() * 100
-    }))
+      y: Math.random() * 100,
+    }));
 
     const handleResize = () => {
       setDimensions({
         width: document.documentElement.clientWidth,
-        height: document.documentElement.clientHeight
-      })
-    }
+        height: document.documentElement.clientHeight,
+      });
+    };
 
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (isHovered && mounted) {
       const interval = setInterval(() => {
-        setGlitchActive(true)
-        setTimeout(() => setGlitchActive(false), 200)
-      }, 2000)
-      return () => clearInterval(interval)
+        setGlitchActive(true);
+        setTimeout(() => setGlitchActive(false), 200);
+      }, 2000);
+      return () => clearInterval(interval);
     }
-  }, [isHovered, mounted])
+  }, [isHovered, mounted]);
 
   const rotateX = useTransform(
     mouseY,
     [0, dimensions.height],
-    mounted ? [15, -15] : [0, 0]
-  )
+    mounted ? [15, -15] : [0, 0],
+  );
   const rotateY = useTransform(
     mouseX,
     [0, dimensions.width],
-    mounted ? [-15, 15] : [0, 0]
-  )
+    mounted ? [-15, 15] : [0, 0],
+  );
 
   return (
     <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] mx-auto">
@@ -88,9 +93,9 @@ export function InteractiveProfile({ isHovered, onHoverChange, mouseX, mouseY }:
           transformPerspective: 1000,
         }}
         animate={{
-          boxShadow: isHovered 
-            ? "0 0 30px rgba(20, 157, 221, 0.5)" 
-            : "0 0 20px rgba(20, 157, 221, 0.3)"
+          boxShadow: isHovered
+            ? "0 0 30px rgba(20, 157, 221, 0.5)"
+            : "0 0 20px rgba(20, 157, 221, 0.3)",
         }}
       >
         {/* Tech Lines */}
@@ -200,12 +205,16 @@ export function InteractiveProfile({ isHovered, onHoverChange, mouseX, mouseY }:
             style={{
               left: `${particle.x}%`,
               top: `${particle.y}%`,
-              opacity: mounted ? 0.3 : 0
+              opacity: mounted ? 0.3 : 0,
             }}
-            animate={mounted ? {
-              scale: isHovered ? [1, 1.5, 1] : 1,
-              opacity: isHovered ? [0.3, 0.7, 0.3] : 0.3,
-            } : {}}
+            animate={
+              mounted
+                ? {
+                    scale: isHovered ? [1, 1.5, 1] : 1,
+                    opacity: isHovered ? [0.3, 0.7, 0.3] : 0.3,
+                  }
+                : {}
+            }
             transition={{
               duration: 2,
               repeat: Infinity,
@@ -229,13 +238,17 @@ export function InteractiveProfile({ isHovered, onHoverChange, mouseX, mouseY }:
             style={{
               transform: `rotate(${i * 30}deg) translateY(-150px)`,
             }}
-            animate={isHovered ? {
-              scale: [1, 1.5, 1],
-              opacity: [0.3, 0.7, 0.3],
-            } : {
-              scale: 1,
-              opacity: 0.3,
-            }}
+            animate={
+              isHovered
+                ? {
+                    scale: [1, 1.5, 1],
+                    opacity: [0.3, 0.7, 0.3],
+                  }
+                : {
+                    scale: 1,
+                    opacity: 0.3,
+                  }
+            }
             transition={{
               duration: 2,
               repeat: Infinity,
@@ -243,7 +256,7 @@ export function InteractiveProfile({ isHovered, onHoverChange, mouseX, mouseY }:
             }}
           />
         ))}
-        
+
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 100 100"
@@ -270,17 +283,17 @@ export function InteractiveProfile({ isHovered, onHoverChange, mouseX, mouseY }:
             className="absolute w-1 h-12 bg-gradient-to-b from-primary/40 to-transparent"
             style={{
               left: `${(i + 1) * 16.666}%`,
-              top: '-20px',
+              top: "-20px",
             }}
             animate={{
-              y: isHovered ? ['-100%', '200%'] : '-100%',
+              y: isHovered ? ["-100%", "200%"] : "-100%",
               opacity: isHovered ? [0, 1, 0] : 0,
             }}
             transition={{
               duration: 2,
               repeat: Infinity,
               delay: i * 0.2,
-              ease: 'linear',
+              ease: "linear",
             }}
           />
         ))}
@@ -297,9 +310,7 @@ export function InteractiveProfile({ isHovered, onHoverChange, mouseX, mouseY }:
           repeat: Infinity,
           ease: "easeInOut",
         }}
-      >
-        <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-50 mix-blend-overlay rounded-full" />
-      </motion.div>
+      ></motion.div>
     </div>
-  )
+  );
 }

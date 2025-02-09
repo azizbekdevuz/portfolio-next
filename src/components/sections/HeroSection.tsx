@@ -1,47 +1,94 @@
-'use client'
+"use client";
 
-import { useRef, useState } from 'react'
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
-import { TypeAnimation } from 'react-type-animation'
-import { MouseParallax } from '../effects/MouseParallax'
-import { ParticlesBackground } from '../effects/ParticlesBackground'
-import { GlowEffect } from '../effects/GlowEffect'
-import { InteractiveProfile } from '../ui/InteractiveProfile'
-import { CountUpValue } from '../ui/CountUpValue'
-import { IDETagline } from '../ui/IDETagline'
+import { useRef, useState } from "react";
+import { memo } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
+import { TypeAnimation } from "react-type-animation";
+import { MouseParallax } from "../effects/MouseParallax";
+import { ParticlesBackground } from "../effects/ParticlesBackground";
+import { GlowEffect } from "../effects/GlowEffect";
+import { InteractiveProfile } from "../ui/InteractiveProfile";
+import { CountUpValue } from "../ui/CountUpValue";
+import { IDETagline } from "../ui/IDETagline";
+
+export const ExploreButton = memo(function ExploreButton() {
+  const handleClick = () => {
+    const projectsSection = document.getElementById("projects");
+    if (!projectsSection) return;
+
+    window.scrollTo({
+      top: projectsSection.offsetTop,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <motion.button
+      onClick={handleClick}
+      className="group relative px-8 py-3 overflow-hidden rounded-full
+                bg-transparent border border-primary text-primary
+                transition-all duration-300"
+      whileHover={{
+        scale: 1.05,
+        boxShadow: "0 0 20px rgba(20, 157, 221, 0.4)",
+      }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <span
+        className="relative z-10 transition-colors duration-300 
+                    group-hover:text-text-light"
+      >
+        Explore My Work
+      </span>
+      <motion.div
+        className="absolute inset-0 bg-primary"
+        initial={{ x: "-100%" }}
+        whileHover={{ x: 0 }}
+        transition={{ type: "tween", duration: 0.3 }}
+      />
+    </motion.button>
+  );
+});
 
 export function HeroSection() {
-  const containerRef = useRef<HTMLElement>(null)
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const [isProfileHovered, setIsProfileHovered] = useState(false)
-  
+  const containerRef = useRef<HTMLElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const [isProfileHovered, setIsProfileHovered] = useState(false);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"]
-  })
+    offset: ["start start", "end start"],
+  });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100])
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
 
-  const springConfig = { stiffness: 100, damping: 30 }
-  const mouseXSpring = useSpring(mouseX, springConfig)
-  const mouseYSpring = useSpring(mouseY, springConfig)
+  const springConfig = { stiffness: 100, damping: 30 };
+  const mouseXSpring = useSpring(mouseX, springConfig);
+  const mouseYSpring = useSpring(mouseY, springConfig);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = containerRef.current?.getBoundingClientRect()
-    if (!rect) return
-    
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    
-    mouseX.set(x)
-    mouseY.set(y)
-  }
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    mouseX.set(x);
+    mouseY.set(y);
+  };
 
   return (
     <motion.section
+      id="hero"
       ref={containerRef}
       onMouseMove={handleMouseMove}
       className="relative h-screen flex items-center justify-center overflow-hidden"
@@ -50,21 +97,17 @@ export function HeroSection() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      
       {/* Enhanced Background Effects */}
       <ParticlesBackground mouseX={mouseXSpring} mouseY={mouseYSpring} />
       <GlowEffect mouseX={mouseXSpring} mouseY={mouseYSpring} />
-      
+
       {/* Cyber Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,black,transparent)]" />
 
       {/* Main Content Grid */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Text Content */}
-        <motion.div 
-          className="text-left"
-          style={{ y, scale }}
-        >
+        <motion.div className="text-left" style={{ y, scale }}>
           <MouseParallax>
             <motion.div
               className="relative inline-block"
@@ -84,7 +127,7 @@ export function HeroSection() {
                 transition={{
                   duration: 4,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
               />
             </motion.div>
@@ -95,15 +138,15 @@ export function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              I&apos;m{' '}
+              I&apos;m{" "}
               <span className="text-primary">
                 <TypeAnimation
                   sequence={[
-                    'Designer',
+                    "Designer",
                     2000,
-                    'Developer',
+                    "Developer",
                     2000,
-                    'Freelancer',
+                    "Freelancer",
                     2000,
                   ]}
                   wrapper="span"
@@ -123,9 +166,9 @@ export function HeroSection() {
               transition={{ delay: 0.5 }}
             >
               {[
-                { name: 'Web Development', icon: '🌐', progress: 90 },
-                { name: 'UI/UX Design', icon: '🎨', progress: 85 },
-                { name: 'Full Stack', icon: '⚡', progress: 80 }
+                { name: "Web Development", icon: "🌐", progress: 90 },
+                { name: "UI/UX Design", icon: "🎨", progress: 85 },
+                { name: "Full Stack", icon: "⚡", progress: 80 },
               ].map((skill) => (
                 <motion.div
                   key={skill.name}
@@ -139,7 +182,7 @@ export function HeroSection() {
                     <span className="text-sm">{skill.icon}</span>
                     <span className="text-primary text-sm">{skill.name}</span>
                   </div>
-                  
+
                   {/* Progress indicator on hover */}
                   <motion.div
                     className="absolute bottom-0 left-0 h-[2px] bg-primary/50"
@@ -170,33 +213,33 @@ export function HeroSection() {
               transition={{ delay: 0.6 }}
             >
               {[
-                { value: 2, label: 'Years Experience', symbol: '+' },
-                { value: 4, label: 'Projects Done', symbol: '+' },
-                { value: 10, label: 'Technologies', symbol: '+' }
+                { value: 2, label: "Years Experience", symbol: "+" },
+                { value: 4, label: "Projects Done", symbol: "+" },
+                { value: 10, label: "Technologies", symbol: "+" },
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
                   className="relative group"
                   whileHover={{ scale: 1.05 }}
                 >
-                  <div className="text-center p-3 rounded-lg bg-primary/5 border border-primary/20
-                                  hover:bg-primary/10 transition-all duration-300">
+                  <div
+                    className="text-center p-3 rounded-lg bg-primary/5 border border-primary/20
+                                  hover:bg-primary/10 transition-all duration-300"
+                  >
                     <motion.div
                       className="text-primary text-2xl font-bold"
                       initial={{ opacity: 0, scale: 0.5 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
-                      <CountUpValue 
-                        start={0} 
-                        end={stat.value} 
-                        duration={2} 
-                      />
+                      <CountUpValue start={0} end={stat.value} duration={2} />
                       {stat.symbol}
                     </motion.div>
-                    <div className="text-text-secondary/70 text-sm mt-1">{stat.label}</div>
+                    <div className="text-text-secondary/70 text-sm mt-1">
+                      {stat.label}
+                    </div>
                   </div>
-                  
+
                   {/* Floating particles on hover */}
                   <motion.div
                     className="absolute inset-0 pointer-events-none"
@@ -207,22 +250,22 @@ export function HeroSection() {
                       <motion.div
                         key={i}
                         className="absolute w-1 h-1 bg-primary rounded-full"
-                        initial={{ 
-                          x: 0, 
-                          y: 0, 
-                          opacity: 0.5 
+                        initial={{
+                          x: 0,
+                          y: 0,
+                          opacity: 0.5,
                         }}
-                        animate={{ 
+                        animate={{
                           x: Math.random() * 40 - 20,
                           y: Math.random() * 40 - 20,
                           opacity: 0,
-                          scale: 0
+                          scale: 0,
                         }}
                         transition={{
                           duration: 1,
                           repeat: Infinity,
                           repeatType: "reverse",
-                          delay: i * 0.2
+                          delay: i * 0.2,
                         }}
                       />
                     ))}
@@ -247,15 +290,17 @@ export function HeroSection() {
                   className="w-2 h-2 rounded-full bg-green-500"
                   animate={{
                     scale: [1, 1.2, 1],
-                    opacity: [1, 0.7, 1]
+                    opacity: [1, 0.7, 1],
                   }}
                   transition={{
                     duration: 2,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: "easeInOut",
                   }}
                 />
-                <span className="text-sm text-text-secondary/80">Available for projects</span>
+                <span className="text-sm text-text-secondary/80">
+                  Available for projects
+                </span>
               </motion.div>
 
               <motion.div
@@ -266,12 +311,12 @@ export function HeroSection() {
                 <span className="text-sm text-text-secondary/80">
                   <motion.span
                     animate={{
-                      y: [0, -2, 0]
+                      y: [0, -2, 0],
                     }}
                     transition={{
                       duration: 2,
                       repeat: Infinity,
-                      ease: "easeInOut"
+                      ease: "easeInOut",
                     }}
                   >
                     📍
@@ -279,33 +324,10 @@ export function HeroSection() {
                   Seoul, South Korea
                 </span>
               </motion.div>
-</motion.div>
+            </motion.div>
 
             {/* Existing CTA Button */}
-            <motion.button
-              className="group relative px-8 py-3 overflow-hidden rounded-full
-                        bg-transparent border border-primary text-primary
-                        transition-all duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 0 20px rgba(20, 157, 221, 0.4)"
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="relative z-10 transition-colors duration-300 
-                            group-hover:text-text-light">
-                Explore My Work
-              </span>
-              <motion.div
-                className="absolute inset-0 bg-primary"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: 0 }}
-                transition={{ type: "tween", duration: 0.3 }}
-              />
-            </motion.button>
+            <ExploreButton />
           </MouseParallax>
         </motion.div>
 
@@ -334,34 +356,34 @@ export function HeroSection() {
       >
         <motion.div
           className="w-6 h-10 border-2 border-text-secondary/30 rounded-full p-1"
-          animate={{ 
+          animate={{
             y: [0, 8, 0],
             boxShadow: [
               "0 0 0 rgba(20, 157, 221, 0)",
               "0 0 10px rgba(20, 157, 221, 0.3)",
-              "0 0 0 rgba(20, 157, 221, 0)"
-            ]
+              "0 0 0 rgba(20, 157, 221, 0)",
+            ],
           }}
-          transition={{ 
-            repeat: Infinity, 
+          transition={{
+            repeat: Infinity,
             duration: 1.5,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         >
-          <motion.div 
+          <motion.div
             className="w-1.5 h-3 bg-primary rounded-full"
             animate={{
               opacity: [0.5, 1, 0.5],
-              y: [0, 8, 0]
+              y: [0, 8, 0],
             }}
             transition={{
               repeat: Infinity,
               duration: 1.5,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
           />
         </motion.div>
       </motion.div>
     </motion.section>
-  )
+  );
 }

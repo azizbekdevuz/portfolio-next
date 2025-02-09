@@ -1,66 +1,66 @@
-import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { TypeAnimation } from 'react-type-animation'
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { TypeAnimation } from "react-type-animation";
 
 export function IDETagline() {
-  const [showAutocomplete, setShowAutocomplete] = useState(false)
+  const [showAutocomplete, setShowAutocomplete] = useState(false);
 
   const codeLines = [
     {
-      prefix: '> Building digital',
+      prefix: "> Building digital",
       suggestions: [
-        'experiences',
-        'solutions',
-        'innovations',
-        'transformations'
+        "experiences",
+        "solutions",
+        "innovations",
+        "transformations",
       ],
-      completion: '[...]'
+      completion: "[...]",
     },
     {
-      prefix: '└─ ',
+      prefix: "└─ ",
       suggestions: [
-        'experiences with web technologies',
-        'solutions for modern web challenges',
-        'innovations in digital interfaces',
-        'transformative tech strategies'
+        "experiences with web technologies",
+        "solutions for modern web challenges",
+        "innovations in digital interfaces",
+        "transformative tech strategies",
       ],
-      completion: '✓'
-    }
-  ]
+      completion: "✓",
+    },
+  ];
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowAutocomplete(true)
-    }, 1500)
+      setShowAutocomplete(true);
+    }, 1500);
 
-    return () => clearTimeout(timer)
-  }, [])
+    return () => clearTimeout(timer);
+  }, []);
 
   const autocompleteVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: 10,
-      scale: 0.95
+      scale: 0.95,
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       scale: 1,
       transition: {
         type: "spring",
         stiffness: 300,
-        damping: 20
-      }
+        damping: 20,
+      },
     },
-    exit: { 
-      opacity: 0, 
+    exit: {
+      opacity: 0,
       y: 10,
       scale: 0.95,
       transition: {
-        duration: 0.2
-      }
-    }
-  }
+        duration: 0.2,
+      },
+    },
+  };
 
   return (
     <motion.div
@@ -72,7 +72,7 @@ export function IDETagline() {
     >
       {/* First line */}
       <div className="flex items-start gap-2">
-        <motion.span 
+        <motion.span
           className="text-primary/70"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -81,16 +81,13 @@ export function IDETagline() {
           &gt;
         </motion.span>
         <TypeAnimation
-          sequence={[
-            'Building digital',
-            500,
-          ]}
+          sequence={["Building digital", 500]}
           wrapper="span"
           cursor={false}
           speed={50}
           className="text-text-light"
         />
-        
+
         {/* Autocomplete Suggestions */}
         <AnimatePresence>
           {showAutocomplete && (
@@ -103,7 +100,7 @@ export function IDETagline() {
               exit="exit"
             >
               {codeLines[0].suggestions.slice(0, 2).map((suggestion, index) => (
-                <motion.div 
+                <motion.div
                   key={`suggestion-${index}`}
                   className="bg-primary/10 rounded px-2 py-0.5 text-sm text-text-secondary/80 
                               border border-primary/20 shadow-sm"
@@ -112,7 +109,7 @@ export function IDETagline() {
                   {suggestion}
                 </motion.div>
               ))}
-              <motion.div 
+              <motion.div
                 className="bg-primary/10 rounded px-2 py-0.5 text-sm text-text-secondary/80 
                             border border-primary/20 shadow-sm"
                 whileHover={{ scale: 1.05 }}
@@ -137,22 +134,20 @@ export function IDETagline() {
           >
             <span className="text-primary">└─</span>
             <TypeAnimation
-              sequence={[
-                'experiences with web technologies', 500,
-              ]}
+              sequence={["experiences with web technologies", 500]}
               wrapper="span"
               cursor={false}
               speed={50}
               className="text-text-secondary"
             />
-            
+
             {/* Autocomplete Suggestions */}
             <motion.div
               className="ml-2 flex items-center gap-2"
               whileHover={{ scale: 1.05 }}
             >
               {codeLines[1].suggestions.slice(0, 1).map((suggestion, index) => (
-                <motion.div 
+                <motion.div
                   key={`suggestion-${index}`}
                   className="bg-primary/10 rounded px-2 py-0.5 text-sm text-text-secondary/80 
                               border border-primary/20 shadow-sm"
@@ -166,5 +161,5 @@ export function IDETagline() {
         )}
       </AnimatePresence>
     </motion.div>
-  )
+  );
 }
