@@ -32,7 +32,21 @@ cd portfolio-next
 npm install
 ```
 
-### 3️⃣ Start the dev server
+### 3️⃣ Setup Environment Variables
+
+| File          | Action                                |
+|--------------|--------------------------------|
+| `.env.example` | **Rename** to `.env.local` |
+| `.env.local`  | **Update only the values**, but do not change key names |
+
+📌 **Important:** The database settings are now component-based, meaning the page renders and displays data dynamically from MongoDB.
+
+To rename the file in a terminal:
+```sh
+mv .env.example .env.local
+```
+
+### 4️⃣ Start the dev server
 
 ```sh
 npm run dev
@@ -58,6 +72,7 @@ Want to take it live? Deploy easily with:
 
 - **🖥️ Framework:** Next.js (React)
 - **📝 Language:** TypeScript
+- **🗄️ Database:** MongoDB
 - **🎨 Animations:** Framer Motion
 - **🌌 3D Graphics:** Three.js & @react-three/fiber
 - **🎭 Styling:** Tailwind CSS
