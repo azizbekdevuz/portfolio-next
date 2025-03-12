@@ -7,12 +7,13 @@ Hey there! 👋 This is my personal portfolio site where I showcase my work, ski
 - **✨ Next.js & TypeScript** – because I love clean and scalable code
 - **🎭 Framer Motion** – smooth animations, because static is boring
 - **🌌 Three.js & @react-three/fiber** – a little bit of 3D magic
+- **🗄️ MongoDB Atlas** - database driven approach to load datasets dynamically
 - **📱 Fully responsive** – looks great on all screens
 - **⚡ Optimized for performance** – because speed matters
 
 ## 🎬 Live Demo
 
-[🔗 Check it out!] (soon)
+[🔗 Check it out!](https://portfolio-next-silk-two.vercel.app/)
 
 ## 🛠️ Get It Running Locally
 

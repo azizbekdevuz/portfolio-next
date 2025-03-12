@@ -1,18 +1,101 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { projects } from "../projects/data/projects";
-import { Project } from "../projects/types/project";
 import ProjectPreview from "../projects/ProjectPreview";
+import { Project } from "../../models/Project";
 
 export function ProjectsSection() {
-  const [selectedProject, setSelectedProject] = useState<Project>(projects[0]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isExplorerOpen, setIsExplorerOpen] = useState(true);
   const containerRef = useRef<HTMLElement>(null);
   type ViewType = "code" | "preview";
   const [activeView, setActiveView] = useState<ViewType>("code");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+
+        const response = await fetch("/api/projects");
+
+        if (!response.ok) {
+          throw new Error(`Error fetching projects: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setProjects(data);
+
+        // Initialize the selected project with the first project
+        if (data.length > 0) {
+          setSelectedProject(data[0]);
+        }
+
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch projects:", err);
+        setError("Failed to load projects. Please try again later.");
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <section id="projects" className="relative min-h-screen py-20">
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="flex items-center justify-between h-12 bg-dark-light/80 border-b border-primary/20 px-4">
+            <div className="h-4 w-40 bg-gradient-to-r from-primary/20 to-primary/10 rounded animate-pulse"></div>
+            <div className="flex gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#ff5f57] animate-pulse"></div>
+              <div className="w-3 h-3 rounded-full bg-[#febc2e] animate-pulse"></div>
+              <div className="w-3 h-3 rounded-full bg-[#28c840] animate-pulse"></div>
+            </div>
+          </div>
+          <div className="border-x border-b border-primary/20 flex">
+            <div className="w-[250px] border-r border-primary/20 bg-dark-light/50 min-h-[600px]">
+              <div className="p-4 space-y-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="h-6 bg-gradient-to-r from-primary/20 to-transparent rounded animate-pulse"
+                  ></div>
+                ))}
+              </div>
+            </div>
+            <div className="flex-1 min-h-[600px] bg-dark-light/30 p-6">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <div className="h-8 w-3/4 bg-gradient-to-r from-primary/30 to-primary/10 rounded animate-pulse"></div>
+                  <div className="h-24 bg-gradient-to-r from-primary/20 to-transparent rounded animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Show error state
+  if (error || !selectedProject) {
+    return (
+      <section
+        id="projects"
+        className="relative min-h-screen py-20 flex items-center justify-center"
+      >
+        <div className="text-red-500 text-lg">
+          {error || "No projects found"}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <motion.section
@@ -248,7 +331,7 @@ export function ProjectsSection() {
                       </button>
                       <button
                         onClick={() => setActiveView("preview")}
-                        className={`px-3 py-1 rounded flex items-center gap-2${
+                        className={`px-3 py-1 rounded flex items-center gap-2 ${
                           activeView === "preview"
                             ? "bg-primary/10 text-primary"
                             : "text-text-secondary hover:bg-primary/5"

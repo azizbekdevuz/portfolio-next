@@ -1,63 +1,136 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-
-// Tech categories with their respective technologies
-const techStack = {
-  frontend: {
-    title: "Frontend",
-    icon: "🎨",
-    color: "#149ddd",
-    techs: [
-      { name: "HTML", level: 100, icon: "/icons/html.svg" },
-      { name: "CSS", level: 100, icon: "/icons/css.svg" },
-      { name: "JavaScript", level: 80, icon: "/icons/javascript.svg" },
-      { name: "React", level: 85, icon: "/icons/react.svg" },
-      { name: "Next.js", level: 80, icon: "/icons/nextjs.svg" },
-      { name: "TypeScript", level: 75, icon: "/icons/typescript.svg" },
-      { name: "Tailwind", level: 90, icon: "/icons/tailwind.svg" },
-    ],
-  },
-  backend: {
-    title: "Backend",
-    icon: "⚡",
-    color: "#2ecc71",
-    techs: [
-      { name: "PHP", level: 80, icon: "/icons/php.svg" },
-      { name: "Node.js", level: 75, icon: "/icons/nodejs.svg" },
-      { name: "MySQL", level: 70, icon: "/icons/mysql.svg" },
-      { name: "MongoDB", level: 65, icon: "/icons/mongodb.svg" },
-    ],
-  },
-  languages: {
-    title: "Languages",
-    icon: "💻",
-    color: "#e74c3c",
-    techs: [
-      { name: "C", level: 60, icon: "/icons/c.svg" },
-      { name: "C++", level: 60, icon: "/icons/cpp.svg" },
-      { name: "Java", level: 60, icon: "/icons/java.svg" },
-      { name: "Python", level: 30, icon: "/icons/python.svg" },
-    ],
-  },
-  tools: {
-    title: "Tools & Others",
-    icon: "🛠️",
-    color: "#9b59b6",
-    techs: [
-      { name: "Git", level: 85, icon: "/icons/git.svg" },
-      { name: "Photoshop", level: 80, icon: "/icons/photoshop.svg" },
-      { name: "Illustrator", level: 75, icon: "/icons/illustrator.svg" },
-      { name: "Figma", level: 70, icon: "/icons/figma.svg" },
-    ],
-  },
-};
+import { TechCategory } from "@/models/TechStack";
 
 export function TechStack() {
-  const [selectedCategory, setSelectedCategory] = useState("frontend");
+  const [techStack, setTechStack] = useState<Record<string, TechCategory>>({});
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTechStack = async () => {
+      try {
+        setIsLoading(true);
+
+        const response = await fetch("/api/techstack");
+
+        if (!response.ok) {
+          throw new Error(`Error fetching tech stack: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setTechStack(data);
+
+        // Set first category as selected if we have data
+        if (Object.keys(data).length > 0) {
+          setSelectedCategory(Object.keys(data)[0]);
+        }
+
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch tech stack:", err);
+        setError("Failed to load tech stack. Please try again later.");
+        setIsLoading(false);
+      }
+    };
+
+    fetchTechStack();
+  }, []);
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="mb-20">
+        <div className="flex items-center gap-3 mb-10 font-mono">
+          <span className="text-primary/50">{"<"}</span>
+          <h3 className="text-2xl font-bold text-text-light">TechStack</h3>
+          <span className="text-primary/50">{"/>"}</span>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="p-4 rounded-lg border border-primary/20 animate-pulse">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl opacity-50">🎨</span>
+              <span className="text-text-secondary/70">
+                Loading Frontend...
+              </span>
+            </div>
+          </div>
+          <div className="p-4 rounded-lg border border-primary/20 animate-pulse">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl opacity-50">⚡</span>
+              <span className="text-text-secondary/70">Loading Backend...</span>
+            </div>
+          </div>
+          <div className="p-4 rounded-lg border border-primary/20 animate-pulse">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl opacity-50">💻</span>
+              <span className="text-text-secondary/70">
+                Loading Languages...
+              </span>
+            </div>
+          </div>
+          <div className="p-4 rounded-lg border border-primary/20 animate-pulse">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl opacity-50">🛠️</span>
+              <span className="text-text-secondary/70">Loading Tools...</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative bg-dark-light/20 rounded-lg p-8 border border-primary/20">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {[
+              "HTML",
+              "CSS",
+              "JavaScript",
+              "React",
+              "Next.js",
+              "TypeScript",
+              "Tailwind",
+            ].map((tech, i) => (
+              <div
+                key={i}
+                className="p-4 rounded-lg bg-dark border border-primary/20 animate-pulse"
+              >
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full"></div>
+                </div>
+                <div className="text-center">
+                  <h4 className="text-text-secondary/50 font-medium mb-2">
+                    {tech}
+                  </h4>
+                  <div className="h-1 bg-primary/20 rounded-full"></div>
+                  <div className="text-xs text-primary/50 mt-1">Loading...</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Background Grid Effect */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,black,transparent)]" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || Object.keys(techStack).length === 0) {
+    return (
+      <div className="mb-20 text-center py-10">
+        <div className="text-red-500 text-lg">
+          {error || "No tech stack data found"}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mb-20">
@@ -101,16 +174,16 @@ export function TechStack() {
       {/* Tech Grid */}
       <div className="relative bg-dark-light/20 rounded-lg p-8 border border-primary/20">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={selectedCategory}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {techStack[selectedCategory as keyof typeof techStack].techs.map(
-              (tech, index) => (
+          {selectedCategory && techStack[selectedCategory] && (
+            <motion.div
+              key={selectedCategory}
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              {techStack[selectedCategory].techs.map((tech, index) => (
                 <motion.div
                   key={tech.name}
                   className="relative group"
@@ -123,17 +196,17 @@ export function TechStack() {
                   {/* Tech Card */}
                   <motion.div
                     className="relative p-4 rounded-lg bg-dark border border-primary/20
-                           hover:border-primary/50 transition-colors"
+                             hover:border-primary/50 transition-colors"
                     whileHover={{ y: -5 }}
                   >
                     {/* Tech Icon */}
                     <div className="flex items-center justify-center mb-4">
-                      <div className="w-12 h-12 relative">
+                      <div className="relative w-12 h-12">
                         <Image
                           src={tech.icon}
-                          alt={tech.name}
-                          layout="fill"
-                          objectFit="contain"
+                          alt={`${tech.name} icon`}
+                          fill
+                          style={{ objectFit: "contain" }}
                         />
                       </div>
                     </div>
@@ -171,9 +244,7 @@ export function TechStack() {
                             exit={{ opacity: 0 }}
                             style={{
                               backgroundColor:
-                                techStack[
-                                  selectedCategory as keyof typeof techStack
-                                ].color,
+                                techStack[selectedCategory].color,
                             }}
                           />
 
@@ -205,9 +276,9 @@ export function TechStack() {
                     </AnimatePresence>
                   </motion.div>
                 </motion.div>
-              ),
-            )}
-          </motion.div>
+              ))}
+            </motion.div>
+          )}
         </AnimatePresence>
 
         {/* Background Grid Effect */}

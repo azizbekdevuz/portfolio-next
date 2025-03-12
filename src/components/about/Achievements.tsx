@@ -1,81 +1,107 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const achievements = [
-  {
-    id: "edu",
-    title: "Education",
-    icon: "🎓",
-    color: "#149ddd",
-    items: [
-      {
-        title: "Computer Science & Engineering",
-        subtitle: "Sejong University",
-        description: "Currently pursuing BSc with strong academic performance",
-        year: "2022-2026",
-        highlight:
-          "Relevant Coursework: Data Structures, Algorithms, Web Development",
-      },
-      {
-        title: "High School",
-        subtitle: "46th public school, Samarkand, UZ",
-        description: "Graduated with red diploma",
-        year: "2019-2022",
-        highlight: "Academic Excellence Award",
-      },
-    ],
-  },
-  {
-    id: "projects",
-    title: "Key Projects",
-    icon: "💻",
-    color: "#2ecc71",
-    items: [
-      {
-        title: "ZDesigner AI",
-        subtitle: "AI-Powered Interior Design Tool",
-        description: "Web application that redesigns room interiors using AI",
-        year: "2024",
-        highlight: "Technologies: React, Next.js, Node.js, AI Integration",
-      },
-      {
-        title: "POZITIV Denta",
-        subtitle: "Dental Clinic Website",
-        description: "Full-featured website with appointment system",
-        year: "2023",
-        highlight: "Technologies: HTML, CSS, JavaScript, PHP",
-      },
-    ],
-  },
-  {
-    id: "skills",
-    title: "Certifications & Skills",
-    icon: "🏆",
-    color: "#e74c3c",
-    items: [
-      {
-        title: "Web Development",
-        subtitle: "Full Stack Expertise",
-        description: "Proficient in modern web technologies",
-        year: "2023",
-        highlight: "Strong focus on React and Next.js ecosystem",
-      },
-      {
-        title: "Design Skills",
-        subtitle: "UI/UX & Graphic Design",
-        description: "Experience with modern design tools",
-        year: "2022",
-        highlight: "Adobe Creative Suite & Figma proficiency",
-      },
-    ],
-  },
-];
+import { Achievement } from "@/models/Achievement";
 
 export function Achievements() {
-  const [activeCategory, setActiveCategory] = useState("edu");
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [activeCategory, setActiveCategory] = useState("");
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      try {
+        setIsLoading(true);
+
+        const response = await fetch("/api/achievements");
+
+        if (!response.ok) {
+          throw new Error(`Error fetching achievements: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setAchievements(data);
+
+        // Set the first category as active if we have data
+        if (data.length > 0) {
+          setActiveCategory(data[0].id);
+        }
+
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch achievements:", err);
+        setError("Failed to load achievements. Please try again later.");
+        setIsLoading(false);
+      }
+    };
+
+    fetchAchievements();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="mb-20">
+        <div className="flex items-center gap-3 mb-10 font-mono">
+          <div className="h-6 w-24 bg-primary/10 animate-pulse rounded"></div>
+          <div className="h-8 w-48 bg-primary/20 animate-pulse rounded"></div>
+          <div className="h-6 w-8 bg-primary/10 animate-pulse rounded"></div>
+        </div>
+
+        <div className="flex flex-wrap gap-4 mb-8">
+          {["Education", "Projects", "Skills"].map((label, i) => (
+            <div
+              key={i}
+              className="h-10 w-32 bg-dark-light/20 animate-pulse rounded-lg flex items-center justify-center"
+            >
+              <span className="text-text-secondary/50 text-sm">
+                Loading {label}...
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="space-y-6">
+          {[
+            "Fetching academic background...",
+            "Loading project achievements...",
+          ].map((text, i) => (
+            <div
+              key={i}
+              className="p-6 rounded-lg border border-primary/20 bg-dark-light/20"
+            >
+              <div className="flex justify-between">
+                <div className="space-y-3 w-4/5">
+                  <div className="h-7 w-1/2 bg-primary/20 animate-pulse rounded flex items-center">
+                    <span className="text-text-secondary/50 text-sm px-2">
+                      {text}
+                    </span>
+                  </div>
+                  <div className="h-5 w-2/5 bg-primary/10 animate-pulse rounded"></div>
+                  <div className="h-4 w-3/4 bg-dark-light/40 animate-pulse rounded"></div>
+                  <div className="h-4 w-3/5 bg-primary/5 animate-pulse rounded"></div>
+                </div>
+                <div className="h-6 w-20 bg-primary/10 animate-pulse rounded-full"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error || achievements.length === 0) {
+    return (
+      <div className="mb-20 text-center py-10">
+        <div className="text-red-500 text-lg">
+          {error || "No achievements found"}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mb-20">

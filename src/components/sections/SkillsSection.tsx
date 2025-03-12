@@ -1,200 +1,392 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  LucideCpu,
-  LucideDatabase,
-  LucideMonitor,
-  LucideCode,
-} from "lucide-react";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue } from "framer-motion";
+import Image from "next/image";
 
-const iconMapping = {
-  processor: LucideCpu,
-  memory: LucideDatabase,
-  io: LucideMonitor,
-  controller: LucideCode,
-};
-
-interface CircuitNode {
+interface SkillNode {
   id: string;
   title: string;
+  icon: string;
   description: string;
-  type: "processor" | "memory" | "io" | "controller";
-  voltageLevel: number;
-  stats: { power: number; frequency: number };
-  details: {
-    experience: string;
-    level: number;
-    subSkills: { name: string; proficiency: number }[];
+  tools: string[];
+  experience: string;
+  projects?: string[];
+  workspace: {
+    title: string;
+    tools: { name: string; icon: string }[];
+    environment: string;
   };
 }
 
-const circuitNodes: CircuitNode[] = [
+const skillNodes: SkillNode[] = [
   {
-    id: "frontend",
-    title: "Frontend Development",
-    description: "Building immersive, high-performance UIs",
-    type: "processor",
-    voltageLevel: 5,
-    stats: { power: 90, frequency: 2.4 },
-    details: {
-      experience: "2+ years",
-      level: 90,
-      subSkills: [
-        { name: "React/Next.js", proficiency: 95 },
-        { name: "TypeScript", proficiency: 90 },
-        { name: "Framer Motion", proficiency: 85 },
-        { name: "Tailwind CSS", proficiency: 95 },
+    id: "webdev",
+    title: "Web Development",
+    icon: "💻",
+    description: "Full-stack development specializing in modern web technologies and AI integration",
+    tools: [
+      "React", 
+      "Next.js", 
+      "TypeScript",
+      "Node.js",
+      "TailwindCSS",
+      "Framer Motion",
+      "Three.js",
+      "AWS",
+      "Docker"
+    ],
+    experience: "2+ years",
+    projects: ["ZDesigner AI", "Professor Website", "Portfolio"],
+    workspace: {
+      title: "Development Environment",
+      tools: [
+        { name: "React", icon: "/icons/react.svg" },
+        { name: "Next", icon: "/icons/nextjs.svg" },
+        { name: "NodeJS", icon: "/icons/nodejs.svg" },
+        { name: "GitHub", icon: "/icons/github.svg" },
+        { name: "Docker", icon: "/icons/docker.svg" },
+        { name: "Vercel", icon: "/icons/vercel.svg" },
+        { name: "AWS", icon: "/icons/aws.svg" }
       ],
-    },
+      environment: "Modern Development Setup"
+    }
   },
   {
-    id: "backend",
-    title: "Backend Development",
-    description: "Optimized and scalable server-side solutions",
-    type: "memory",
-    voltageLevel: 4.2,
-    stats: { power: 85, frequency: 2.0 },
-    details: {
-      experience: "2+ years",
-      level: 85,
-      subSkills: [
-        { name: "Node.js", proficiency: 90 },
-        { name: "Express.js", proficiency: 85 },
-        { name: "REST & GraphQL APIs", proficiency: 88 },
-        { name: "Database Optimization", proficiency: 80 },
+    id: "design",
+    title: "Graphic Design",
+    icon: "🎨",
+    description: "Creative visual design focusing on brand identity, UI/UX, and marketing materials",
+    tools: [
+      "Adobe Photoshop",
+      "Adobe Illustrator",
+      "Figma",
+      "UI/UX Design",
+      "Brand Design",
+      "Social Media Graphics"
+    ],
+    experience: "1+ year",
+    projects: ["POZITIV Denta Branding", "Social Media Designs"],
+    workspace: {
+      title: "Design Studio",
+      tools: [
+        { name: "Photoshop", icon: "/icons/photoshop.svg" },
+        { name: "Illustrator", icon: "/icons/illustrator.svg" },
+        { name: "Figma", icon: "/icons/figma.svg" }
       ],
-    },
+      environment: "Creative Workspace"
+    }
   },
+  {
+    id: "smm",
+    title: "Social Media Management",
+    icon: "📱",
+    description: "Strategic social media management focusing on growth and engagement",
+    tools: [
+      "Content Strategy",
+      "Analytics",
+      "Community Management",
+      "Campaign Planning",
+      "Growth Hacking",
+      "Engagement Optimization"
+    ],
+    experience: "1 year",
+    projects: ["POZITIV Denta SMM", "Personal Brand Management"],
+    workspace: {
+      title: "Social Command Center",
+      tools: [
+        { name: "Analytics", icon: "/icons/analytics.svg" },
+        { name: "Telegram", icon: "/icons/telegram.svg" },
+        { name: "Instagram", icon: "/icons/instagram.svg" },
+        { name: "Facebook", icon: "/icons/facebook.svg"}
+      ],
+      environment: "Digital Marketing Hub"
+    }
+  },
+  {
+    id: "english",
+    title: "English Tutoring",
+    icon: "📚",
+    description: "Personalized English language instruction focusing on practical communication skills",
+    tools: [
+      "IELTS Preparation",
+      "Business English",
+      "Conversational English",
+      "Grammar & Vocabulary",
+      "Pronunciation",
+      "Academic Writing"
+    ],
+    experience: "1 year",
+    projects: ["Private Tutoring", "Group Classes"],
+    workspace: {
+      title: "Virtual Classroom",
+      tools: [
+        { name: "Zoom", icon: "/icons/zoom.svg" },
+        { name: "Google Classroom", icon: "/icons/classroom.svg" }
+      ],
+      environment: "Interactive Learning Space"
+    }
+  }
 ];
 
 export function SkillsSection() {
-  const [selectedNode, setSelectedNode] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalNode, setModalNode] = useState<CircuitNode | null>(null);
+  const [activeSkill, setActiveSkill] = useState<string>("webdev");
+  const setHoveredTool = useState<string | null>(null)[1];
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  const handleNodeClick = useCallback(
-    (node: CircuitNode) => {
-      setSelectedNode(selectedNode === node.id ? null : node.id);
-      if (window.innerWidth < 768) {
-        setModalNode(node);
-        setIsModalOpen(true);
-      }
-    },
-    [selectedNode],
-  );
+  const activeNode = skillNodes.find(node => node.id === activeSkill);
+
+  // Mouse movement effect
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  };
 
   return (
-    <section className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white relative overflow-hidden">
-      <div className="container mx-auto px-6 text-center">
-        <motion.h2
-          className="text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          Next-Level Skills
-        </motion.h2>
-        <p className="text-lg text-gray-400 mb-12">
-          A futuristic, interactive skill showcase
-        </p>
+    <motion.section
+      ref={containerRef}
+      id="skills"
+      className="relative min-h-screen py-20 overflow-hidden"
+      onMouseMove={handleMouseMove}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+    >
+      {/* Enhanced Background with Dynamic Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(20,157,221,0.03),transparent)]" />
+        <motion.div
+          className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)]
+                     bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)]"
+          style={{
+            rotateX: mouseY,
+            rotateY: mouseX,
+            transformPerspective: 1000,
+          }}
+        />
+        
+        {/* Dynamic Glow Effect */}
+        <motion.div
+          className="absolute blur-[100px] rounded-full bg-primary/20"
+          style={{
+            width: 400,
+            height: 400,
+            x: mouseX,
+            y: mouseY,
+            translateX: "-50%",
+            translateY: "-50%",
+          }}
+        />
+      </div>
 
-        <div className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-10 rounded-2xl bg-gray-900/20 border border-gray-800 shadow-2xl backdrop-blur-xl">
-          {circuitNodes.map((node) => {
-            const Icon = iconMapping[node.type];
-            return (
-              <motion.div
+      {/* Main Content Container */}
+      <div className="relative z-10 container mx-auto px-4">
+        {/* Enhanced Section Title */}
+        <motion.div
+          className="flex flex-col items-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <div className="flex items-center gap-3 mb-4 font-mono">
+            <span className="text-primary/50">class</span>
+            <h2 className="text-4xl font-bold text-text-light">SkillMatrix</h2>
+            <span className="text-primary/50">extends</span>
+            <span className="text-text-light">Expertise</span>
+          </div>
+          <motion.div 
+            className="h-1 w-20 bg-primary rounded-full"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+          />
+        </motion.div>
+
+        {/* Main Grid Layout */}
+        <div className="grid lg:grid-cols-[1.5fr_2.5fr] gap-8">
+          {/* Skill Navigation Panel */}
+          <div className="space-y-4">
+            {skillNodes.map((node, index) => (
+              <motion.button
                 key={node.id}
-                className={`relative p-6 rounded-xl border-2 bg-gray-900/60 text-center transition-all duration-300 shadow-lg cursor-pointer ${
-                  selectedNode === node.id
-                    ? "border-blue-500"
-                    : "border-gray-700"
-                }`}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0px 10px 30px rgba(0, 120, 255, 0.3)",
-                }}
-                onClick={() => handleNodeClick(node)}
+                onClick={() => setActiveSkill(node.id)}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className={`w-full p-6 rounded-lg text-left transition-all duration-300
+                           border group relative overflow-hidden
+                           ${activeSkill === node.id 
+                             ? "border-primary bg-primary/10" 
+                             : "border-primary/20 hover:border-primary/50"}`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <Icon size={40} className="mb-3 text-blue-400" />
-                <h3 className="text-2xl font-semibold text-white mb-2">
-                  {node.title}
-                </h3>
-                <p className="text-sm text-gray-400">{node.description}</p>
+                {/* Skill Card Content */}
+                <div className="relative z-10">
+                  <div className="flex items-center gap-4 mb-3">
+                    <span className="text-3xl">{node.icon}</span>
+                    <div>
+                      <h3 className="text-xl text-text-light font-medium">{node.title}</h3>
+                      <span className="text-primary text-sm">{node.experience}</span>
+                    </div>
+                  </div>
+                  <p className="text-text-secondary text-sm mb-3">{node.description}</p>
+                  
+                  {/* Mini Tools Preview */}
+                  <div className="flex flex-wrap gap-2">
+                    {node.tools.slice(0, 3).map((tool) => (
+                      <span
+                        key={tool}
+                        className="px-2 py-1 rounded-full bg-dark-light/30 
+                                 text-xs text-primary/80"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                    {node.tools.length > 3 && (
+                      <span className="text-text-secondary text-xs">
+                        +{node.tools.length - 3} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Interactive Background Effects */}
                 <motion.div
-                  className="absolute top-3 right-3 text-xs text-blue-400 font-mono"
-                  animate={{ opacity: [0, 1], scale: [0.8, 1] }}
+                  className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent
+                            opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    backgroundSize: "200% 200%",
+                  }}
+                  animate={{
+                    backgroundPosition: ["0% 0%", "100% 100%"],
+                  }}
                   transition={{
-                    duration: 1,
+                    duration: 3,
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
+                />
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Detailed Skill View */}
+          <AnimatePresence mode="wait">
+            {activeNode && (
+              <motion.div
+                key={activeNode.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-dark-light/20 rounded-lg p-8 border border-primary/20
+                          backdrop-blur-sm relative overflow-hidden"
+              >
+                {/* Workspace Section */}
+                <motion.div 
+                  className="mb-8"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                 >
-                  {node.voltageLevel}V
+                  <h3 className="text-2xl text-text-light mb-6 font-medium">
+                    {activeNode.workspace.title}
+                  </h3>
+                  
+                  {/* Tools Grid */}
+                  <div className="grid grid-cols-3 md:grid-cols-5 gap-4">
+                    {activeNode.workspace.tools.map((tool, index) => (
+                      <motion.div
+                        key={tool.name}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="group relative"
+                        onHoverStart={() => setHoveredTool(tool.name)}
+                        onHoverEnd={() => setHoveredTool(null)}
+                      >
+                        <motion.div
+                          className="p-4 rounded-lg bg-dark-light/30 border border-primary/20
+                                    hover:border-primary/50 transition-colors duration-300"
+                          whileHover={{ y: -5 }}
+                        >
+                          <div className="relative w-10 h-10 mx-auto mb-3">
+                            <Image
+                              src={tool.icon}
+                              alt={tool.name}
+                              fill
+                              style={{ objectFit: "contain" }}
+                            />
+                          </div>
+                          <p className="text-center text-sm text-text-secondary group-hover:text-text-light">
+                            {tool.name}
+                          </p>
+                        </motion.div>
+                      </motion.div>
+                    ))}
+                  </div>
                 </motion.div>
+
+                {/* Projects & Experience */}
+                <div className="space-y-6">
+                  {/* Projects Section */}
+                  {activeNode.projects && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <h4 className="text-text-light mb-3">Featured Projects</h4>
+                      <div className="flex flex-wrap gap-3">
+                        {activeNode.projects.map((project) => (
+                          <div
+                            key={project}
+                            className="px-4 py-2 rounded-lg bg-primary/5 border border-primary/20
+                                     text-primary text-sm"
+                          >
+                            {project}
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Tools & Technologies */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <h4 className="text-text-light mb-3">Technologies</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {activeNode.tools.map((tool) => (
+                        <div
+                          key={tool}
+                          className="px-3 py-1 rounded-full bg-dark-light/30
+                                   border border-primary/20 text-sm text-primary"
+                        >
+                          {tool}
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Decorative Elements */}
+                <div className="absolute top-0 right-0 w-64 h-64 opacity-10
+                              bg-gradient-conic from-primary via-transparent to-transparent
+                              blur-3xl" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 opacity-10
+                              bg-gradient-conic from-transparent via-primary to-transparent
+                              blur-3xl" />
               </motion.div>
-            );
-          })}
+            )}
+          </AnimatePresence>
         </div>
       </div>
-
-      <AnimatePresence>
-        {isModalOpen && modalNode && (
-          <motion.div
-            className="fixed inset-0 bg-black/80 flex items-center justify-center p-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="w-full max-w-md bg-gray-900/80 p-6 rounded-xl border border-blue-500 text-white shadow-2xl relative"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-            >
-              <button
-                className="absolute top-3 right-3 text-gray-500 hover:text-gray-300"
-                onClick={() => setIsModalOpen(false)}
-              >
-                ✕
-              </button>
-              <DetailPanel node={modalNode} />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
-  );
-}
-
-function DetailPanel({ node }: { node: CircuitNode }) {
-  return (
-    <div>
-      <h3 className="text-3xl font-bold text-blue-400 mb-3">{node.title}</h3>
-      <p className="text-gray-400 mb-4">{node.description}</p>
-      <div className="grid grid-cols-2 gap-4 text-sm text-gray-300">
-        <div>Experience: {node.details.experience}</div>
-        <div>Power: {node.stats.power}W</div>
-        <div>Frequency: {node.stats.frequency}GHz</div>
-      </div>
-      <h4 className="mt-5 text-xl text-blue-400">Skills</h4>
-      <div className="space-y-2">
-        {node.details.subSkills.map((skill) => (
-          <div key={skill.name} className="relative">
-            <div className="flex justify-between text-sm text-gray-300">
-              <span>{skill.name}</span>
-              <span>{skill.proficiency}%</span>
-            </div>
-            <motion.div
-              className="h-2 rounded-full bg-blue-500"
-              initial={{ width: "0%" }}
-              animate={{ width: `${skill.proficiency}%` }}
-              transition={{ duration: 1 }}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
+    </motion.section>
   );
 }

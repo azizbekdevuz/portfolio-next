@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
 type ProgressContextType = {
   progress: number;
@@ -21,5 +21,3 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     </ProgressContext.Provider>
   );
 }
-
-export const useProgress = () => useContext(ProgressContext);

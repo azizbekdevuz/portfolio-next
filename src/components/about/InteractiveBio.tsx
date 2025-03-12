@@ -1,41 +1,101 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
-const bioSections = [
-  {
-    id: "intro",
-    icon: "👋",
-    title: "Introduction",
-    content:
-      "Hey there! I'm Azizbek Arzikulov, a sophomore at Sejong University, passionate about Computer Science and Engineering.",
-  },
-  {
-    id: "journey",
-    icon: "🚀",
-    title: "Journey",
-    content:
-      "Born and raised in Uzbekistan, I jumped into university life at 17, eager to pursue my dream of becoming a web developer.",
-  },
-  {
-    id: "experience",
-    icon: "💼",
-    title: "Experience",
-    content:
-      "In just over a year, I've dabbled in everything from website design to social media management and graphic design, freelancing along the way.",
-  },
-  {
-    id: "vision",
-    icon: "🎯",
-    title: "Vision",
-    content:
-      "Now, my focus is on mastering web development and building a career I'm proud of, turning my passion into a profession, one line of code at a time!",
-  },
-];
+import { BioSection } from "@/models/Bio";
 
 export function InteractiveBio() {
-  const [activeSection, setActiveSection] = useState("intro");
+  const [bioSections, setBioSections] = useState<BioSection[]>([]);
+  const [activeSection, setActiveSection] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBioSections = async () => {
+      try {
+
+        const response = await fetch("/api/bio");
+
+        if (!response.ok) {
+          throw new Error(`Error fetching bio sections: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setBioSections(data);
+
+        // Set the first section as active if we have data
+        if (data.length > 0) {
+          setActiveSection(data[0].id);
+        }
+
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch bio sections:", err);
+        setError("Failed to load bio sections. Please try again later.");
+        setIsLoading(false);
+      }
+    };
+
+    fetchBioSections();
+  }, []);
+
+  // Show loading skeleton
+  if (isLoading) {
+    return (
+      <div className="grid md:grid-cols-[1fr_2fr] gap-8 mb-20">
+        {/* Navigation Cards Loading */}
+        <div className="flex flex-col gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="p-4 rounded-lg border border-primary/20 bg-dark-light/20 animate-pulse"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/10"></div>
+                <div className="h-5 w-24 bg-primary/10 rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Content Display Loading */}
+        <div className="relative bg-dark-light/20 rounded-lg p-6 border border-primary/20 min-h-[200px]">
+          <div className="absolute top-0 left-6 w-px h-full bg-gradient-to-b from-primary/0 via-primary/20 to-primary/0" />
+          <div className="absolute top-6 left-0 h-px w-full bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0" />
+
+          <div className="flex items-start gap-4 ml-6">
+            <div className="w-10 h-10 rounded-full bg-primary/10 animate-pulse"></div>
+            <div className="space-y-3 flex-1">
+              <div className="h-6 w-1/3 bg-primary/10 rounded animate-pulse"></div>
+              <div className="space-y-2">
+                <div className="h-4 w-full bg-dark-light/40 rounded animate-pulse"></div>
+                <div className="h-4 w-5/6 bg-dark-light/40 rounded animate-pulse"></div>
+                <div className="h-4 w-3/4 bg-dark-light/40 rounded animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Code-style line numbers */}
+          <div className="absolute left-2 top-6 bottom-6 flex flex-col items-end pr-3 text-sm text-primary/30 font-mono">
+            {[...Array(10)].map((_, i) => (
+              <div key={i}>{String(i + 1).padStart(2, "0")}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error || bioSections.length === 0) {
+    return (
+      <div className="text-center py-10 mb-20">
+        <div className="text-red-500 text-lg">
+          {error || "No bio sections found"}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="grid md:grid-cols-[1fr_2fr] gap-8 mb-20">

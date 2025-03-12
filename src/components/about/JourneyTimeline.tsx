@@ -1,60 +1,107 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const journeyData = [
-  {
-    date: "2022 - Present",
-    title: "Bachelor of Computer Science & Engineering",
-    subtitle: "Sejong University, Seoul, KR",
-    description: "Expected to graduate in 2026.",
-    icon: "🎓",
-    tech: ["C", "C++", "Java", "Python"],
-  },
-  {
-    date: "2024.03 - 2024.06",
-    title: "Web Developer",
-    subtitle: "Sejong University, Seoul, KR",
-    description:
-      "Front End Development, Back End Development, Domain + Hosting Management",
-    link: "https://zdesigner-ai.vercel.app/",
-    icon: "💻",
-    tech: ["React", "Next.js", "TypeScript", "Tailwind"],
-  },
-  {
-    date: "2023.11 - 2023.12",
-    title: "Web Developer",
-    subtitle: "Essence School, Seoul, KR",
-    description:
-      "Front End Development, Back End Development, Admin Page Development, Domain + Hosting Management",
-    icon: "🌐",
-    tech: ["HTML", "CSS", "JavaScript", "PHP"],
-  },
-  {
-    date: "2023.09 - 2023.12",
-    title: "Web Developer",
-    subtitle: "POZITIV Denta, Samarkand, UZ",
-    description:
-      "Front End Development, Back End Development, Domain + Hosting Management",
-    link: "www.pozitiv-denta.uz",
-    icon: "🦷",
-    tech: ["HTML", "CSS", "JavaScript", "jQuery"],
-  },
-  {
-    date: "2022.05 - 2022.09",
-    title: "SMM Manager & Graphic Designer",
-    subtitle: "POZITIV Denta, Samarkand, UZ",
-    description:
-      "Social Media Management, Content Planning, Graphic Design, Bot Development",
-    icon: "🎨",
-    tech: ["Photoshop", "Illustrator", "Social Media", "Bot API"],
-  },
-];
+import { JourneyData } from "@/models/Journey"; // Update this path if needed
 
 export function JourneyTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [journeyData, setJourneyData] = useState<JourneyData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchJourneyData = async () => {
+      try {
+        setIsLoading(true);
+
+        const response = await fetch("/api/journey");
+
+        if (!response.ok) {
+          throw new Error(`Error fetching journey data: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setJourneyData(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch journey data:", err);
+        setError("Failed to load journey timeline. Please try again later.");
+        setIsLoading(false);
+      }
+    };
+
+    fetchJourneyData();
+  }, []);
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="relative mb-20">
+        <div className="flex items-center gap-3 mb-10 font-mono">
+          <span className="text-primary/50">{"/**"}</span>
+          <h3 className="text-2xl font-bold text-text-light">Journey.map()</h3>
+          <span className="text-primary/50">{"*/"}</span>
+        </div>
+
+        <div className="space-y-8">
+          {[1, 2, 3].map((item, index) => (
+            <div
+              key={index}
+              className="bg-dark-light/30 rounded-lg border border-primary/20 backdrop-blur-sm overflow-hidden animate-pulse"
+            >
+              <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 border-b border-primary/20">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+                </div>
+                <div className="flex-1 text-center font-mono text-sm text-primary/70">
+                  <div className="h-4 w-24 mx-auto bg-primary/20 rounded"></div>
+                </div>
+              </div>
+
+              <div className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <div className="h-6 w-6 bg-primary/20 rounded"></div>
+                  </div>
+
+                  <div className="flex-1 space-y-3">
+                    <div className="h-6 w-2/3 bg-primary/20 rounded"></div>
+                    <div className="h-4 w-1/2 bg-primary/10 rounded"></div>
+                    <div className="h-4 w-full bg-primary/5 rounded"></div>
+                    <div className="flex flex-wrap gap-2">
+                      {[1, 2, 3].map((tech, techIndex) => (
+                        <div
+                          key={techIndex}
+                          className="px-3 py-1 rounded-md bg-primary/5 border border-primary/20"
+                        >
+                          <div className="h-3 w-16 bg-primary/10 rounded"></div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || journeyData.length === 0) {
+    return (
+      <div className="relative mb-20 text-center py-10">
+        <div className="text-red-500 text-lg">
+          {error || "No journey data found"}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={containerRef} className="relative mb-20">

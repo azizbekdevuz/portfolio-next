@@ -2,10 +2,10 @@
 
 import { HeroSection } from "@/components/sections/HeroSection";
 import { AboutSection } from "@/components/sections/AboutSection";
-// import { SkillsSection } from '@/components/sections/SkillsSection'
+import { SkillsSection } from "@/components/sections/SkillsSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { InProgressSection } from "@/components/sections/InProgressSection";
-// import { ContactSection } from '@/components/sections/ContactSection'
+import { ContactSection } from "@/components/sections/ContactSection";
 
 export default function Home() {
   return (
@@ -18,19 +18,21 @@ export default function Home() {
         <AboutSection />
       </section>
 
-      {/* <section id="skills">
+      <section id="skills">
         <SkillsSection />
-      </section> */}
+      </section>
 
       <section id="projects">
         <ProjectsSection />
       </section>
 
+      <section id="contact">
+        <ContactSection />
+      </section>
+
       <section id="in-progress">
         <InProgressSection />
       </section>
-
-      {/* <ContactSection />  */}
     </main>
   );
 }
