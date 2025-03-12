@@ -4,6 +4,7 @@ import { ProgressProvider } from "@/components/providers/ProgressProvider";
 import { OptimizedCursor } from "@/components/ui/Cursor";
 import { BackgroundGradient } from "@/components/ui/BackgroundGradient";
 import { NavigationDots } from "@/components/navigation/NavigationDots";
+import { Analytics } from "@vercel/analytics/react"
 import { fonts } from "@/libs/fonts";
 import "./globals.css";
 
@@ -35,6 +36,7 @@ export default function RootLayout({
             <main className="relative min-h-screen">{children}</main>
           </ProgressProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
