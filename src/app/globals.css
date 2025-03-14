@@ -106,6 +106,17 @@
   .bg-gradient-radial {
     background-image: radial-gradient(var(--tw-gradient-stops));
   }
+  .optimize-animation {
+    will-change: transform, opacity;
+  }
+  
+  .reduce-motion {
+    @media (prefers-reduced-motion: reduce) {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+  }
 }
 
 /* Particle animations */

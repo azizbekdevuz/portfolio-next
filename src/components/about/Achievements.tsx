@@ -1,47 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Achievement } from "@/models/Achievement";
+import { AchievementsContext } from "../sections/AboutSection";
 
 export function Achievements() {
-  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  // Use context instead of fetching
+  const achievements = useContext(AchievementsContext);
+  
   const [activeCategory, setActiveCategory] = useState("");
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  
+  // Set the first category as active if we have data and no active category
+  if (achievements.length > 0 && activeCategory === "") {
+    setActiveCategory(achievements[0].id);
+  }
 
-  useEffect(() => {
-    const fetchAchievements = async () => {
-      try {
-        setIsLoading(true);
-
-        const response = await fetch("/api/achievements");
-
-        if (!response.ok) {
-          throw new Error(`Error fetching achievements: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setAchievements(data);
-
-        // Set the first category as active if we have data
-        if (data.length > 0) {
-          setActiveCategory(data[0].id);
-        }
-
-        setIsLoading(false);
-      } catch (err) {
-        console.error("Failed to fetch achievements:", err);
-        setError("Failed to load achievements. Please try again later.");
-        setIsLoading(false);
-      }
-    };
-
-    fetchAchievements();
-  }, []);
-
-  if (isLoading) {
+  // Show loading skeleton if no achievements yet
+  if (achievements.length === 0) {
     return (
       <div className="mb-20">
         <div className="flex items-center gap-3 mb-10 font-mono">
@@ -87,17 +63,6 @@ export function Achievements() {
               </div>
             </div>
           ))}
-        </div>
-      </div>
-    );
-  }
-
-  // Show error state
-  if (error || achievements.length === 0) {
-    return (
-      <div className="mb-20 text-center py-10">
-        <div className="text-red-500 text-lg">
-          {error || "No achievements found"}
         </div>
       </div>
     );

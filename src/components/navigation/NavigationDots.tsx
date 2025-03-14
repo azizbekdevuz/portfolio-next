@@ -61,7 +61,7 @@ export const NavigationDots = memo(function NavigationDots() {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
     >
-      {["hero", "about", "projects"].map((section) => (
+      {["hero", "about", "skills",  "projects", "contact", "in-progress"].map((section) => (
         <motion.a
           key={section}
           href={`#${section}`}

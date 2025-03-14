@@ -1,13 +1,35 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, createContext } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { InteractiveBio } from "../about/InteractiveBio";
 import { JourneyTimeline } from "../about/JourneyTimeline";
 import { TechStack } from "../about/TechStack";
 import { Achievements } from "../about/Achievements";
+import type { BioSection } from "@/models/Bio";
+import type { JourneyData } from "@/models/Journey";
+import type { TechCategory } from "@/models/TechStack";
+import type { Achievement } from "@/models/Achievement";
 
-export function AboutSection() {
+// Create context objects to help with the transition
+export const BioContext = createContext<BioSection[]>([]);
+export const JourneyContext = createContext<JourneyData[]>([]);
+export const TechStackContext = createContext<Record<string, TechCategory>>({});
+export const AchievementsContext = createContext<Achievement[]>([]);
+
+interface AboutSectionProps {
+  bioSections: BioSection[];
+  journeyData: JourneyData[];
+  techStack: Record<string, TechCategory>;
+  achievements: Achievement[];
+}
+
+export function AboutSection({ 
+  bioSections, 
+  journeyData, 
+  techStack, 
+  achievements 
+}: AboutSectionProps) {
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -36,33 +58,41 @@ export function AboutSection() {
       </div>
 
       {/* Main Content Container */}
-      <div className="relative z-10 container mx-auto px-4">
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-text-light mb-4">
-            About Me
-          </h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
-        </motion.div>
+      <BioContext.Provider value={bioSections}>
+        <JourneyContext.Provider value={journeyData}>
+          <TechStackContext.Provider value={techStack}>
+            <AchievementsContext.Provider value={achievements}>
+              <div className="relative z-10 container mx-auto px-4">
+                {/* Section Title */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="text-center mb-16"
+                >
+                  <h2 className="text-4xl md:text-5xl font-bold text-text-light mb-4">
+                    About Me
+                  </h2>
+                  <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
+                </motion.div>
 
-        {/* Interactive Bio */}
-        <InteractiveBio />
+                {/* Interactive Bio */}
+                <InteractiveBio />
 
-        {/* Journey Timeline */}
-        <JourneyTimeline />
+                {/* Journey Timeline */}
+                <JourneyTimeline />
 
-        {/* Tech Stack */}
-        <TechStack />
+                {/* Tech Stack */}
+                <TechStack />
 
-        {/* Achievements */}
-        <Achievements />
-      </div>
+                {/* Achievements */}
+                <Achievements />
+              </div>
+            </AchievementsContext.Provider>
+          </TechStackContext.Provider>
+        </JourneyContext.Provider>
+      </BioContext.Provider>
     </motion.section>
   );
 }

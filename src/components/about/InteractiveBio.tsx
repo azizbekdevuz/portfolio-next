@@ -1,46 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { motion } from "framer-motion";
-import { BioSection } from "@/models/Bio";
+import { BioContext } from "../sections/AboutSection";
 
 export function InteractiveBio() {
-  const [bioSections, setBioSections] = useState<BioSection[]>([]);
+  const bioSections = useContext(BioContext);
   const [activeSection, setActiveSection] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const error = null;
 
-  useEffect(() => {
-    const fetchBioSections = async () => {
-      try {
-
-        const response = await fetch("/api/bio");
-
-        if (!response.ok) {
-          throw new Error(`Error fetching bio sections: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setBioSections(data);
-
-        // Set the first section as active if we have data
-        if (data.length > 0) {
-          setActiveSection(data[0].id);
-        }
-
-        setIsLoading(false);
-      } catch (err) {
-        console.error("Failed to fetch bio sections:", err);
-        setError("Failed to load bio sections. Please try again later.");
-        setIsLoading(false);
-      }
-    };
-
-    fetchBioSections();
-  }, []);
+  if (bioSections.length > 0 && activeSection === "") {
+    setActiveSection(bioSections[0].id);
+  }
 
   // Show loading skeleton
-  if (isLoading) {
+  if (bioSections.length === 0) {
     return (
       <div className="grid md:grid-cols-[1fr_2fr] gap-8 mb-20">
         {/* Navigation Cards Loading */}

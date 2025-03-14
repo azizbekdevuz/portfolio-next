@@ -1,42 +1,19 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { JourneyData } from "@/models/Journey"; // Update this path if needed
+import { JourneyContext } from "../sections/AboutSection";
 
 export function JourneyTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const error = null;
+
+  const journeyData = useContext(JourneyContext);
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [journeyData, setJourneyData] = useState<JourneyData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchJourneyData = async () => {
-      try {
-        setIsLoading(true);
-
-        const response = await fetch("/api/journey");
-
-        if (!response.ok) {
-          throw new Error(`Error fetching journey data: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setJourneyData(data);
-        setIsLoading(false);
-      } catch (err) {
-        console.error("Failed to fetch journey data:", err);
-        setError("Failed to load journey timeline. Please try again later.");
-        setIsLoading(false);
-      }
-    };
-
-    fetchJourneyData();
-  }, []);
 
   // Loading state
-  if (isLoading) {
+  if (journeyData.length === 0) {
     return (
       <div className="relative mb-20">
         <div className="flex items-center gap-3 mb-10 font-mono">

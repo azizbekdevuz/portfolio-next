@@ -1,52 +1,28 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import ProjectPreview from "../projects/ProjectPreview";
 import { Project } from "../../models/Project";
 
-export function ProjectsSection() {
-  const [projects, setProjects] = useState<Project[]>([]);
+interface ProjectsSectionProps {
+  projects: Project[];
+}
+
+export function ProjectsSection({ projects }: ProjectsSectionProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isExplorerOpen, setIsExplorerOpen] = useState(true);
   const containerRef = useRef<HTMLElement>(null);
   type ViewType = "code" | "preview";
   const [activeView, setActiveView] = useState<ViewType>("code");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-
-        const response = await fetch("/api/projects");
-
-        if (!response.ok) {
-          throw new Error(`Error fetching projects: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setProjects(data);
-
-        // Initialize the selected project with the first project
-        if (data.length > 0) {
-          setSelectedProject(data[0]);
-        }
-
-        setIsLoading(false);
-      } catch (err) {
-        console.error("Failed to fetch projects:", err);
-        setError("Failed to load projects. Please try again later.");
-        setIsLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, []);
+  if (projects.length > 0 && !selectedProject) {
+    setSelectedProject(projects[0]);
+  }
 
   // Show loading state
-  if (isLoading) {
+  if (projects.length === 0) {
     return (
       <section id="projects" className="relative min-h-screen py-20">
         <div className="relative z-10 container mx-auto px-4">
@@ -84,15 +60,13 @@ export function ProjectsSection() {
   }
 
   // Show error state
-  if (error || !selectedProject) {
+  if (!selectedProject) {
     return (
       <section
         id="projects"
         className="relative min-h-screen py-20 flex items-center justify-center"
       >
-        <div className="text-red-500 text-lg">
-          {error || "No projects found"}
-        </div>
+        <div className="text-red-500 text-lg">No projects found</div>
       </section>
     );
   }

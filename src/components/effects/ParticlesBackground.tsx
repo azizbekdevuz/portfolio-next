@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import { motion, MotionValue } from "framer-motion";
+import { motion, MotionValue, useReducedMotion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 interface Particle {
   id: number;
@@ -20,11 +21,36 @@ interface Props {
 export function ParticlesBackground({}: Props) {
   const [mounted, setMounted] = useState(false);
   const particlesRef = useRef<Particle[]>([]);
+  const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Use Intersection Observer to check if component is in viewport
+  const { ref: inViewRef, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: false
+  });
 
-  // Generate deterministic particles for SSR
+  // Determine device type based on screen width
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+
+  // Generate particles based on device and preferences
   const generateInitialParticles = useCallback(() => {
+    // Fewer particles on mobile
+    const particleCount = isMobile ? 25 : 50;
+    
     const particles: Particle[] = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < particleCount; i++) {
       particles.push({
         id: i,
         x: (i * 2) % 100, // Deterministic x position
@@ -35,27 +61,39 @@ export function ParticlesBackground({}: Props) {
       });
     }
     return particles;
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
-    // Only randomize on client side after mount
-    particlesRef.current = particlesRef.current.map((particle) => ({
-      ...particle,
-      x: Math.floor(Math.random() * 100),
-      y: Math.floor(Math.random() * 100),
-      opacity: Number((Math.random() * 0.5 + 0.2).toFixed(2)),
-      speed: Number((Math.random() * 0.5 + 0.5).toFixed(2)),
-    }));
+    // Regenerate particles when mobile status changes
+    particlesRef.current = generateInitialParticles();
+    
+    // Only randomize on client side after mount if animation is allowed
+    if (!prefersReducedMotion) {
+      particlesRef.current = particlesRef.current.map((particle) => ({
+        ...particle,
+        x: Math.floor(Math.random() * 100),
+        y: Math.floor(Math.random() * 100),
+        opacity: Number((Math.random() * 0.5 + 0.2).toFixed(2)),
+        speed: Number((Math.random() * 0.5 + 0.5).toFixed(2)),
+      }));
+    }
+    
     setMounted(true);
-  }, []);
+  }, [generateInitialParticles, prefersReducedMotion]);
 
-  // Initialize with deterministic values
+  // Initialize with deterministic values if needed
   if (!particlesRef.current.length) {
     particlesRef.current = generateInitialParticles();
   }
 
+  // Determine if animation should run
+  const shouldAnimate = mounted && inView && !prefersReducedMotion;
+
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div 
+      ref={inViewRef} 
+      className="absolute inset-0 overflow-hidden"
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-dark-light/20 via-dark to-dark-light/20" />
 
       {particlesRef.current.map((particle) => (
@@ -69,19 +107,29 @@ export function ParticlesBackground({}: Props) {
             top: `${particle.y}%`,
             opacity: particle.opacity,
           }}
-          animate={{
-            x: mounted ? [0, 20, 0] : 0,
-            y: mounted ? [0, 20, 0] : 0,
-            opacity: mounted
-              ? [particle.opacity, particle.opacity * 0.5, particle.opacity]
-              : particle.opacity,
-          }}
-          transition={{
-            duration: 3 / particle.speed,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: particle.id * 0.1,
-          }}
+          animate={
+            shouldAnimate
+              ? {
+                  x: [0, 20, 0],
+                  y: [0, 20, 0],
+                  opacity: [
+                    particle.opacity,
+                    particle.opacity * 0.5,
+                    particle.opacity,
+                  ],
+                }
+              : {}
+          }
+          transition={
+            shouldAnimate
+              ? {
+                  duration: 3 / particle.speed,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: particle.id * 0.1,
+                }
+              : {}
+          }
         />
       ))}
 

@@ -1,49 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { TechCategory } from "@/models/TechStack";
+import { TechStackContext } from "../sections/AboutSection";
 
 export function TechStack() {
-  const [techStack, setTechStack] = useState<Record<string, TechCategory>>({});
+  const techStack = useContext(TechStackContext);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const error = null;
 
-  useEffect(() => {
-    const fetchTechStack = async () => {
-      try {
-        setIsLoading(true);
-
-        const response = await fetch("/api/techstack");
-
-        if (!response.ok) {
-          throw new Error(`Error fetching tech stack: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setTechStack(data);
-
-        // Set first category as selected if we have data
-        if (Object.keys(data).length > 0) {
-          setSelectedCategory(Object.keys(data)[0]);
-        }
-
-        setIsLoading(false);
-      } catch (err) {
-        console.error("Failed to fetch tech stack:", err);
-        setError("Failed to load tech stack. Please try again later.");
-        setIsLoading(false);
-      }
-    };
-
-    fetchTechStack();
-  }, []);
+  if (Object.keys(techStack).length > 0 && selectedCategory === "") {
+    setSelectedCategory(Object.keys(techStack)[0]);
+  }
 
   // Loading state
-  if (isLoading) {
+  if (Object.keys(techStack).length === 0) {
     return (
       <div className="mb-20">
         <div className="flex items-center gap-3 mb-10 font-mono">
