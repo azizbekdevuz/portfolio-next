@@ -61,20 +61,22 @@ export const NavigationDots = memo(function NavigationDots() {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
     >
-      {["hero", "about", "skills",  "projects", "contact", "in-progress"].map((section) => (
-        <motion.a
-          key={section}
-          href={`#${section}`}
-          onClick={(e) => handleClick(e, section)}
-          className={`w-3 h-3 rounded-full transition-all duration-200 ${
-            activeSection === section
-              ? "bg-primary scale-125"
-              : "bg-white/20 hover:bg-white/40"
-          }`}
-          whileHover={{ scale: 1.2 }}
-          whileTap={{ scale: 0.9 }}
-        />
-      ))}
+      {["hero", "about", "skills", "projects", "contact", "in-progress"].map(
+        (section) => (
+          <motion.a
+            key={section}
+            href={`#${section}`}
+            onClick={(e) => handleClick(e, section)}
+            className={`w-3 h-3 rounded-full transition-all duration-200 ${
+              activeSection === section
+                ? "bg-primary scale-125"
+                : "bg-white/20 hover:bg-white/40"
+            }`}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+          />
+        ),
+      )}
     </motion.div>
   );
 });

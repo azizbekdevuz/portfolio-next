@@ -24,17 +24,18 @@ const skillNodes: SkillNode[] = [
     id: "webdev",
     title: "Web Development",
     icon: "💻",
-    description: "Full-stack development specializing in modern web technologies and AI integration",
+    description:
+      "Full-stack development specializing in modern web technologies and AI integration",
     tools: [
-      "React", 
-      "Next.js", 
+      "React",
+      "Next.js",
       "TypeScript",
       "Node.js",
       "TailwindCSS",
       "Framer Motion",
       "Three.js",
       "AWS",
-      "Docker"
+      "Docker",
     ],
     experience: "2+ years",
     projects: ["ZDesigner AI", "Professor Website", "Portfolio"],
@@ -47,23 +48,24 @@ const skillNodes: SkillNode[] = [
         { name: "GitHub", icon: "/icons/github.svg" },
         { name: "Docker", icon: "/icons/docker.svg" },
         { name: "Vercel", icon: "/icons/vercel.svg" },
-        { name: "AWS", icon: "/icons/aws.svg" }
+        { name: "AWS", icon: "/icons/aws.svg" },
       ],
-      environment: "Modern Development Setup"
-    }
+      environment: "Modern Development Setup",
+    },
   },
   {
     id: "design",
     title: "Graphic Design",
     icon: "🎨",
-    description: "Creative visual design focusing on brand identity, UI/UX, and marketing materials",
+    description:
+      "Creative visual design focusing on brand identity, UI/UX, and marketing materials",
     tools: [
       "Adobe Photoshop",
       "Adobe Illustrator",
       "Figma",
       "UI/UX Design",
       "Brand Design",
-      "Social Media Graphics"
+      "Social Media Graphics",
     ],
     experience: "1+ year",
     projects: ["POZITIV Denta Branding", "Social Media Designs"],
@@ -72,23 +74,24 @@ const skillNodes: SkillNode[] = [
       tools: [
         { name: "Photoshop", icon: "/icons/photoshop.svg" },
         { name: "Illustrator", icon: "/icons/illustrator.svg" },
-        { name: "Figma", icon: "/icons/figma.svg" }
+        { name: "Figma", icon: "/icons/figma.svg" },
       ],
-      environment: "Creative Workspace"
-    }
+      environment: "Creative Workspace",
+    },
   },
   {
     id: "smm",
     title: "Social Media Management",
     icon: "📱",
-    description: "Strategic social media management focusing on growth and engagement",
+    description:
+      "Strategic social media management focusing on growth and engagement",
     tools: [
       "Content Strategy",
       "Analytics",
       "Community Management",
       "Campaign Planning",
       "Growth Hacking",
-      "Engagement Optimization"
+      "Engagement Optimization",
     ],
     experience: "1 year",
     projects: ["POZITIV Denta SMM", "Personal Brand Management"],
@@ -98,23 +101,24 @@ const skillNodes: SkillNode[] = [
         { name: "Analytics", icon: "/icons/analytics.svg" },
         { name: "Telegram", icon: "/icons/telegram.svg" },
         { name: "Instagram", icon: "/icons/instagram.svg" },
-        { name: "Facebook", icon: "/icons/facebook.svg"}
+        { name: "Facebook", icon: "/icons/facebook.svg" },
       ],
-      environment: "Digital Marketing Hub"
-    }
+      environment: "Digital Marketing Hub",
+    },
   },
   {
     id: "english",
     title: "English Tutoring",
     icon: "📚",
-    description: "Personalized English language instruction focusing on practical communication skills",
+    description:
+      "Personalized English language instruction focusing on practical communication skills",
     tools: [
       "IELTS Preparation",
       "Business English",
       "Conversational English",
       "Grammar & Vocabulary",
       "Pronunciation",
-      "Academic Writing"
+      "Academic Writing",
     ],
     experience: "1 year",
     projects: ["Private Tutoring", "Group Classes"],
@@ -122,11 +126,11 @@ const skillNodes: SkillNode[] = [
       title: "Virtual Classroom",
       tools: [
         { name: "Zoom", icon: "/icons/zoom.svg" },
-        { name: "Google Classroom", icon: "/icons/classroom.svg" }
+        { name: "Google Classroom", icon: "/icons/classroom.svg" },
       ],
-      environment: "Interactive Learning Space"
-    }
-  }
+      environment: "Interactive Learning Space",
+    },
+  },
 ];
 
 export function SkillsSection() {
@@ -136,7 +140,7 @@ export function SkillsSection() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const activeNode = skillNodes.find(node => node.id === activeSkill);
+  const activeNode = skillNodes.find((node) => node.id === activeSkill);
 
   // Mouse movement effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -168,7 +172,7 @@ export function SkillsSection() {
             transformPerspective: 1000,
           }}
         />
-        
+
         {/* Dynamic Glow Effect */}
         <motion.div
           className="absolute blur-[100px] rounded-full bg-primary/20"
@@ -198,7 +202,7 @@ export function SkillsSection() {
             <span className="text-primary/50">extends</span>
             <span className="text-text-light">Expertise</span>
           </div>
-          <motion.div 
+          <motion.div
             className="h-1 w-20 bg-primary rounded-full"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
@@ -219,9 +223,11 @@ export function SkillsSection() {
                 transition={{ delay: index * 0.1 }}
                 className={`w-full p-6 rounded-lg text-left transition-all duration-300
                            border group relative overflow-hidden
-                           ${activeSkill === node.id 
-                             ? "border-primary bg-primary/10" 
-                             : "border-primary/20 hover:border-primary/50"}`}
+                           ${
+                             activeSkill === node.id
+                               ? "border-primary bg-primary/10"
+                               : "border-primary/20 hover:border-primary/50"
+                           }`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -230,12 +236,18 @@ export function SkillsSection() {
                   <div className="flex items-center gap-4 mb-3">
                     <span className="text-3xl">{node.icon}</span>
                     <div>
-                      <h3 className="text-xl text-text-light font-medium">{node.title}</h3>
-                      <span className="text-primary text-sm">{node.experience}</span>
+                      <h3 className="text-xl text-text-light font-medium">
+                        {node.title}
+                      </h3>
+                      <span className="text-primary text-sm">
+                        {node.experience}
+                      </span>
                     </div>
                   </div>
-                  <p className="text-text-secondary text-sm mb-3">{node.description}</p>
-                  
+                  <p className="text-text-secondary text-sm mb-3">
+                    {node.description}
+                  </p>
+
                   {/* Mini Tools Preview */}
                   <div className="flex flex-wrap gap-2">
                     {node.tools.slice(0, 3).map((tool) => (
@@ -287,7 +299,7 @@ export function SkillsSection() {
                           backdrop-blur-sm relative overflow-hidden"
               >
                 {/* Workspace Section */}
-                <motion.div 
+                <motion.div
                   className="mb-8"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -295,7 +307,7 @@ export function SkillsSection() {
                   <h3 className="text-2xl text-text-light mb-6 font-medium">
                     {activeNode.workspace.title}
                   </h3>
-                  
+
                   {/* Tools Grid */}
                   <div className="grid grid-cols-3 md:grid-cols-5 gap-4">
                     {activeNode.workspace.tools.map((tool, index) => (
@@ -339,7 +351,9 @@ export function SkillsSection() {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
                     >
-                      <h4 className="text-text-light mb-3">Featured Projects</h4>
+                      <h4 className="text-text-light mb-3">
+                        Featured Projects
+                      </h4>
                       <div className="flex flex-wrap gap-3">
                         {activeNode.projects.map((project) => (
                           <div
@@ -376,12 +390,16 @@ export function SkillsSection() {
                 </div>
 
                 {/* Decorative Elements */}
-                <div className="absolute top-0 right-0 w-64 h-64 opacity-10
+                <div
+                  className="absolute top-0 right-0 w-64 h-64 opacity-10
                               bg-gradient-conic from-primary via-transparent to-transparent
-                              blur-3xl" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 opacity-10
+                              blur-3xl"
+                />
+                <div
+                  className="absolute bottom-0 left-0 w-64 h-64 opacity-10
                               bg-gradient-conic from-transparent via-primary to-transparent
-                              blur-3xl" />
+                              blur-3xl"
+                />
               </motion.div>
             )}
           </AnimatePresence>

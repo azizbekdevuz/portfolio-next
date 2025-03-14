@@ -24,11 +24,11 @@ interface AboutSectionProps {
   achievements: Achievement[];
 }
 
-export function AboutSection({ 
-  bioSections, 
-  journeyData, 
-  techStack, 
-  achievements 
+export function AboutSection({
+  bioSections,
+  journeyData,
+  techStack,
+  achievements,
 }: AboutSectionProps) {
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({

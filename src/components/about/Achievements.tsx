@@ -7,10 +7,10 @@ import { AchievementsContext } from "../sections/AboutSection";
 export function Achievements() {
   // Use context instead of fetching
   const achievements = useContext(AchievementsContext);
-  
+
   const [activeCategory, setActiveCategory] = useState("");
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  
+
   // Set the first category as active if we have data and no active category
   if (achievements.length > 0 && activeCategory === "") {
     setActiveCategory(achievements[0].id);

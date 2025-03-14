@@ -34,14 +34,15 @@ npm install
 
 ### 3️⃣ Setup Environment Variables
 
-| File          | Action                                |
-|--------------|--------------------------------|
-| `.env.example` | **Rename** to `.env.local` |
-| `.env.local`  | **Update only the values**, but do not change key names |
+| File           | Action                                                  |
+| -------------- | ------------------------------------------------------- |
+| `.env.example` | **Rename** to `.env.local`                              |
+| `.env.local`   | **Update only the values**, but do not change key names |
 
 📌 **Important:** The database settings are now component-based, meaning the page renders and displays data dynamically from MongoDB.
 
 To rename the file in a terminal:
+
 ```sh
 mv .env.example .env.local
 ```

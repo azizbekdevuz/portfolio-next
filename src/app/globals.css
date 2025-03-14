@@ -109,7 +109,7 @@
   .optimize-animation {
     will-change: transform, opacity;
   }
-  
+
   .reduce-motion {
     @media (prefers-reduced-motion: reduce) {
       animation: none !important;

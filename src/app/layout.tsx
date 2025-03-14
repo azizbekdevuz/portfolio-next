@@ -4,7 +4,7 @@ import { ProgressProvider } from "@/components/providers/ProgressProvider";
 import { OptimizedCursor } from "@/components/ui/Cursor";
 import { BackgroundGradient } from "@/components/ui/BackgroundGradient";
 import { NavigationDots } from "@/components/navigation/NavigationDots";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 import { fonts } from "@/libs/fonts";
 import "./globals.css";
 
