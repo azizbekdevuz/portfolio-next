@@ -179,15 +179,18 @@ export function ContactSection() {
       <div className="relative z-10 container mx-auto px-4">
         {/* Section Title */}
         <motion.div
-          className="flex items-center gap-3 mb-16"
+          className="flex flex-col items-center gap-3 mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
+        <div className="flex items-center gap-3 mb-4 font-mono">
           <span className="text-primary/50">class</span>
           <h2 className="text-4xl font-bold text-text-light">ContactMatrix</h2>
-          <span className="text-primary/50">extends Connection</span>
-        </motion.div>
+          <span className="text-primary/50">extends</span>
+          <span className="text-text-light">Connection</span>
+        </div>
+      </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Contact Card */}

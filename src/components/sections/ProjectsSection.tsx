@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, memo } from "react";
+import { useState, useRef, useCallback, memo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import ProjectPreview from "../projects/ProjectPreview";
@@ -110,6 +110,16 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
   const containerRef = useRef<HTMLElement>(null);
   type ViewType = "code" | "preview";
   const [activeView, setActiveView] = useState<ViewType>("code");
+  // Add this to track if the component has mounted
+  const [hasMounted, setHasMounted] = useState(false);
+
+  // Use useEffect to initialize the selected project after mounting
+  useEffect(() => {
+    setHasMounted(true);
+    if (projects.length > 0 && !selectedProject) {
+      setSelectedProject(projects[0]);
+    }
+  }, [projects, selectedProject]);
 
   // Memoized handlers for better performance
   const toggleExplorer = useCallback(() => {
@@ -120,13 +130,8 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
     setActiveView(view);
   }, []);
 
-  // Initialize selected project if none is selected and projects exist
-  if (projects.length > 0 && !selectedProject) {
-    setSelectedProject(projects[0]);
-  }
-
-  // Show loading state - optimized with fewer elements
-  if (projects.length === 0) {
+  // Show loading state if not mounted yet or no projects
+  if (!hasMounted || projects.length === 0) {
     return (
       <section id="projects" className="relative min-h-screen py-20">
         <div className="relative z-10 container mx-auto px-4">
@@ -181,15 +186,36 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      {/* Background Elements - optimized for performance */}
+      {/* Background Elements - using suppressHydrationWarning on potentially problematic divs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(20,157,221,0.05),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(20,157,221,0.05),transparent)]" suppressHydrationWarning />
         <div 
           className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)]
                      bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)]
                      opacity-50"
+          suppressHydrationWarning
         />
       </div>
+
+      <motion.div
+        className="flex flex-col items-center mb-16"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <div className="flex items-center gap-3 mb-4 font-mono">
+          <span className="text-primary/50">class</span>
+          <h2 className="text-4xl font-bold text-text-light">PortfolioMatrix</h2>
+          <span className="text-primary/50">extends</span>
+          <span className="text-text-light">Work</span>
+        </div>
+        <motion.div
+          className="h-1 w-20 bg-primary rounded-full"
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+        />
+      </motion.div>
 
       {/* VS Code-style Editor Layout */}
       <div className="relative z-10 container mx-auto px-4 overflow-hidden">

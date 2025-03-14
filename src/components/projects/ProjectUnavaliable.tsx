@@ -10,18 +10,32 @@ const glitchText = [
 
 export default function ProjectUnavailable() {
   const [glitchIndex, setGlitchIndex] = useState(0);
+  // Add client-side only rendering flag
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // Set mounted flag
+    setIsMounted(true);
+    
     const interval = setInterval(() => {
       setGlitchIndex((prev) => (prev + 1) % glitchText.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
 
+  // Server-side fallback
+  if (!isMounted) {
+    return (
+      <div className="relative w-full h-full bg-dark/80 rounded-lg overflow-hidden flex items-center justify-center">
+        <div className="text-primary">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full h-full bg-dark/80 rounded-lg overflow-hidden">
       {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-20" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-20" suppressHydrationWarning />
 
       {/* Scanning Line Effect */}
       <motion.div
@@ -87,31 +101,33 @@ export default function ProjectUnavailable() {
           Check back later for updates.
         </p>
 
-        {/* Binary Rain Effect */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(10)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-primary/10 text-xs font-mono whitespace-nowrap"
-              initial={{
-                x: `${Math.random() * 100}%`,
-                y: -20,
-                opacity: 0,
-              }}
-              animate={{
-                y: "100%",
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: 2 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            >
-              {Math.random().toString(2).slice(2, 10)}
-            </motion.div>
-          ))}
-        </div>
+        {/* Binary Rain Effect - only rendered client-side */}
+        {isMounted && (
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {[...Array(10)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute text-primary/10 text-xs font-mono whitespace-nowrap"
+                initial={{
+                  x: `${Math.random() * 100}%`,
+                  y: -20,
+                  opacity: 0,
+                }}
+                animate={{
+                  y: "100%",
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 2 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                }}
+              >
+                {Math.random().toString(2).slice(2, 10)}
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

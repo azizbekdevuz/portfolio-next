@@ -173,17 +173,59 @@ export function InProgressSection() {
       <div className="relative z-10 container mx-auto px-4">
         {/* Section Title */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+  viewport={{ once: true }}
+  className="mb-16"
+>
+  <div className="flex flex-col items-center relative">
+    {/* Title with minimal animation */}
+    <div className="flex items-center flex-col">
+      <h2 className="text-4xl md:text-5xl font-bold text-text-light mb-5 relative flex items-center">
+        <span className="text-primary/70">[</span>
+        <span>Digital Ecosystem</span>
+        <span className="text-primary/70">]</span>
+        {/* Single blinking cursor - low performance impact */}
+        <motion.span 
+          className="ml-1 text-primary"
+          animate={{ opacity: [1, 0] }}
+          transition={{ 
+            repeat: Infinity, 
+            repeatType: "reverse", 
+            duration: 0.8,
+            repeatDelay: 0.2 
+          }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-text-light mb-4">
-            Digital Ecosystem in Development
-          </h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
-        </motion.div>
+          _
+        </motion.span>
+      </h2>
+      
+      {/* Simple Progress Bar - uses CSS instead of motion animations where possible */}
+      <div className="w-64 h-2 bg-dark-light/50 rounded-full overflow-hidden">
+        <div className="h-full bg-gradient-to-r from-primary/80 to-primary rounded-full w-2/3 relative">
+          {/* Single shimmer effect instead of continuous animation */}
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            initial={{ x: "-100%" }}
+            animate={{ x: "100%" }}
+            transition={{ 
+              repeat: Infinity, 
+              duration: 2,
+              repeatDelay: 2
+            }}
+          />
+        </div>
+      </div>
+      
+      {/* Status Text - static with minimal animation */}
+      <div className="mt-3 font-mono text-sm text-text-secondary flex items-center gap-2">
+        <span className="text-primary">●</span>
+        <span>In Development • 67% Complete</span>
+      </div>
+    </div>
+  </div>
+</motion.div>
 
         {/* Interactive Construction Metaphor */}
         <div className="relative max-w-6xl mx-auto">

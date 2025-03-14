@@ -13,12 +13,26 @@ export default function ProjectPreview({
 }: ProjectPreviewProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  // Add client-side only rendering flag
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // Set mounted state
+    setIsMounted(true);
+    
     // Reset states when liveLink changes
     setIsLoading(true);
     setHasError(false);
   }, [liveLink]);
+
+  // Don't render anything on the server
+  if (!isMounted) {
+    return (
+      <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-primary/20 bg-dark/80 flex items-center justify-center">
+        <div className="text-text-secondary">Loading preview...</div>
+      </div>
+    );
+  }
 
   if (!liveLink) {
     return <ProjectUnavailable />;
@@ -105,18 +119,20 @@ export default function ProjectPreview({
         )}
       </AnimatePresence>
 
-      {/* iframe */}
-      <iframe
-        src={liveLink}
-        title={`${title} preview`}
-        className="w-full h-full bg-white"
-        sandbox="allow-scripts allow-same-origin"
-        onLoad={() => setIsLoading(false)}
-        onError={() => {
-          setIsLoading(false);
-          setHasError(true);
-        }}
-      />
+      {/* iframe - only rendered on client side now */}
+      {isMounted && (
+        <iframe
+          src={liveLink}
+          title={`${title} preview`}
+          className="w-full h-full bg-white"
+          sandbox="allow-scripts allow-same-origin"
+          onLoad={() => setIsLoading(false)}
+          onError={() => {
+            setIsLoading(false);
+            setHasError(true);
+          }}
+        />
+      )}
     </div>
   );
 }

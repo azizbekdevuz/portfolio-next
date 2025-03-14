@@ -65,17 +65,25 @@ export function AboutSection({
               <div className="relative z-10 container mx-auto px-4">
                 {/* Section Title */}
                 <motion.div
+                  className="flex flex-col items-center mb-16"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
-                  className="text-center mb-16"
                 >
-                  <h2 className="text-4xl md:text-5xl font-bold text-text-light mb-4">
-                    About Me
-                  </h2>
-                  <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
+                  <div className="flex items-center gap-3 mb-4 font-mono">
+                    <span className="text-primary/50">class</span>
+                    <h2 className="text-4xl font-bold text-text-light">AboutMe</h2>
+                    <span className="text-primary/50">extends</span>
+                    <span className="text-text-light">Story</span>
+                  </div>
+                  <motion.div
+                    className="h-1 w-20 bg-primary rounded-full"
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                  />
                 </motion.div>
+                  <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
 
                 {/* Interactive Bio */}
                 <InteractiveBio />
