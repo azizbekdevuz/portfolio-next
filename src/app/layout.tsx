@@ -5,6 +5,7 @@ import { OptimizedCursor } from "@/components/ui/Cursor";
 import { BackgroundGradient } from "@/components/ui/BackgroundGradient";
 import { NavigationDots } from "@/components/navigation/NavigationDots";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { fonts } from "@/libs/fonts";
 import "./globals.css";
 
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={fonts} suppressHydrationWarning>
       <body className="bg-light dark:bg-dark text-text-primary dark:text-text-light">
+      <SpeedInsights />
         <ThemeProvider>
           <ProgressProvider>
             {/* Custom cursor */}
