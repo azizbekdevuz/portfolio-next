@@ -10,6 +10,8 @@ export interface Project {
   githubLink?: string;
   codeSnippet: string;
   mockupImage: string;
+  imageUrl?: string;
+  category?: string;
 }
 
 // This is the type for the database document
