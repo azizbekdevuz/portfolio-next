@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { ProgressProvider } from "@/components/providers/ProgressProvider";
 import { OptimizedCursor } from "@/components/ui/Cursor";
 import { BackgroundGradient } from "@/components/ui/BackgroundGradient";
 import { NavigationDots } from "@/components/navigation/NavigationDots";
@@ -24,7 +23,6 @@ export default function RootLayout({
       <body className="bg-light dark:bg-dark text-text-primary dark:text-text-light">
       <SpeedInsights />
         <ThemeProvider>
-          <ProgressProvider>
             {/* Custom cursor */}
             <OptimizedCursor />
 
@@ -36,7 +34,6 @@ export default function RootLayout({
 
             {/* Main content */}
             <main className="relative min-h-screen">{children}</main>
-          </ProgressProvider>
         </ThemeProvider>
         <Analytics />
       </body>

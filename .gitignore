@@ -3,6 +3,9 @@
 #IDE
 .vscode/
 
+#dist
+**/dist/
+
 # dependencies
 /node_modules
 /.pnp
