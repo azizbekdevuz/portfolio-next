@@ -6,9 +6,45 @@ import { Analytics } from "@vercel/analytics/react";
 import { fonts } from "@/libs/fonts";
 import "./globals.css";
 
+const siteUrl = "https://portfolio-next-silk-two.vercel.app/";
+
 export const metadata: Metadata = {
   title: "Portfolio - Azizbek Arzikulov",
-  description: "Web Developer portfolio showcasing projects and skills",
+  description: "Web Developer portfolio showcasing projects and skills in React, Next.js, and UI/UX design",
+  metadataBase: new URL(siteUrl),
+  
+  // Open Graph metadata
+  openGraph: {
+    type: "website",
+    countryName: "South Korea",
+    locale: "en_US",
+    url: siteUrl,
+    title: "Azizbek Arzikulov - Web Developer Portfolio",
+    description: "Experienced web developer specializing in React, Next.js, and modern web technologies",
+    siteName: "Azizbek Arzikulov Portfolio",
+    images: [
+      {
+        url: "/assets/img/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Azizbek Arzikulov - Web Developer Portfolio",
+      },
+    ],
+  },
+  
+  // Twitter metadata
+  twitter: {
+    card: "summary_large_image",
+    title: "Azizbek Arzikulov - Web Developer Portfolio",
+    description: "Experienced web developer specializing in React, Next.js, and modern web technologies",
+    images: ["/assets/img/twitter-image.png"],
+  },
+  
+  // Additional metadata
+  keywords: ["web developer", "React", "Next.js", "portfolio", "Azizbek Arzikulov", "frontend developer"],
+  authors: [{ name: "Azizbek Arzikulov" }],
+  creator: "Azizbek Arzikulov",
+  publisher: "Azizbek Arzikulov",
 };
 
 export const viewport: Viewport = {
