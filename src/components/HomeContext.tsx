@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 import { HeroSkeleton, ProjectsSkeleton, SkillsSkeleton, ContactSkeleton, InProgressSkeleton, AboutSkeleton } from "@/components/skeletons/SectionSkeletons";
-import { PullToRefresh } from "@/components/ui/PullToRefresh";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 // ✅ Import the correct types from the models
@@ -33,9 +32,7 @@ function HomeContent({ data }: { data: HomeData }) {
   const { isMobile } = useDeviceDetection();
 
   return isMobile ? (
-    <PullToRefresh>
       <MainContent data={data} />
-    </PullToRefresh>
   ) : (
     <MainContent data={data} />
   );
