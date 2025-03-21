@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { memo } from "react";
 import {
   motion,
@@ -17,6 +17,7 @@ import { CountUpValue } from "../ui/CountUpValue";
 import { IDETagline } from "../ui/IDETagline";
 import { MobileInteractiveProfile } from "../ui/MobileInteractiveProfile";
 import { MobileIDETagline } from "../ui/MobileIDETagline";
+import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 
 const ExploreButton = memo(function ExploreButton() {
   const handleClick = () => {
@@ -62,23 +63,7 @@ export function HeroSection() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isProfileHovered, setIsProfileHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  
-  // Use a standard breakpoint of 768px (md in Tailwind)
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    // Initial check
-    checkScreenSize();
-    
-    // Add event listener for resize
-    window.addEventListener('resize', checkScreenSize);
-    
-    // Cleanup
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
+  const {isMobile} = useDeviceDetection();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, createContext, useState, useEffect } from "react";
+import { useRef, createContext } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { InteractiveBio } from "../about/InteractiveBio";
 import { JourneyTimeline } from "../about/JourneyTimeline";
@@ -14,6 +14,7 @@ import type { BioSection } from "@/models/Bio";
 import type { JourneyData } from "@/models/Journey";
 import type { TechCategory } from "@/models/TechStack";
 import type { Achievement } from "@/models/Achievement";
+import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 
 // Create context objects to help with the transition
 export const BioContext = createContext<BioSection[]>([]);
@@ -35,23 +36,7 @@ export function AboutSection({
   achievements,
 }: AboutSectionProps) {
   const containerRef = useRef<HTMLElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-  
-  // Check if the screen size is mobile
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    // Initial check
-    checkScreenSize();
-    
-    // Add event listener for resize
-    window.addEventListener('resize', checkScreenSize);
-    
-    // Cleanup
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
+  const { isMobile } = useDeviceDetection();
   
   const { scrollYProgress } = useScroll({
     target: containerRef,

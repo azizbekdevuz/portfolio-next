@@ -9,6 +9,8 @@ export const useDeviceDetection = () => {
     const checkDevice = () => {
       setIsMobile(window.innerWidth < 768); // Standard md breakpoint
     };
+
+    checkDevice();
     
     // Only run on client-side
     if (typeof window !== "undefined") {

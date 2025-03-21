@@ -3,135 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 import Image from "next/image";
-
-interface SkillNode {
-  id: string;
-  title: string;
-  icon: string;
-  description: string;
-  tools: string[];
-  experience: string;
-  projects?: string[];
-  workspace: {
-    title: string;
-    tools: { name: string; icon: string }[];
-    environment: string;
-  };
-}
-
-const skillNodes: SkillNode[] = [
-  {
-    id: "webdev",
-    title: "Web Development",
-    icon: "💻",
-    description:
-      "Full-stack development specializing in modern web technologies and AI integration",
-    tools: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "Node.js",
-      "TailwindCSS",
-      "Framer Motion",
-      "Three.js",
-      "AWS",
-      "Docker",
-    ],
-    experience: "2+ years",
-    projects: ["ZDesigner AI", "Professor Website", "Portfolio"],
-    workspace: {
-      title: "Development Environment",
-      tools: [
-        { name: "React", icon: "/icons/react.svg" },
-        { name: "Next", icon: "/icons/nextjs.svg" },
-        { name: "NodeJS", icon: "/icons/nodejs.svg" },
-        { name: "GitHub", icon: "/icons/github.svg" },
-        { name: "Docker", icon: "/icons/docker.svg" },
-        { name: "Vercel", icon: "/icons/vercel.svg" },
-        { name: "AWS", icon: "/icons/aws.svg" },
-      ],
-      environment: "Modern Development Setup",
-    },
-  },
-  {
-    id: "design",
-    title: "Graphic Design",
-    icon: "🎨",
-    description:
-      "Creative visual design focusing on brand identity, UI/UX, and marketing materials",
-    tools: [
-      "Adobe Photoshop",
-      "Adobe Illustrator",
-      "Figma",
-      "UI/UX Design",
-      "Brand Design",
-      "Social Media Graphics",
-    ],
-    experience: "1+ year",
-    projects: ["POZITIV Denta Branding", "Social Media Designs"],
-    workspace: {
-      title: "Design Studio",
-      tools: [
-        { name: "Photoshop", icon: "/icons/photoshop.svg" },
-        { name: "Illustrator", icon: "/icons/illustrator.svg" },
-        { name: "Figma", icon: "/icons/figma.svg" },
-      ],
-      environment: "Creative Workspace",
-    },
-  },
-  {
-    id: "smm",
-    title: "Social Media Management",
-    icon: "📱",
-    description:
-      "Strategic social media management focusing on growth and engagement",
-    tools: [
-      "Content Strategy",
-      "Analytics",
-      "Community Management",
-      "Campaign Planning",
-      "Growth Hacking",
-      "Engagement Optimization",
-    ],
-    experience: "1 year",
-    projects: ["POZITIV Denta SMM", "Personal Brand Management"],
-    workspace: {
-      title: "Social Command Center",
-      tools: [
-        { name: "Analytics", icon: "/icons/analytics.svg" },
-        { name: "Telegram", icon: "/icons/telegram.svg" },
-        { name: "Instagram", icon: "/icons/instagram.svg" },
-        { name: "Facebook", icon: "/icons/facebook.svg" },
-      ],
-      environment: "Digital Marketing Hub",
-    },
-  },
-  {
-    id: "english",
-    title: "English Tutoring",
-    icon: "📚",
-    description:
-      "Personalized English language instruction focusing on practical communication skills",
-    tools: [
-      "IELTS Preparation",
-      "Business English",
-      "Conversational English",
-      "Grammar & Vocabulary",
-      "Pronunciation",
-      "Academic Writing",
-    ],
-    experience: "1 year",
-    projects: ["Private Tutoring", "Group Classes"],
-    workspace: {
-      title: "Virtual Classroom",
-      tools: [
-        { name: "Zoom", icon: "/icons/zoom.svg" },
-        { name: "Google Classroom", icon: "/icons/classroom.svg" },
-      ],
-      environment: "Interactive Learning Space",
-    },
-  },
-];
+import { skillNodes } from "../skills/skillsList";
+import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 
 export function SkillsSection() {
   const [activeSkill, setActiveSkill] = useState<string>("webdev");
@@ -139,25 +12,9 @@ export function SkillsSection() {
   const skillsContainerRef = useRef<HTMLDivElement>(null);
   const [currentView, setCurrentView] = useState<"overview" | "details">("overview");
   const [activeTab, setActiveTab] = useState<"about" | "tools" | "projects">("about");
-  const [isMobile, setIsMobile] = useState(false);
+  const { isMobile } = useDeviceDetection();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
-  // Check if the screen size is mobile
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    // Initial check
-    checkScreenSize();
-    
-    // Add event listener for resize
-    window.addEventListener('resize', checkScreenSize);
-    
-    // Cleanup
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
 
   const activeNode = skillNodes.find((node) => node.id === activeSkill);
 
