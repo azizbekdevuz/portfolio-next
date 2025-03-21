@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import DeviceDetectionWrapper from "@/components/DeviceDetectionWrapper";
@@ -9,7 +9,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Portfolio - Azizbek Arzikulov",
   description: "Web Developer portfolio showcasing projects and skills",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+  maximumScale: 5.0,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
