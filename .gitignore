@@ -6,6 +6,9 @@
 #dist
 **/dist/
 
+#gitignore
+.gitignore
+
 # dependencies
 /node_modules
 /.pnp
