@@ -101,16 +101,14 @@ export function MobileJourneyTimeline() {
               <div className="absolute left-5 top-[40px] w-px h-[calc(100%+1rem)] bg-gradient-to-b from-primary/30 via-primary/10 to-transparent"></div>
             )}
             
-            <div
-              className="relative"
-              onTouchStart={() => setActiveIndex(activeIndex === index ? null : index)}
-            >
+            <div className="relative">
               {/* Terminal-style Card - More compact for mobile */}
               <motion.div
                 className="relative bg-dark-light/30 rounded-lg border border-primary/20 
                           backdrop-blur-sm overflow-hidden"
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                onClick={() => setActiveIndex(activeIndex === index ? null : index)}
               >
                 {/* Card Header - Simplified */}
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 border-b border-primary/20">
@@ -242,17 +240,29 @@ export function MobileJourneyTimeline() {
 
               {/* Link if available - Positioned differently for mobile */}
               {item.link && activeIndex === index && (
-                <motion.a
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full mt-2 px-4 py-1.5 bg-primary 
-                           text-white text-xs text-center rounded-md shadow-md
-                           hover:shadow-primary/20 transition-shadow"
-                  whileTap={{ scale: 0.95 }}
+                <motion.div
+                  className="mt-2"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 5 }}
                 >
-                  View Project →
-                </motion.a>
+                  <motion.a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full px-4 py-1.5 bg-primary 
+                             text-white text-xs text-center rounded-md shadow-md
+                             hover:shadow-primary/20 transition-shadow"
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => {
+                      // This prevents the click from propagating to the parent
+                      // which would toggle the active index
+                      e.stopPropagation();
+                    }}
+                  >
+                    View Project →
+                  </motion.a>
+                </motion.div>
               )}
             </div>
           </motion.div>
