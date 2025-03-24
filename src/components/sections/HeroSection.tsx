@@ -1,19 +1,28 @@
 "use client";
 
+import dynamic from 'next/dynamic';
 import { useDeviceDetection } from "@/hooks/useDeviceDetection";
-import HeroDesktop from "../ui/hero/HeroDesktop";
-import HeroMobile from "../ui/hero/HeroMobile";
+import { HeroSkeleton } from '../skeletons/SectionSkeletons';
+
+// Use dynamic imports with proper loading states
+const HeroDesktop = dynamic(() => import("../ui/hero/HeroDesktop"), {
+  loading: () => <HeroSkeleton/>,
+  ssr: false // Don't render desktop version on server to save bytes
+});
+
+const HeroMobile = dynamic(() => import("../ui/hero/HeroMobile"), {
+  loading: () => <HeroSkeleton />,
+  ssr: true // Pre-render mobile version for better FCP
+});
 
 export function HeroSection() {
-  const {isMobile} = useDeviceDetection();
+  const { isMobile } = useDeviceDetection();
   
-  // Mobile version of Hero Section
+  // Fix: Properly return the mobile component
   if (isMobile) {
-    <HeroMobile />
+    return <HeroMobile />;
   }
   
-  // Original Desktop Version - Unchanged
-  return (
-    <HeroDesktop />
-  );
+  // Desktop version
+  return <HeroDesktop />;
 }

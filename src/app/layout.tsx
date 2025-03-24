@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import DeviceDetectionWrapper from "@/components/DeviceDetectionWrapper";
 import { Analytics } from "@vercel/analytics/react";
 import { fonts } from "@/libs/fonts";
+import { DeviceDetectionProvider } from "@/components/DeviceDetectionContext";
 import "./globals.css";
 
 const siteUrl = "https://portfolio-next-silk-two.vercel.app/";
@@ -51,17 +52,29 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1.0,
   maximumScale: 5.0,
+  // Add critical preconnect hints
+  themeColor: "#040b14",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={fonts} suppressHydrationWarning>
+      <head>
+        {/* Preload critical assets */}
+        <link rel="preload" href="/assets/img/profile-img.jpg" as="image" />
+        {/* Preconnect to external domains */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className="bg-light dark:bg-dark text-text-primary dark:text-text-light">
-      <SpeedInsights />
-        <ThemeProvider>
-        <DeviceDetectionWrapper>{children}</DeviceDetectionWrapper>
-        </ThemeProvider>
+        <DeviceDetectionProvider>
+          <ThemeProvider>
+            <DeviceDetectionWrapper>{children}</DeviceDetectionWrapper>
+          </ThemeProvider>
+        </DeviceDetectionProvider>
+        {/* Defer non-critical scripts */}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

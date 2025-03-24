@@ -587,27 +587,3 @@ export function ProjectsSkeleton() {
       </div>
     );
   }
-  
-  // Export a function to generate appropriate skeleton for a given section
-  export function getSectionSkeleton(sectionId: string) {
-    switch (sectionId) {
-      case 'hero':
-        return <HeroSkeleton />;
-      case 'about':
-        return <SkeletonWrapper><AboutSkeleton /></SkeletonWrapper>;
-      case 'skills':
-        return <SkeletonWrapper><SkillsSkeleton /></SkeletonWrapper>;
-      case 'projects':
-        return <SkeletonWrapper><ProjectsSkeleton /></SkeletonWrapper>;
-      case 'contact':
-        return <SkeletonWrapper><ContactSkeleton /></SkeletonWrapper>;
-      case 'in-progress':
-        return <SkeletonWrapper><InProgressSkeleton /></SkeletonWrapper>;
-      default:
-        return (
-          <div className="flex items-center justify-center min-h-screen">
-            <div className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-          </div>
-        );
-    }
-  }

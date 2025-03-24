@@ -11,9 +11,9 @@ import {
 import { TypeAnimation } from "react-type-animation";
 import { ParticlesBackground } from "@/components/effects/ParticlesBackground";
 import { GlowEffect } from "@/components/effects/GlowEffect";
-import { InteractiveProfile } from "../InteractiveProfile";
-import { CountUpValue } from "../CountUpValue";
-import { IDETagline } from "../IDETagline";
+import { InteractiveProfile } from "./InteractiveProfile";
+import { CountUpValue } from "@/components/inprogress/CountUpValue";
+import { IDETagline } from "./IDETagline";
 import ExploreButton from "./ExploreButton";
 import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 
