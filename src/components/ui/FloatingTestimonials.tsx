@@ -4,63 +4,42 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
-// Sample testimonial data
+// Updated testimonial data with real reviews
 const TESTIMONIALS = [
-  // Development testimonials
   {
     id: 1,
-    name: "Alex Johnson",
-    role: "CTO",
-    company: "TechMatrix",
-    text: "The React components and architecture in this project were exceptionally well-structured. Performance optimizations resulted in a 40% faster load time.",
+    name: "Karimov J.",
+    role: "Business Owner",
+    company: "Local Business",
+    text: "Azizbek bilan ilk bor ishlashda menda ozroq ikkilanish bo'lgan edi. Uning professional va tezkor yondashuvi men kutganimdanda kuchliroq ekan. Azizbekdan shaxsiy web sayt yaratib berishini so'rab murojat qilgan edim, sayt yaratishdagi ko'nikmalari bilan maslahatlar berdi.",
     category: "development",
     rating: 5,
   },
   {
     id: 2,
-    name: "Sarah Chen",
-    role: "Lead Developer",
-    company: "CodeCraft",
-    text: "Your Next.js implementation set a new standard for our team. The state management and API integration was flawless.",
-    category: "development",
+    name: "Norkuziev O.",
+    role: "Healthcare Professional",
+    company: "Medical Services",
+    text: "Bugungi kunda kompaniyalarning har qaysi sohasida ham axborotning oshkoraligi va komunikatsion aloqalarning qulayligi juda muhim sanaladi. Bu mijozlarga tez va aniq javob olishga, yetarli xulosa qilishga yordam beradi.",
+    category: "general",
     rating: 5,
   },
-  // Design testimonials
   {
     id: 3,
-    name: "Michael Park",
-    role: "UI/UX Director",
-    company: "DesignWave",
-    text: "The animations and micro-interactions brought our brand to life. Users specifically mentioned how intuitive the interface feels.",
+    name: "Norkuziev O.",
+    role: "Dentist",
+    company: "Dental Professional",
+    text: "Barcha ish jarayonlari aniq va tushunarli tarzda amalga oshirildi, natija esa kutilganidan ham yaxshi bo'ldi. Har qanday loyihada Ikilanmasdan Azizbek bilan ishlashni tavsiya etaman.",
     category: "design",
     rating: 5,
   },
   {
     id: 4,
-    name: "Emma Rodriguez",
-    role: "Creative Director",
-    company: "Visionary Studios",
-    text: "Remarkable attention to visual details while maintaining accessibility standards. The dark mode implementation was especially impressive.",
-    category: "design",
-    rating: 5,
-  },
-  // General testimonials
-  {
-    id: 5,
-    name: "Daniel Kim",
-    role: "Product Manager",
-    company: "InnovateX",
-    text: "Working with you was a true highlight. You understood our requirements instantly and delivered beyond expectations, on time and with exceptional quality.",
-    category: "general",
-    rating: 5,
-  },
-  {
-    id: 6,
-    name: "Lisa Wei",
-    role: "Startup Founder",
-    company: "NextGen Solutions",
-    text: "From concept to deployment, the entire process was smooth and professional. Our conversion rates increased by 35% after launch.",
-    category: "general",
+    name: "Norkuziev O.",
+    role: "Clinic Owner",
+    company: "Healthcare Facility",
+    text: "Tibbiy sohada onlayn navbatda turish, masofadan turib qisqa vaqt ichida maslahat yoki yo'nalish olish, qilinadigan muolajalarni oldindan shifokor va bemor uchun qulay paytga belgilash ortiqcha vaqt sarflashning oldini oladi.",
+    category: "development",
     rating: 5,
   },
 ];
@@ -297,7 +276,7 @@ export default function FloatingTestimonials({ isMobile, children }: FloatingTes
               ))}
             </div>
             
-            {/* Testimonials List */}
+            {/* Testimonials List with text-justify */}
             <div className="overflow-y-auto p-3 max-h-[60vh]">
               <AnimatePresence>
                 {filteredTestimonials.map((testimonial) => (
@@ -312,7 +291,7 @@ export default function FloatingTestimonials({ isMobile, children }: FloatingTes
                              hover:border-primary/30 transition-colors mb-3"
                   >
                     <div className="relative mb-3">
-                      <div className="text-text-secondary text-sm italic">
+                      <div className="text-text-secondary text-sm italic text-justify">
                         &quot;{testimonial.text}&quot;
                       </div>
                       
@@ -326,7 +305,7 @@ export default function FloatingTestimonials({ isMobile, children }: FloatingTes
                     </div>
                     
                     <div className="flex items-center mt-4">
-                      {/* Avatar Circle */}
+                      {/* Avatar Circle with Initials */}
                       <div className="relative w-10 h-10 mr-3 rounded-full overflow-hidden 
                                     border border-primary/20 bg-primary/20 
                                     flex items-center justify-center text-white font-bold">
