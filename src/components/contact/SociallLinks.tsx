@@ -23,7 +23,7 @@ const socialLinks: SocialLink[] = [
   {
     id: "linkedin",
     name: "LinkedIn",
-    url: "https://linkedin.com/in/azizbekdev",
+    url: "https://linkedin.com/in/azizbek-arzikulov",
     icon: "/icons/linkedin.svg",
     command: "connect --professional",
     description: "Professional network",
