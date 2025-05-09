@@ -31,7 +31,7 @@ const socialLinks: SocialLink[] = [
   {
     id: "telegram",
     name: "Telegram",
-    url: "https://t.me/azizbek_dev",
+    url: "https://t.me/+Abz6kYFkTX9hNzFi",
     icon: "/icons/telegram.svg",
     command: "send message",
     description: "Direct messaging",
