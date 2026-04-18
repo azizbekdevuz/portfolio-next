@@ -53,3 +53,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .qodo
+
+# docs
+docs/
+
+# agents & skills
+.agents/
+skills-lock.json

@@ -10,7 +10,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#149ddd",
+        /** Semantic — maps to CSS variables in theme-tokens.css */
+        page: "var(--color-page)",
+        "page-elevated": "var(--color-page-elevated)",
+        card: "var(--color-card)",
+        "card-muted": "var(--color-card-muted)",
+        border: "var(--color-border)",
+        "border-strong": "var(--color-border-strong)",
+        fg: "var(--color-fg)",
+        muted: "var(--color-fg-muted)",
+        subtle: "var(--color-fg-subtle)",
+        accent: "var(--color-accent)",
+        "accent-dim": "var(--color-accent-dim)",
+        "accent-fg": "var(--color-accent-fg)",
+        "surface-soft": "var(--color-surface-soft)",
+        "icon-plate": "var(--color-icon-plate)",
+        /** Alias legacy `primary` to theme accent */
+        primary: "var(--color-accent)",
         secondary: "#173b6c",
         dark: {
           DEFAULT: "#040b14",
@@ -21,9 +37,9 @@ const config: Config = {
           dark: "#f5f8fd",
         },
         text: {
-          primary: "#272829",
-          secondary: "#6f7180",
-          light: "#fff",
+          primary: "var(--color-fg)",
+          secondary: "var(--color-fg-muted)",
+          light: "var(--color-fg)",
         },
       },
       animation: {
