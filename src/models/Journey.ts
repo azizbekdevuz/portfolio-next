@@ -5,7 +5,8 @@ export interface JourneyData {
   title: string;
   subtitle: string;
   description: string;
-  icon: string;
+  /** @deprecated Prefer lucide map by id in UI */
+  icon?: string;
   tech: string[];
   link?: string;
 }

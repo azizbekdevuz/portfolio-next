@@ -2,6 +2,7 @@ export interface AchievementItem {
   title: string;
   subtitle: string;
   description: string;
+  certificateMedia?: string;
   year: string;
   highlight: string;
 }
@@ -9,9 +10,10 @@ export interface AchievementItem {
 export interface Achievement {
   id: string;
   title: string;
-  icon: string;
-  color: string;
   items: AchievementItem[];
+  /** @deprecated Prefer lucide map by id in UI */
+  icon?: string;
+  color?: string;
 }
 
 // This is the type for the database document

@@ -1,15 +1,17 @@
 export interface Tech {
   name: string;
-  level: number;
+  /** Omit to hide proficiency bars (recommended). */
+  level?: number;
   icon: string;
 }
 
 export interface TechCategory {
   id: string;
   title: string;
-  icon: string;
-  color: string;
   techs: Tech[];
+  /** @deprecated Prefer lucide map by id in UI */
+  icon?: string;
+  color?: string;
 }
 
 // This is the type for the database document
