@@ -1,0 +1,67 @@
+/**
+ * Semantic theme tokens — single source for light/dark.
+ * Components should prefer `bg-page`, `text-fg`, `border-border`, `text-accent`, etc.
+ */
+:root {
+  --color-page: #f0f4f8;
+  --color-page-elevated: #ffffff;
+  --color-card: #ffffff;
+  --color-card-muted: #e8eef4;
+  --color-border: #c5d4e0;
+  --color-border-strong: #94a8bc;
+  --color-fg: #0f172a;
+  --color-fg-muted: #475569;
+  --color-fg-subtle: #64748b;
+  --color-accent: #0d7ea8;
+  --color-accent-dim: #0a6b8f;
+  --color-accent-fg: #ffffff;
+  --color-grid: rgba(13, 126, 168, 0.06);
+  --color-glow: rgba(13, 126, 168, 0.12);
+  --gradient-mesh-a: #e0f0f8;
+  --gradient-mesh-b: #f5f8fc;
+  --gradient-mesh-c: #e8eef8;
+  /** Light panels: cool tint, not flat grey (#issueColour) */
+  --color-surface-soft: #eef4fa;
+  /** Behind dark SVG brand marks — high contrast in both themes */
+  --color-icon-plate: #ffffff;
+  /** Inner well on tech tiles — slightly off-white so dark brand marks separate from the outer plate in light mode */
+  --color-icon-well: #eef2f7;
+  --color-icon-plate-ring: rgba(15, 23, 42, 0.08);
+  /** Desktop non-cockpit shell: reserved outer lanes for language (L) + theme/nav (R); center column is the content stage */
+  --shell-chrome-left: 5.75rem;
+  /** Theme column only — primary section nav moved to header / panel top (fits `ThemeToggle` lane `max-w`) */
+  --shell-chrome-right: 5.75rem;
+  /**
+   * Cockpit (md+): single max width for the **whole** hero frame (Views band + proof grid) so the
+   * centered stage stays clear of fixed `LanguageSwitcher` / `ThemeToggle` (`left-6` / `right-6`,
+   * including the wide horizontal theme row + long locale labels). Replaces padding-only inset,
+   * which could not shrink the stage on narrower desktop widths.
+   */
+  --cockpit-hero-stage-max-width: min(80rem, max(17.25rem, calc(100vw - 38rem)));
+}
+
+.dark {
+  --color-page: #040b14;
+  --color-page-elevated: #0a1628;
+  --color-card: #0d1829;
+  --color-card-muted: #111f35;
+  --color-border: rgba(20, 157, 221, 0.22);
+  --color-border-strong: rgba(20, 157, 221, 0.38);
+  --color-fg: #f1f5f9;
+  --color-fg-muted: #94a3b8;
+  /** Slightly lifted vs light theme so captions stay AA-friendly on navy surfaces */
+  --color-fg-subtle: #7d8ea1;
+  --color-accent: #149ddd;
+  --color-accent-dim: #0d7bad;
+  --color-accent-fg: #040b14;
+  --color-grid: rgba(20, 157, 221, 0.07);
+  --color-glow: rgba(20, 157, 221, 0.18);
+  --gradient-mesh-a: #050d18;
+  --gradient-mesh-b: #0a1628;
+  --gradient-mesh-c: #040b14;
+  --color-surface-soft: #0f1a2e;
+  --color-icon-plate: #f1f5f9;
+  /** Brighter inner field so marks read clearly on dark section surfaces */
+  --color-icon-well: #ffffff;
+  --color-icon-plate-ring: rgba(241, 245, 249, 0.2);
+}

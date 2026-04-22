@@ -1,10 +1,12 @@
+@import "./theme-tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply bg-light dark:bg-dark text-text-primary dark:text-text-light;
+    @apply bg-page text-fg antialiased;
   }
 
   h1,
@@ -19,28 +21,26 @@
 
 @layer components {
   .section-title {
-    @apply text-3xl font-bold mb-8 relative pb-4
-           after:content-[''] after:absolute after:bottom-0 
-           after:left-0 after:w-12 after:h-1 after:bg-primary;
+    @apply relative mb-8 pb-4 text-3xl font-bold
+           after:absolute after:bottom-0 after:left-0 
+           after:h-1 after:w-12 after:content-[''] after:bg-accent;
   }
 
   .skill-bar {
-    @apply h-2 bg-light-dark dark:bg-dark-light rounded-full overflow-hidden;
+    @apply h-2 overflow-hidden rounded-full bg-card-muted;
   }
 
   .skill-progress {
-    @apply h-full bg-primary transition-all duration-1000;
+    @apply h-full bg-accent transition-all duration-1000;
   }
 
   .social-link {
-    @apply inline-flex items-center justify-center w-9 h-9 
-           bg-dark-light text-text-light rounded-full 
-           hover:bg-primary transition-colors duration-300;
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-full 
+           bg-card-muted text-fg transition-colors duration-300 hover:bg-accent hover:text-accent-fg;
   }
 
   .nav-link {
-    @apply flex items-center text-text-secondary hover:text-primary
-           px-4 py-2 rounded transition-colors duration-200;
+    @apply flex items-center rounded px-4 py-2 text-muted transition-colors duration-200 hover:text-accent;
   }
 }
 
@@ -50,11 +50,15 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-light dark:bg-dark;
+  @apply bg-card-muted;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary/50 rounded-full hover:bg-primary;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-accent) 65%, transparent);
 }
 
 /* Animations */
@@ -154,12 +158,19 @@
 /* Add to globals.css */
 @layer components {
   .profile-glow {
-    @apply absolute -inset-2 bg-primary/20 rounded-full blur-xl;
+    @apply absolute -inset-2 rounded-full blur-xl;
+    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
     animation: profile-glow 4s ease-in-out infinite;
   }
 
   .tech-line {
-    @apply absolute bg-gradient-to-r from-transparent via-primary/30 to-transparent;
+    @apply absolute;
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in srgb, var(--color-accent) 35%, transparent),
+      transparent
+    );
     height: 1px;
     animation: tech-line-flow 3s linear infinite;
   }
@@ -256,8 +267,8 @@
   .book-cover,
   .book-page,
   .book-back-cover {
-    @apply absolute inset-0 bg-dark-light/20 backdrop-blur-md 
-           border border-primary/20 rounded-lg overflow-hidden;
+    @apply absolute inset-0 overflow-hidden rounded-lg border border-border 
+           bg-card/80 backdrop-blur-md;
     transform-style: preserve-3d;
     backface-visibility: hidden;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -344,7 +355,7 @@
     @apply absolute inset-0 opacity-50;
     box-shadow:
       0 10px 30px -10px rgba(0, 0, 0, 0.5),
-      0 5px 10px -5px rgba(var(--color-primary), 0.2);
+      0 5px 10px -5px color-mix(in srgb, var(--color-accent) 25%, transparent);
   }
 
   .page-edge {
@@ -352,7 +363,7 @@
     background: linear-gradient(
       to bottom,
       transparent,
-      rgba(var(--color-primary), 0.2),
+      color-mix(in srgb, var(--color-accent) 25%, transparent),
       transparent
     );
   }
@@ -360,7 +371,7 @@
   /* Cyberpunk accents */
   .cyber-glow {
     @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    box-shadow: 0 0 20px rgba(var(--color-primary), 0.2);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--color-accent) 22%, transparent);
   }
 
   .book-container:hover .cyber-glow {
