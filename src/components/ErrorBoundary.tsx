@@ -31,7 +31,7 @@ export class ErrorBoundary extends Component<Props, State> {
         this.props.fallback || (
           <div className="p-8 text-center">
             <h2 className="text-2xl text-red-500 mb-4">Something went wrong</h2>
-            <p className="text-text-secondary mb-4">
+            <p className="text-muted mb-4">
               We&apos;re having trouble displaying this section.
             </p>
             <button
