@@ -1,19 +1,42 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
-import Image from "next/image";
+import { Cpu, Palette } from "lucide-react";
+import { TechIconTile } from "@/components/ui/TechIconTile";
 import { skillNodes } from "../skills/skillsList";
 import { useDeviceDetection } from "@/hooks/useDeviceDetection";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
-export default function SkillsDesktop() {
-  const [activeSkill, setActiveSkill] = useState<string>("webdev");
+export default function SkillsDesktop({ embedded = false }: { embedded?: boolean }) {
+  const { messages } = useI18n();
+  const [activeSkill, setActiveSkill] = useState<string>("engineering");
   const containerRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useDeviceDetection();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const activeNode = skillNodes.find((node) => node.id === activeSkill);
+  const localizedNodes = useMemo(
+    () =>
+      skillNodes.map((node) => {
+        const loc = messages.skills.nodes[node.id as keyof typeof messages.skills.nodes];
+        if (!loc) return node;
+        return {
+          ...node,
+          title: loc.title,
+          description: loc.description,
+          experience: loc.experience,
+          workspace: {
+            ...node.workspace,
+            title: loc.workspaceTitle,
+            environment: loc.workspaceEnvironment,
+          },
+        };
+      }),
+    [messages],
+  );
+
+  const activeNode = localizedNodes.find((node) => node.id === activeSkill);
 
   // Desktop mouse movement handler
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -30,7 +53,7 @@ export default function SkillsDesktop() {
     <motion.section
       ref={containerRef}
       id="skills"
-      className="relative min-h-screen py-20 overflow-hidden"
+      className={`relative overflow-hidden ${embedded ? "min-h-0 py-6" : "min-h-screen py-20"}`}
       onMouseMove={handleMouseMove}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -38,9 +61,9 @@ export default function SkillsDesktop() {
     >
       {/* Enhanced Background with Dynamic Effects */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(20,157,221,0.03),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,var(--color-glow),transparent)]" />
         <motion.div
-          className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)]
+          className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)]
                      bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)]"
           style={{
             rotateX: mouseY,
@@ -51,7 +74,7 @@ export default function SkillsDesktop() {
 
         {/* Dynamic Glow Effect */}
         <motion.div
-          className="absolute blur-[100px] rounded-full bg-primary/20"
+          className="absolute rounded-full bg-accent/15 blur-[100px]"
           style={{
             width: 400,
             height: 400,
@@ -65,32 +88,35 @@ export default function SkillsDesktop() {
 
       {/* Main Content Container */}
       <div className="relative z-10 container mx-auto px-4">
-        {/* Enhanced Section Title */}
-        <motion.div
-          className="flex flex-col items-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="flex items-center gap-3 mb-4 font-mono">
-            <span className="text-primary/50">class</span>
-            <h2 className="text-4xl font-bold text-text-light">SkillMatrix</h2>
-            <span className="text-primary/50">extends</span>
-            <span className="text-text-light">Expertise</span>
-          </div>
+        {!embedded && (
           <motion.div
-            className="h-1 w-20 bg-primary rounded-full"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
+            className="mb-16 flex flex-col items-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-          />
-        </motion.div>
+          >
+            <div className="mb-4 flex items-center gap-3 font-mono">
+              <span className="text-primary/50">{messages.skills.classKeyword}</span>
+              <h2 className="text-4xl font-bold text-fg">{messages.skills.title}</h2>
+              <span className="text-primary/50">{messages.skills.dash}</span>
+              <span className="text-fg">{messages.skills.subtitle}</span>
+            </div>
+            <motion.div
+              className="h-1 w-20 rounded-full bg-accent"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+            />
+          </motion.div>
+        )}
 
         {/* Main Grid Layout */}
         <div className="grid lg:grid-cols-[1.5fr_2.5fr] gap-8">
           {/* Skill Navigation Panel */}
           <div className="space-y-4">
-            {skillNodes.map((node, index) => (
+            {localizedNodes.map((node, index) => {
+              const NavIcon = node.id === "engineering" ? Cpu : Palette;
+              return (
               <motion.button
                 key={node.id}
                 onClick={() => setActiveSkill(node.id)}
@@ -109,10 +135,10 @@ export default function SkillsDesktop() {
               >
                 {/* Skill Card Content */}
                 <div className="relative z-10">
-                  <div className="flex items-center gap-4 mb-3">
-                    <span className="text-3xl">{node.icon}</span>
+                  <div className="mb-3 flex items-center gap-4">
+                    <NavIcon className="h-8 w-8 shrink-0 text-accent" strokeWidth={1.5} aria-hidden />
                     <div>
-                      <h3 className="text-xl text-text-light font-medium">
+                      <h3 className="text-xl text-fg font-medium">
                         {node.title}
                       </h3>
                       <span className="text-primary text-sm">
@@ -120,7 +146,7 @@ export default function SkillsDesktop() {
                       </span>
                     </div>
                   </div>
-                  <p className="text-text-secondary text-sm mb-3">
+                  <p className="text-muted text-sm mb-3">
                     {node.description}
                   </p>
 
@@ -129,15 +155,18 @@ export default function SkillsDesktop() {
                     {node.tools.slice(0, 3).map((tool) => (
                       <span
                         key={tool}
-                        className="px-2 py-1 rounded-full bg-dark-light/30 
+                        className="px-2 py-1 rounded-full bg-card-muted/80 
                                  text-xs text-primary/80"
                       >
                         {tool}
                       </span>
                     ))}
                     {node.tools.length > 3 && (
-                      <span className="text-text-secondary text-xs">
-                        +{node.tools.length - 3} more
+                      <span className="text-muted text-xs">
+                        {messages.skills.toolsMore.replace(
+                          "{count}",
+                          String(node.tools.length - 3),
+                        )}
                       </span>
                     )}
                   </div>
@@ -160,7 +189,8 @@ export default function SkillsDesktop() {
                   }}
                 />
               </motion.button>
-            ))}
+            );
+            })}
           </div>
 
           {/* Detailed Skill View */}
@@ -171,7 +201,7 @@ export default function SkillsDesktop() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-dark-light/20 rounded-lg p-8 border border-primary/20
+                className="bg-card-muted/60 rounded-lg p-8 border border-primary/20
                           backdrop-blur-sm relative overflow-hidden"
               >
                 {/* Workspace Section */}
@@ -180,7 +210,7 @@ export default function SkillsDesktop() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  <h3 className="text-2xl text-text-light mb-6 font-medium">
+                  <h3 className="text-2xl text-fg mb-6 font-medium">
                     {activeNode.workspace.title}
                   </h3>
 
@@ -195,19 +225,13 @@ export default function SkillsDesktop() {
                         className="group relative"
                       >
                         <motion.div
-                          className="p-4 rounded-lg bg-dark-light/30 border border-primary/20
-                                    hover:border-primary/50 transition-colors duration-300"
-                          whileHover={{ y: -5 }}
+                          className="rounded-lg border border-border bg-card p-4 transition-colors duration-300 hover:border-border-strong dark:border-border-strong"
+                          whileHover={{ y: -3 }}
                         >
-                          <div className="relative w-10 h-10 mx-auto mb-3">
-                            <Image
-                              src={tool.icon}
-                              alt={tool.name}
-                              fill
-                              style={{ objectFit: "contain" }}
-                            />
+                          <div className="mx-auto mb-3 flex justify-center">
+                            <TechIconTile src={tool.icon} alt="" size="md" surface="emphasis" />
                           </div>
-                          <p className="text-center text-sm text-text-secondary group-hover:text-text-light">
+                          <p className="text-center text-sm text-muted group-hover:text-fg">
                             {tool.name}
                           </p>
                         </motion.div>
@@ -225,9 +249,7 @@ export default function SkillsDesktop() {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
                     >
-                      <h4 className="text-text-light mb-3">
-                        Featured Projects
-                      </h4>
+                      <h4 className="mb-3 text-fg">{messages.skills.featuredProjects}</h4>
                       <div className="flex flex-wrap gap-3">
                         {activeNode.projects.map((project) => (
                           <div
@@ -248,12 +270,12 @@ export default function SkillsDesktop() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4 }}
                   >
-                    <h4 className="text-text-light mb-3">Technologies</h4>
+                    <h4 className="mb-3 text-fg">{messages.skills.panelTechnologies}</h4>
                     <div className="flex flex-wrap gap-2">
                       {activeNode.tools.map((tool) => (
                         <div
                           key={tool}
-                          className="px-3 py-1 rounded-full bg-dark-light/30
+                          className="px-3 py-1 rounded-full bg-card-muted/80
                                    border border-primary/20 text-sm text-primary"
                         >
                           {tool}

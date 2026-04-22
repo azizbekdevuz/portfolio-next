@@ -1,145 +1,52 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
   motion,
   AnimatePresence,
   useScroll,
   useTransform,
 } from "framer-motion";
+import { Pencil, Keyboard, Zap } from "lucide-react";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
-export const CountUpValue = ({
-  start = 0,
-  end,
-  duration = 2,
-}: {
-  start?: number;
-  end: number;
-  duration?: number;
-}) => {
-  const [value, setValue] = useState(start);
-
-  useEffect(() => {
-    const startTime = Date.now();
-    const timer = setInterval(() => {
-      const progress = (Date.now() - startTime) / (duration * 1000);
-      if (progress >= 1) {
-        setValue(end);
-        clearInterval(timer);
-      } else {
-        setValue(start + (end - start) * progress);
-      }
-    }, 16);
-
-    return () => clearInterval(timer);
-  }, [start, end, duration]);
-
-  return <>{Math.floor(value)}</>;
-};
-
-// Contribution Tracker Component
-const ContributionTracker = () => {
-  const [contributions, setContributions] = useState({
-    codeLines: 0,
-    features: 0,
-    optimizations: 0,
-  });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setContributions((prev) => ({
-        codeLines: prev.codeLines + Math.floor(Math.random() * 10),
-        features: prev.features + (Math.random() > 0.8 ? 1 : 0),
-        optimizations: prev.optimizations + (Math.random() > 0.9 ? 1 : 0),
-      }));
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <motion.div
-      className="grid grid-cols-3 gap-4 mt-6"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-    >
-      {Object.entries(contributions).map(([key, value]) => (
-        <div
-          key={key}
-          className="bg-dark-light/30 p-4 rounded-lg border border-primary/10 
-                     hover:bg-primary/5 transition-all duration-300"
-        >
-          <div className="text-2xl font-bold text-primary mb-2">
-            <CountUpValue start={0} end={value} duration={1} />
-          </div>
-          <span className="text-text-secondary text-sm">
-            {key.replace(/([A-Z])/g, " $1").toLowerCase()}
-          </span>
-        </div>
-      ))}
-    </motion.div>
-  );
-};
-
-// Construction Stages Component
-const ConstructionStages = () => {
-  const constructionStages = [
-    {
-      icon: "🏗️",
-      title: "Foundation Laying",
-      description: "Core architectural frameworks being established",
-      progress: 60,
-    },
-    {
-      icon: "🔧",
-      title: "System Integration",
-      description: "Connecting complex technological components",
-      progress: 45,
-    },
-    {
-      icon: "🖥️",
-      title: "Interface Refinement",
-      description: "Polishing user experience and interactions",
-      progress: 30,
-    },
+function RoadmapStages() {
+  const { messages } = useI18n();
+  const icons = [
+    <Pencil key="p" className="h-10 w-10" />,
+    <Keyboard key="k" className="h-10 w-10" />,
+    <Zap key="z" className="h-10 w-10" />,
   ];
-
   return (
-    <div className="grid md:grid-cols-3 gap-4 mt-6">
-      {constructionStages.map((stage, index) => (
+    <div className="mt-6 grid gap-4 md:grid-cols-3">
+      {messages.inProgress.stages.map((stage, index) => (
         <motion.div
-          key={stage.title}
-          className="bg-dark-light/30 p-6 rounded-lg border border-primary/20"
+          key={`${stage.title}-${index}`}
+          className="rounded-lg border border-border bg-surface-soft p-6 dark:bg-card-muted/60"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.2 }}
         >
-          <div className="text-4xl mb-4">{stage.icon}</div>
-          <h4 className="text-primary font-bold mb-2">{stage.title}</h4>
-          <p className="text-text-secondary text-sm mb-4">
-            {stage.description}
-          </p>
-
-          {/* Progress Bar */}
-          <div className="w-full bg-dark-light/20 rounded-full h-2.5 mt-4">
-            <motion.div
-              className="bg-primary h-2.5 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${stage.progress}%` }}
-              transition={{ duration: 1.5, delay: 0.5 }}
-            />
-          </div>
-          <div className="text-xs text-text-secondary mt-2">
-            {stage.progress}% Complete
-          </div>
+          <div className="mb-4 text-4xl">{icons[index]}</div>
+          <h4 className="mb-2 font-bold text-primary">{stage.title}</h4>
+          <p className="mb-4 text-sm text-muted">{stage.description}</p>
+          <span className="inline-block rounded-full border border-primary/25 bg-primary/5 px-3 py-1 text-xs text-primary">
+            {stage.status}
+          </span>
         </motion.div>
       ))}
     </div>
   );
-};
+}
 
-// Renamed to InProgressSectionDesktop
-export function DesktopInProgressSection() {
+export function DesktopInProgressSection({ embedded = false }: { embedded?: boolean }) {
+  const { messages } = useI18n();
+  const d = messages.inProgress.desktop;
+  const detailColumns = [
+    { title: d.columnInProgressTitle, items: d.columnInProgressItems },
+    { title: d.columnPlannedTitle, items: d.columnPlannedItems },
+    { title: d.columnNearTitle, items: d.columnNearItems },
+  ];
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -157,14 +64,14 @@ export function DesktopInProgressSection() {
     <motion.section
       ref={containerRef}
       id="in-progress"
-      className="relative min-h-screen py-20 overflow-hidden"
+      className={`relative overflow-hidden ${embedded ? "min-h-0 py-8" : "min-h-screen py-20"}`}
       style={{ opacity }}
     >
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(20,157,221,0.03),transparent)]" />
         <motion.div
-          className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)]
+          className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)]
                      bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)]"
           style={{ y }}
         />
@@ -172,66 +79,47 @@ export function DesktopInProgressSection() {
 
       {/* Main Content Container */}
       <div className="relative z-10 container mx-auto px-4">
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <div className="flex flex-col items-center relative">
-            {/* Title with minimal animation */}
-            <div className="flex items-center flex-col">
-              <h2 className="text-4xl md:text-5xl font-bold text-text-light mb-5 relative flex items-center">
-                <span className="text-primary/70">[</span>
-                <span>Digital Ecosystem</span>
-                <span className="text-primary/70">]</span>
-                {/* Single blinking cursor - low performance impact */}
-                <motion.span 
-                  className="ml-1 text-primary"
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ 
-                    repeat: Infinity, 
-                    repeatType: "reverse", 
-                    duration: 0.8,
-                    repeatDelay: 0.2 
-                  }}
-                >
-                  _
-                </motion.span>
-              </h2>
-              
-              {/* Simple Progress Bar - uses CSS instead of motion animations where possible */}
-              <div className="w-64 h-2 bg-dark-light/50 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-primary/80 to-primary rounded-full w-2/3 relative">
-                  {/* Single shimmer effect instead of continuous animation */}
-                  <motion.div 
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                    initial={{ x: "-100%" }}
-                    animate={{ x: "100%" }}
-                    transition={{ 
-                      repeat: Infinity, 
-                      duration: 2,
-                      repeatDelay: 2
+        {!embedded && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+            <div className="relative flex flex-col items-center">
+              <div className="flex flex-col items-center">
+                <h2 className="relative mb-5 flex items-center text-4xl font-bold text-fg md:text-5xl">
+                  <span className="text-primary/70">[</span>
+                  <span>{messages.inProgress.title}</span>
+                  <span className="text-primary/70">]</span>
+                  <motion.span
+                    className="ml-1 text-primary"
+                    animate={{ opacity: [1, 0] }}
+                    transition={{
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      duration: 0.8,
+                      repeatDelay: 0.2,
                     }}
-                  />
+                  >
+                    _
+                  </motion.span>
+                </h2>
+
+                <div className="mt-3 flex items-center gap-2 font-mono text-sm text-muted">
+                  <span className="text-primary">●</span>
+                  <span>{messages.inProgress.subtitle}</span>
                 </div>
               </div>
-              
-              {/* Status Text - static with minimal animation */}
-              <div className="mt-3 font-mono text-sm text-text-secondary flex items-center gap-2">
-                <span className="text-primary">●</span>
-                <span>In Development • 67% Complete</span>
-              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        )}
 
         {/* Interactive Construction Metaphor */}
         <div className="relative max-w-6xl mx-auto">
           <motion.div
-            className="bg-dark-light/30 backdrop-blur-sm border border-primary/20 rounded-lg p-8"
+            className="bg-surface-soft dark:bg-card-muted/60 backdrop-blur-sm border border-border rounded-lg p-8"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
@@ -290,21 +178,11 @@ export function DesktopInProgressSection() {
                   </motion.div>
                 </div>
 
-                <h3 className="text-2xl md:text-3xl font-bold text-text-light mb-4">
-                  Crafting a Dynamic Digital Landscape
-                </h3>
-                <p className="text-text-secondary mb-6 max-w-2xl mx-auto">
-                  This portfolio is a living, evolving digital ecosystem.
-                  Currently under active development, each component is being
-                  meticulously designed to showcase not just projects, but the
-                  intricate journey of technological innovation.
-                </p>
+                <h3 className="mb-4 text-2xl font-bold text-fg md:text-3xl">{d.nextHeading}</h3>
+                <p className="mx-auto mb-6 max-w-2xl text-muted">{d.nextBody}</p>
 
                 {/* Construction Stages */}
-                <ConstructionStages />
-
-                {/* Contribution Tracker */}
-                <ContributionTracker />
+                <RoadmapStages />
 
                 {/* Interactive Construction Indicator */}
                 <div className="flex justify-center items-center gap-4 mt-6">
@@ -330,7 +208,7 @@ export function DesktopInProgressSection() {
                         d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a1 1 0 01-1-1V7a1 1 0 011-1h1a1 1 0 001-1V4a2 2 0 114 0v1a1 1 0 001 1h2a1 1 0 001-1V4z"
                       />
                     </svg>
-                    {isConstructing ? "Hide Details" : "Explore Development"}
+                    {isConstructing ? d.toggleHide : d.toggleShow}
                   </motion.button>
                 </div>
 
@@ -343,35 +221,9 @@ export function DesktopInProgressSection() {
                       exit={{ opacity: 0, height: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="bg-dark-light/20 rounded-lg p-6 mt-4">
-                        <div className="grid md:grid-cols-3 gap-4">
-                          {[
-                            {
-                              title: "Sections in Progress",
-                              items: [
-                                "Skills",
-                                "Testimonials",
-                                "Blog",
-                                "Contact",
-                              ],
-                            },
-                            {
-                              title: "Planned Enhancements",
-                              items: [
-                                "Responsive Optimization",
-                                "Performance Tweaks",
-                                "Accessibility Improvements",
-                              ],
-                            },
-                            {
-                              title: "Near Future",
-                              items: [
-                                "Case Studies",
-                                "Detailed Project Breakdowns",
-                                "Interactive Demos",
-                              ],
-                            },
-                          ].map((column, index) => (
+                      <div className="mt-4 rounded-lg bg-card-muted/50 p-6">
+                        <div className="grid gap-4 md:grid-cols-3">
+                          {detailColumns.map((column, index) => (
                             <motion.div
                               key={column.title}
                               initial={{ opacity: 0, y: 20 }}
@@ -379,16 +231,14 @@ export function DesktopInProgressSection() {
                               transition={{ delay: index * 0.2 }}
                               className="text-left"
                             >
-                              <h4 className="text-primary font-bold mb-3">
-                                {column.title}
-                              </h4>
-                              <ul className="text-text-secondary space-y-2">
+                              <h4 className="mb-3 font-bold text-primary">{column.title}</h4>
+                              <ul className="space-y-2 text-muted">
                                 {column.items.map((item) => (
                                   <li
                                     key={item}
-                                    className="flex items-center gap-2 hover:text-primary transition-colors"
+                                    className="flex items-center gap-2 transition-colors hover:text-primary"
                                   >
-                                    <span className="w-2 h-2 bg-primary rounded-full" />
+                                    <span className="h-2 w-2 rounded-full bg-primary" />
                                     {item}
                                   </li>
                                 ))}
@@ -403,21 +253,19 @@ export function DesktopInProgressSection() {
 
                 {/* Overall Progress Indicator */}
                 <div className="mt-6">
-                  <div className="text-sm text-text-secondary mb-2">
-                    Portfolio Completion Progress
-                  </div>
-                  <div className="w-full bg-dark-light/30 rounded-full h-2.5">
+                  <div className="mb-2 text-sm text-muted">{d.progressLabel}</div>
+                  <div className="h-2.5 w-full rounded-full bg-surface-soft dark:bg-card-muted/60">
                     <motion.div
-                      className="bg-primary h-2.5 rounded-full"
+                      className="h-2.5 rounded-full bg-primary"
                       initial={{ width: 0 }}
                       animate={{ width: "65%" }}
                       transition={{ duration: 1.5, delay: 0.5 }}
                     />
                   </div>
-                  <div className="text-sm text-text-secondary mt-2 flex items-center justify-between">
-                    <span>65% Complete</span>
+                  <div className="mt-2 flex items-center justify-between text-sm text-muted">
+                    <span>{d.progressValue}</span>
                     <motion.div
-                      className="text-primary font-bold"
+                      className="font-bold text-primary"
                       animate={{
                         opacity: [0.6, 1, 0.6],
                         scale: [1, 1.1, 1],
@@ -428,7 +276,7 @@ export function DesktopInProgressSection() {
                         ease: "easeInOut",
                       }}
                     >
-                      Stay Tuned!
+                      {d.stayTuned}
                     </motion.div>
                   </div>
                 </div>

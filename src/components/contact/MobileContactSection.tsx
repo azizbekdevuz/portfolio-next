@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import emailjs from "@emailjs/browser";
+import { useI18n } from "@/components/i18n/I18nProvider";
+import type { SiteProfile } from "@/content/site";
 
 // Types
 interface FormData {
@@ -19,14 +21,17 @@ interface SocialLink {
   icon: string;
 }
 
-interface Language {
-  code: string;
-  name: string;
-  icon: string;
-}
-
 // Export as named export for importing in other components
-export function MobileContactSection() {
+export function MobileContactSection({
+  site,
+  embedded = false,
+}: {
+  site: SiteProfile;
+  embedded?: boolean;
+}) {
+  const { messages } = useI18n();
+  const mc = messages.contact.mobile;
+  const lm = messages.languageMatrix.languages;
   // Form state management
   const [formData, setFormData] = useState<FormData>({
     from_name: "",
@@ -67,29 +72,18 @@ export function MobileContactSection() {
     },
   ];
 
-  // Languages
-  const languages: Language[] = [
-    {
-      code: "en",
-      name: "English",
-      icon: "/icons/uk.svg",
-    },
-    {
-      code: "ko",
-      name: "Korean",
-      icon: "/icons/kr.svg",
-    },
-    {
-      code: "uz",
-      name: "Uzbek",
-      icon: "/icons/uz.svg",
-    },
-    {
-      code: "ru",
-      name: "Russian",
-      icon: "/icons/ru.svg",
-    },
-  ];
+  const languages = (
+    [
+      ["en", "/icons/uk.svg"],
+      ["ko", "/icons/kr.svg"],
+      ["uz", "/icons/uz.svg"],
+      ["ru", "/icons/ru.svg"],
+    ] as const
+  ).map(([code, icon]) => ({
+    code,
+    name: lm[code].name,
+    icon,
+  }));
 
   // Clear success/error messages after 5 seconds
   useEffect(() => {
@@ -121,9 +115,10 @@ export function MobileContactSection() {
 
     // Validate that all required environment variables exist
     if (!serviceId || !templateId || !publicKey) {
-      setError(
-        "Email service configuration is missing. Please contact the administrator."
+      console.error(
+        "Missing EmailJS configuration. Please check your environment variables.",
       );
+      setError(messages.contact.errorConfigUser);
       setIsLoading(false);
       return;
     }
@@ -151,8 +146,8 @@ export function MobileContactSection() {
       console.error("EmailJS error:", err);
       setError(
         err instanceof Error
-          ? `Failed to send message: ${err.message}`
-          : "Failed to send message. Please try again later."
+          ? `${messages.contact.errorSend} (${err.message})`
+          : messages.contact.errorSend,
       );
 
       // Clean up temp field if it exists
@@ -169,25 +164,26 @@ export function MobileContactSection() {
   return (
     <motion.section
       id="contact"
-      className="relative min-h-screen py-10 px-4 bg-dark-light/5"
+      className={`relative px-4 bg-page-elevated/40 ${embedded ? "min-h-0 py-4" : "min-h-screen py-10"}`}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
     >
-      {/* Section Title - Simple and clear */}
-      <motion.div
-        className="mb-8 text-center"
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        <h2 className="text-3xl font-bold text-text-light mb-1">Get in Touch</h2>
-        <div className="w-16 h-1 bg-primary mx-auto rounded-full" />
-      </motion.div>
+      {!embedded && (
+        <motion.div
+          className="mb-8 text-center"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="mb-1 text-3xl font-bold text-fg">{messages.contact.mobileSectionTitle}</h2>
+          <div className="mx-auto h-1 w-16 rounded-full bg-primary" />
+        </motion.div>
+      )}
 
       {/* Contact Card - Simplified for mobile */}
       <motion.div
-        className="mb-8 p-4 rounded-lg bg-dark-light/30 border border-primary/20 backdrop-blur-sm"
+        className="mb-8 p-4 rounded-lg bg-card-muted/80 border border-primary/20 backdrop-blur-sm"
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -199,7 +195,7 @@ export function MobileContactSection() {
             <div className="p-1 rounded border-white">
               <Image 
                 src="/icons/contact.png" 
-                alt="QR Code for portfolio" 
+                alt={mc.qrAlt}
                 width={56} 
                 height={56}
               />
@@ -208,10 +204,10 @@ export function MobileContactSection() {
           
           <div>
             <h3 className="text-xl font-bold text-primary">Azizbek Arzikulov</h3>
-            <p className="text-sm text-text-light">Full Stack Developer</p>
+            <p className="text-sm text-fg">{messages.contact.profileSubtitle}</p>
             <a 
               href="mailto:azizbek.dev.uz@gmail.com" 
-              className="text-sm text-text-secondary hover:text-primary transition-colors"
+              className="text-sm text-muted hover:text-primary transition-colors"
             >
               azizbek.dev.uz@gmail.com
             </a>
@@ -220,11 +216,11 @@ export function MobileContactSection() {
       </motion.div>
 
       {/* Tab Navigation - Mobile-friendly navigation */}
-      <div className="flex rounded-lg bg-dark-light/20 p-1 mb-6 sticky top-4 z-30 border border-primary/10 backdrop-blur-md shadow-lg">
+      <div className="flex rounded-lg bg-card-muted/60 p-1 mb-6 sticky top-4 z-30 border border-primary/10 backdrop-blur-md shadow-lg">
         {[
-          { id: 'form', label: 'Message' },
-          { id: 'socials', label: 'Connect' },
-          { id: 'about', label: 'About' },
+          { id: "form" as const, label: messages.contact.tabForm },
+          { id: "socials" as const, label: messages.contact.tabSocials },
+          { id: "about" as const, label: messages.contact.tabAbout },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -232,7 +228,7 @@ export function MobileContactSection() {
             className={`flex-1 py-2 text-center rounded-md text-sm font-medium transition-colors 
               ${activeTab === tab.id 
                 ? 'bg-primary text-white shadow-md' 
-                : 'text-text-secondary hover:bg-primary/10'}`}
+                : 'text-muted hover:bg-primary/10'}`}
           >
             {tab.label}
           </button>
@@ -251,7 +247,7 @@ export function MobileContactSection() {
           >
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
               {/* Name Field */}
-              <div className="bg-dark-light/20 rounded-lg overflow-hidden border border-primary/10">
+              <div className="bg-card-muted/60 rounded-lg overflow-hidden border border-primary/10">
                 <input
                   type="text"
                   name="from_name"
@@ -259,14 +255,14 @@ export function MobileContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, from_name: e.target.value })
                   }
-                  className="w-full bg-transparent outline-none text-text-light px-4 py-3 text-base"
-                  placeholder="Your Name"
+                  className="w-full bg-transparent outline-none text-fg px-4 py-3 text-base"
+                  placeholder={messages.contact.namePlaceholder}
                   required
                 />
               </div>
 
               {/* Email Field */}
-              <div className="bg-dark-light/20 rounded-lg overflow-hidden border border-primary/10">
+              <div className="bg-card-muted/60 rounded-lg overflow-hidden border border-primary/10">
                 <input
                   type="email"
                   name="email"
@@ -274,14 +270,14 @@ export function MobileContactSection() {
                   onChange={(e) => {
                     setFormData({ ...formData, email: e.target.value });
                   }}
-                  className="w-full bg-transparent outline-none text-text-light px-4 py-3 text-base"
-                  placeholder="Your Email"
+                  className="w-full bg-transparent outline-none text-fg px-4 py-3 text-base"
+                  placeholder={messages.contact.emailPlaceholder}
                   required
                 />
               </div>
 
               {/* Message Field */}
-              <div className="bg-dark-light/20 rounded-lg overflow-hidden border border-primary/10">
+              <div className="bg-card-muted/60 rounded-lg overflow-hidden border border-primary/10">
                 <textarea
                   name="message"
                   value={formData.message}
@@ -289,11 +285,12 @@ export function MobileContactSection() {
                     setFormData({ ...formData, message: e.target.value })
                   }
                   rows={4}
-                  className="w-full bg-transparent outline-none text-text-light px-4 py-3 text-base resize-none"
-                  placeholder="Your Message"
+                  maxLength={500}
+                  className="w-full bg-transparent outline-none text-fg px-4 py-3 text-base resize-none"
+                  placeholder={messages.contact.messagePlaceholder}
                   required
                 />
-                <div className="px-4 py-1 text-xs text-text-secondary text-right">
+                <div className="px-4 py-1 text-xs text-muted text-right">
                   {formData.message.length}/500
                 </div>
               </div>
@@ -307,11 +304,11 @@ export function MobileContactSection() {
               >
                 {isLoading ? (
                   <>
-                    <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" /> 
-                    Sending...
+                    <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                    {messages.contact.sending}
                   </>
                 ) : (
-                  "Send Message"
+                  messages.contact.send
                 )}
               </button>
 
@@ -334,7 +331,7 @@ export function MobileContactSection() {
                     exit={{ opacity: 0, y: -10 }}
                     className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-500 text-sm"
                   >
-                    Thank you! Your message has been sent successfully.
+                    {messages.contact.success}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -358,7 +355,7 @@ export function MobileContactSection() {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-4 bg-dark-light/30 rounded-lg border border-primary/20 flex flex-col items-center gap-3 active:bg-primary/10"
+                  className="p-4 bg-card-muted/80 rounded-lg border border-primary/20 flex flex-col items-center gap-3 active:bg-primary/10"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -372,21 +369,21 @@ export function MobileContactSection() {
                       className="object-contain"
                     />
                   </div>
-                  <span className="text-text-light font-medium text-sm">{link.name}</span>
+                  <span className="text-fg font-medium text-sm">{link.name}</span>
                 </motion.a>
               ))}
             </div>
 
             {/* Contact info card */}
             <motion.div 
-              className="mt-6 p-4 bg-dark-light/30 rounded-lg border border-primary/20"
+              className="mt-6 p-4 bg-card-muted/80 rounded-lg border border-primary/20"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
-              <h3 className="text-primary font-medium mb-3">Direct Contact</h3>
+              <h3 className="text-primary font-medium mb-3">{mc.directContact}</h3>
               <div className="space-y-2">
-                <a href="tel:+998901234567" className="flex items-center gap-3 text-text-light hover:text-primary">
+                <a href="tel:+998901234567" className="flex items-center gap-3 text-fg hover:text-primary">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
@@ -394,7 +391,7 @@ export function MobileContactSection() {
                   </div>
                   <span>+998 90 1227 88 79</span>
                 </a>
-                <a href="mailto:azizbek.dev.uz@gmail.com" className="flex items-center gap-3 text-text-light hover:text-primary">
+                <a href="mailto:azizbek.dev.uz@gmail.com" className="flex items-center gap-3 text-fg hover:text-primary">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -419,13 +416,13 @@ export function MobileContactSection() {
           >
             {/* Languages list */}
             <motion.div 
-              className="bg-dark-light/30 rounded-lg border border-primary/20 overflow-hidden"
+              className="bg-card-muted/80 rounded-lg border border-primary/20 overflow-hidden"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
             >
               <div className="p-4 border-b border-primary/10">
-                <h3 className="text-primary font-medium">Languages</h3>
+                <h3 className="text-primary font-medium">{mc.languagesCard}</h3>
               </div>
               <div>
                 {languages.map((lang, index) => (
@@ -441,7 +438,7 @@ export function MobileContactSection() {
                         className="object-contain rounded-sm"
                       />
                     </div>
-                    <span className="text-text-light">{lang.name}</span>
+                    <span className="text-fg">{lang.name}</span>
                   </div>
                 ))}
               </div>
@@ -449,26 +446,23 @@ export function MobileContactSection() {
 
             {/* About card */}
             <motion.div 
-              className="bg-dark-light/30 rounded-lg border border-primary/20 p-4"
+              className="bg-card-muted/80 rounded-lg border border-primary/20 p-4"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <h3 className="text-primary font-medium mb-2">About Me</h3>
-              <p className="text-text-secondary text-sm leading-relaxed">
-                Full Stack Developer with expertise in React, Next.js, and TypeScript. Passionate about creating responsive, 
-                user-friendly applications with clean code and modern best practices.
-              </p>
+              <h3 className="text-primary font-medium mb-2">{mc.aboutCard}</h3>
+              <p className="text-muted text-sm leading-relaxed">{mc.aboutBio}</p>
             </motion.div>
 
             {/* Location card */}
             <motion.div 
-              className="bg-dark-light/30 rounded-lg border border-primary/20 p-4"
+              className="bg-card-muted/80 rounded-lg border border-primary/20 p-4"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <h3 className="text-primary font-medium mb-2">Location</h3>
+              <h3 className="text-primary font-medium mb-2">{mc.locationCard}</h3>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
@@ -476,7 +470,7 @@ export function MobileContactSection() {
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
                 </div>
-                <span className="text-text-light">Seoul, South Korea</span>
+                <span className="text-fg">{site.location}</span>
               </div>
             </motion.div>
           </motion.div>

@@ -1,128 +1,88 @@
 interface SkillNode {
-    id: string;
+  id: string;
+  title: string;
+  description: string;
+  tools: string[];
+  experience: string;
+  projects?: string[];
+  workspace: {
     title: string;
-    icon: string;
-    description: string;
-    tools: string[];
-    experience: string;
-    projects?: string[];
-    workspace: {
-      title: string;
-      tools: { name: string; icon: string }[];
-      environment: string;
-    };
-  }
+    tools: { name: string; icon: string }[];
+    environment: string;
+  };
+}
 
+/** Primary positioning: engineering. Secondary node is short context only—no separate SMM/tutoring emphasis. */
 export const skillNodes: SkillNode[] = [
-    {
-      id: "webdev",
-      title: "Web Development",
-      icon: "💻",
-      description:
-        "Full-stack development specializing in modern web technologies and AI integration",
+  {
+    id: "engineering",
+    title: "Software engineering",
+    description:
+      "End-to-end web delivery: typed React/Next.js UIs, APIs and data access, deployment, and iteration with product constraints.",
+    tools: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "MongoDB",
+      "Docker",
+      "AWS",
+      "Vercel",
+    ],
+    experience: "3.5+ years",
+    projects: ["ZDesigner AI", "Professor Website", "Portfolio"],
+    workspace: {
+      title: "Core toolchain",
       tools: [
-        "React",
-        "Next.js",
-        "TypeScript",
-        "Node.js",
-        "TailwindCSS",
-        "Framer Motion",
-        "Three.js",
-        "AWS",
-        "Docker",
+        { name: "React", icon: "/icons/react.svg" },
+        { name: "Next", icon: "/icons/nextjs.svg" },
+        { name: "TypeScript", icon: "/icons/typescript.svg" },
+        { name: "GitHub", icon: "/icons/github.svg" },
+        { name: "Docker", icon: "/icons/docker.svg" },
+        { name: "Vercel", icon: "/icons/vercel.svg" },
+        { name: "AWS", icon: "/icons/aws.svg" },
       ],
-      experience: "2+ years",
-      projects: ["ZDesigner AI", "Professor Website", "Portfolio"],
-      workspace: {
-        title: "Development Environment",
-        tools: [
-          { name: "React", icon: "/icons/react.svg" },
-          { name: "Next", icon: "/icons/nextjs.svg" },
-          { name: "NodeJS", icon: "/icons/nodejs.svg" },
-          { name: "GitHub", icon: "/icons/github.svg" },
-          { name: "Docker", icon: "/icons/docker.svg" },
-          { name: "Vercel", icon: "/icons/vercel.svg" },
-          { name: "AWS", icon: "/icons/aws.svg" },
-        ],
-        environment: "Modern Development Setup",
-      },
+      environment: "Production-oriented setup",
     },
-    {
-      id: "design",
-      title: "Graphic Design",
-      icon: "🎨",
-      description:
-        "Creative visual design focusing on brand identity, UI/UX, and marketing materials",
+  },
+  {
+    id: "adjacent",
+    title: "Design & client delivery",
+    description:
+      "Supporting skills for polished UI and client-facing work—Figma and Adobe tools, brand assets, and clear communication on timelines and scope.",
+    tools: ["Figma", "Photoshop", "Illustrator", "Brand & marketing assets", "Client communication"],
+    experience: "3.5+ years",
+    projects: ["POZITIV Denta (branding & collateral)"],
+    workspace: {
+      title: "Design tools",
       tools: [
-        "Adobe Photoshop",
-        "Adobe Illustrator",
-        "Figma",
-        "UI/UX Design",
-        "Brand Design",
-        "Social Media Graphics",
+        { name: "Figma", icon: "/icons/figma.svg" },
+        { name: "Photoshop", icon: "/icons/photoshop.svg" },
+        { name: "Illustrator", icon: "/icons/illustrator.svg" },
       ],
-      experience: "1+ year",
-      projects: ["POZITIV Denta Branding", "Social Media Designs"],
-      workspace: {
-        title: "Design Studio",
-        tools: [
-          { name: "Photoshop", icon: "/icons/photoshop.svg" },
-          { name: "Illustrator", icon: "/icons/illustrator.svg" },
-          { name: "Figma", icon: "/icons/figma.svg" },
-        ],
-        environment: "Creative Workspace",
-      },
+      environment: "When visuals are part of the delivery",
     },
-    {
-      id: "smm",
-      title: "Social Media Management",
-      icon: "📱",
-      description:
-        "Strategic social media management focusing on growth and engagement",
-      tools: [
-        "Content Strategy",
-        "Analytics",
-        "Community Management",
-        "Campaign Planning",
-        "Growth Hacking",
-        "Engagement Optimization",
-      ],
-      experience: "1 year",
-      projects: ["POZITIV Denta SMM", "Personal Brand Management"],
-      workspace: {
-        title: "Social Command Center",
-        tools: [
-          { name: "Analytics", icon: "/icons/analytics.svg" },
-          { name: "Telegram", icon: "/icons/telegram.svg" },
-          { name: "Instagram", icon: "/icons/instagram.svg" },
-          { name: "Facebook", icon: "/icons/facebook.svg" },
-        ],
-        environment: "Digital Marketing Hub",
-      },
+  },
+  {
+    id: "planning",
+    title: "Planning & management",
+    description:
+      "Planning, brainstorming, flowcharting, team discussions, business research and more.",
+    tools: [
+      "Flowcharting",
+      "Team discussions",
+      "Business research",
+      "Brainstorming",
+      "Project Documentation",
+    ],
+    experience: "3.5+ years",
+    projects: ["ZDesigner AI", "Professor Website", "Portfolio"],
+    workspace: {
+      title: "Planning & management tools",
+      tools: [],
+      environment: "When planning and managing projects",
     },
-    {
-      id: "english",
-      title: "English Tutoring",
-      icon: "📚",
-      description:
-        "Personalized English language instruction focusing on practical communication skills",
-      tools: [
-        "IELTS Preparation",
-        "Business English",
-        "Conversational English",
-        "Grammar & Vocabulary",
-        "Pronunciation",
-        "Academic Writing",
-      ],
-      experience: "1 year",
-      projects: ["Private Tutoring", "Group Classes"],
-      workspace: {
-        title: "Virtual Classroom",
-        tools: [
-          { name: "Zoom", icon: "/icons/zoom.svg" },
-          { name: "Google Classroom", icon: "/icons/classroom.svg" },
-        ],
-        environment: "Interactive Learning Space",
-      },
-    },
-  ];
+  },
+];

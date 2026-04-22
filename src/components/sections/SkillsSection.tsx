@@ -4,18 +4,12 @@ import SkillsDesktop from "../skills/SkillsDesktop";
 import SkillsMobile from "../skills/SkillsMobile";
 import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 
-export function SkillsSection() {
+export function SkillsSection({ embedded = false }: { embedded?: boolean }) {
   const { isMobile } = useDeviceDetection();
-  
-  // Mobile version
+
   if (isMobile) {
-    return (
-      <SkillsMobile />
-    );
+    return <SkillsMobile embedded={embedded} />;
   }
 
-  // Original Desktop Version
-  return (
-    <SkillsDesktop />
-  );
+  return <SkillsDesktop embedded={embedded} />;
 }

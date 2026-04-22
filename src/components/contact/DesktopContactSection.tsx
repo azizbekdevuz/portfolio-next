@@ -2,7 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 import emailjs from "@emailjs/browser";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 // Import components
 import { CircuitBackground } from "../contact/CircuitBackground";
@@ -19,12 +21,20 @@ interface FormData {
 
 // Interactive Contact Card Component
 const ContactCard: React.FC = () => {
-  // Component code remains the same
+  const { messages } = useI18n();
+  const pathname = usePathname();
   const [isHovered, setIsHovered] = useState(false);
+  const [qrOrigin, setQrOrigin] = useState("https://portfolio-next-silk-two.vercel.app");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") setQrOrigin(window.location.origin);
+  }, []);
+
+  const qrValue = `${qrOrigin}${pathname}`;
 
   return (
     <motion.div
-      className="relative p-8 rounded-lg bg-dark-light/30 border border-primary/20 backdrop-blur-sm overflow-hidden"
+      className="relative p-8 rounded-lg bg-card-muted/80 border border-primary/20 backdrop-blur-sm overflow-hidden"
       whileHover={{ scale: 1.02 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
@@ -41,10 +51,10 @@ const ContactCard: React.FC = () => {
         >
           Azizbek Arzikulov
         </motion.h2>
-        <p className="text-text-light">Full Stack Developer</p>
+        <p className="text-fg">{messages.contact.profileSubtitle}</p>
         <motion.a
           href="mailto:azizbek.dev.uz@gmail.com"
-          className="block text-text-secondary hover:text-primary transition-colors"
+          className="block text-muted hover:text-primary transition-colors"
           whileHover={{ x: 5 }}
         >
           azizbek.dev.uz@gmail.com
@@ -52,10 +62,7 @@ const ContactCard: React.FC = () => {
 
         {/* QR Code with animation */}
         <div className="absolute top-4 right-4">
-          <QRCodeDisplay
-            value="https://portfolio-next-silk-two.vercel.app/"
-            isHovered={isHovered}
-          />
+          <QRCodeDisplay value={qrValue} isHovered={isHovered} />
         </div>
 
         {/* Decorative Elements */}
@@ -77,7 +84,8 @@ const ContactCard: React.FC = () => {
 };
 
 // Renamed to ContactSectionDesktop
-export function DesktopContactSection() {
+export function DesktopContactSection({ embedded = false }: { embedded?: boolean }) {
+  const { messages } = useI18n();
   const [formData, setFormData] = useState<FormData>({
     from_name: "",
     email: "",
@@ -123,9 +131,7 @@ export function DesktopContactSection() {
       console.error(
         "Missing EmailJS configuration. Please check your environment variables.",
       );
-      setError(
-        "Email service configuration is missing. Please contact the administrator.",
-      );
+      setError(messages.contact.errorConfigUser);
       setIsLoading(false);
       return;
     }
@@ -152,9 +158,7 @@ export function DesktopContactSection() {
       // Error handling with better logging
       console.error("EmailJS error:", err);
       setError(
-        err instanceof Error
-          ? `Failed to send message: ${err.message}`
-          : "Failed to send message. Please try again later.",
+        err instanceof Error ? `${messages.contact.errorSend} (${err.message})` : messages.contact.errorSend,
       );
 
       // Clean up temp field if it exists
@@ -171,27 +175,28 @@ export function DesktopContactSection() {
   return (
     <motion.section
       id="contact"
-      className="relative min-h-screen py-20"
+      className={`relative ${embedded ? "min-h-0 py-8" : "min-h-screen py-20"}`}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
     >
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4">
-        {/* Section Title */}
-        <motion.div
-          className="flex flex-col items-center gap-3 mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-        <div className="flex items-center gap-3 mb-4 font-mono">
-          <span className="text-primary/50">class</span>
-          <h2 className="text-4xl font-bold text-text-light">ContactMatrix</h2>
-          <span className="text-primary/50">extends</span>
-          <span className="text-text-light">Connection</span>
-        </div>
-      </motion.div>
+        {!embedded && (
+          <motion.div
+            className="mb-16 flex flex-col items-center gap-3"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="mb-4 flex items-center gap-3 font-mono">
+              <span className="text-primary/50">{messages.aboutSection.classKeyword}</span>
+              <h2 className="text-4xl font-bold text-fg">{messages.contact.matrixTitle}</h2>
+              <span className="text-primary/50">{messages.aboutSection.extendsKeyword}</span>
+              <span className="text-fg">{messages.contact.connection}</span>
+            </div>
+          </motion.div>
+        )}
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Contact Card */}
@@ -237,8 +242,8 @@ export function DesktopContactSection() {
                     }
                     onFocus={() => setActiveField("from_name")}
                     onBlur={() => setActiveField(null)}
-                    className="w-full bg-transparent outline-none text-text-light px-3 py-2"
-                    placeholder="Your Name"
+                    className="w-full bg-transparent outline-none text-fg px-3 py-2"
+                    placeholder={messages.contact.namePlaceholder}
                     required
                   />
                   <motion.div
@@ -278,8 +283,8 @@ export function DesktopContactSection() {
                     }}
                     onFocus={() => setActiveField("email")}
                     onBlur={() => setActiveField(null)}
-                    className="w-full bg-transparent outline-none text-text-light px-3 py-2"
-                    placeholder="Your Email"
+                    className="w-full bg-transparent outline-none text-fg px-3 py-2"
+                    placeholder={messages.contact.emailPlaceholder}
                     required
                   />
                 </motion.div>
@@ -311,12 +316,12 @@ export function DesktopContactSection() {
                     onBlur={() => setActiveField(null)}
                     rows={5}
                     maxLength={500}
-                    className="w-full bg-transparent outline-none text-text-light 
+                    className="w-full bg-transparent outline-none text-fg 
                              px-3 py-2 resize-none"
-                    placeholder="Your Message"
+                    placeholder={messages.contact.messagePlaceholder}
                     required
                   />
-                  <div className="absolute bottom-2 right-2 text-xs text-text-secondary">
+                  <div className="absolute bottom-2 right-2 text-xs text-muted">
                     {formData.message.length}/500
                   </div>
                 </motion.div>
@@ -332,7 +337,7 @@ export function DesktopContactSection() {
                 whileTap={{ scale: 0.98 }}
               >
                 <span className="relative z-10">
-                  {isLoading ? "Sending..." : "Send Message"}
+                  {isLoading ? messages.contact.sending : messages.contact.send}
                 </span>
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-primary via-[#2980b9] to-primary"
@@ -361,7 +366,7 @@ export function DesktopContactSection() {
                     exit={{ opacity: 0, y: -10 }}
                     className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-500 text-sm"
                   >
-                    Message sent successfully!
+                    {messages.contact.success}
                   </motion.div>
                 )}
               </AnimatePresence>

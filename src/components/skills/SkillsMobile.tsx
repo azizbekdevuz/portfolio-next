@@ -1,20 +1,43 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import { ArrowLeft, ChevronRight, Cpu, Palette } from "lucide-react";
+import { TechIconTile } from "@/components/ui/TechIconTile";
 import { skillNodes } from "../skills/skillsList";
 import { useDeviceDetection } from "@/hooks/useDeviceDetection";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
-export default function SkillsMobile() {
-  const [activeSkill, setActiveSkill] = useState<string>("webdev");
+export default function SkillsMobile({ embedded = false }: { embedded?: boolean }) {
+  const { messages } = useI18n();
+  const [activeSkill, setActiveSkill] = useState<string>("engineering");
   const containerRef = useRef<HTMLDivElement>(null);
   const skillsContainerRef = useRef<HTMLDivElement>(null);
   const [currentView, setCurrentView] = useState<"overview" | "details">("overview");
   const [activeTab, setActiveTab] = useState<"about" | "tools" | "projects">("about");
   const { isMobile } = useDeviceDetection();
 
-  const activeNode = skillNodes.find((node) => node.id === activeSkill);
+  const localizedNodes = useMemo(
+    () =>
+      skillNodes.map((node) => {
+        const loc = messages.skills.nodes[node.id as keyof typeof messages.skills.nodes];
+        if (!loc) return node;
+        return {
+          ...node,
+          title: loc.title,
+          description: loc.description,
+          experience: loc.experience,
+          workspace: {
+            ...node.workspace,
+            title: loc.workspaceTitle,
+            environment: loc.workspaceEnvironment,
+          },
+        };
+      }),
+    [messages],
+  );
+
+  const activeNode = localizedNodes.find((node) => node.id === activeSkill);
 
   // Handle back button action
   const handleBack = () => {
@@ -37,30 +60,30 @@ export default function SkillsMobile() {
       <motion.section
         ref={containerRef}
         id="skills"
-        className="relative min-h-[100svh] py-10 overflow-hidden"
+        className={`relative overflow-hidden ${embedded ? "min-h-0 py-4" : "min-h-[100svh] py-10"}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
         {/* Simplified Background for Mobile */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_300px_at_50%_30%,rgba(20,157,221,0.02),transparent)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)]
-                     bg-[size:3rem_3rem] opacity-40" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_300px_at_50%_30%,var(--color-glow),transparent)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-50 dark:opacity-40" />
         </div>
 
         {/* Main Content Container */}
         <div className="relative z-10 container mx-auto px-4">
-          {/* Section Title */}
-          <motion.div
-            className="text-center mb-8"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl font-bold text-text-light mb-2">My Skills</h2>
-            <div className="h-1 w-16 bg-primary rounded-full mx-auto"></div>
-          </motion.div>
+          {!embedded && (
+            <motion.div
+              className="mb-8 text-center"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="mb-2 text-3xl font-bold text-fg">{messages.skills.title}</h2>
+              <div className="mx-auto h-1 w-16 rounded-full bg-accent" />
+            </motion.div>
+          )}
 
           {/* Two Views: Overview (Grid) and Details (Focused View) */}
           <AnimatePresence mode="wait">
@@ -74,21 +97,23 @@ export default function SkillsMobile() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
               >
-                {skillNodes.map((skill) => (
+                {localizedNodes.map((skill) => {
+                  const NavIcon = skill.id === "engineering" ? Cpu : Palette;
+                  return (
                   <motion.div
                     key={skill.id}
-                    className={`relative rounded-lg overflow-hidden border ${
-                      skill.id === activeSkill ? "border-primary" : "border-primary/20"
+                    className={`relative overflow-hidden rounded-lg border ${
+                      skill.id === activeSkill ? "border-accent ring-1 ring-accent/30" : "border-border"
                     }`}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleSelectSkill(skill.id)}
                   >
                     {/* Card with Info */}
-                    <div className="p-4 bg-dark-light/30 h-full flex flex-col">
+                    <div className="p-4 bg-card-muted/80 h-full flex flex-col">
                       {/* Icon and Title */}
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-2xl">{skill.icon}</span>
-                        <h3 className="text-base font-medium text-text-light">{skill.title}</h3>
+                      <div className="mb-2 flex items-center gap-2">
+                        <NavIcon className="h-6 w-6 shrink-0 text-accent" strokeWidth={1.5} aria-hidden />
+                        <h3 className="text-base font-medium text-fg">{skill.title}</h3>
                       </div>
                       
                       {/* Experience Badge */}
@@ -99,18 +124,19 @@ export default function SkillsMobile() {
                       </div>
                       
                       {/* Short Description */}
-                      <p className="text-xs text-text-secondary line-clamp-2 mb-3">
+                      <p className="text-xs text-muted line-clamp-2 mb-3">
                         {skill.description}
                       </p>
                       
                       {/* View More Button */}
-                      <div className="mt-auto text-xs text-primary flex items-center">
-                        <span>View details</span>
-                        <span className="ml-1">→</span>
+                      <div className="mt-auto flex items-center text-xs text-accent">
+                        <span>{messages.skills.viewDetails}</span>
+                        <ChevronRight className="ml-0.5 h-3.5 w-3.5" aria-hidden />
                       </div>
                     </div>
                   </motion.div>
-                ))}
+                );
+                })}
               </motion.div>
             ) : (
               /* DETAILS: Individual Skill Focused View */
@@ -125,21 +151,24 @@ export default function SkillsMobile() {
               >
                 {activeNode && (
                   <>
-                    {/* Back Button */}
                     <button
+                      type="button"
                       onClick={handleBack}
-                      className="inline-flex items-center gap-1 text-sm text-primary mb-4"
+                      className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-accent"
                     >
-                      <span>←</span>
-                      <span>Back to all skills</span>
+                      <ArrowLeft className="h-4 w-4" aria-hidden />
+                      {messages.skills.backToAll}
                     </button>
-                    
-                    {/* Skill Header */}
-                    <div className="bg-dark-light/20 rounded-t-lg p-4 border border-primary/30 border-b-0">
+
+                    <div className="rounded-t-lg border border-border border-b-0 bg-surface-soft p-4 dark:border-border-strong dark:bg-card-muted/50">
                       <div className="flex items-center gap-3">
-                        <span className="text-3xl">{activeNode.icon}</span>
+                        {activeNode.id === "engineering" ? (
+                          <Cpu className="h-8 w-8 shrink-0 text-accent" strokeWidth={1.5} aria-hidden />
+                        ) : (
+                          <Palette className="h-8 w-8 shrink-0 text-accent" strokeWidth={1.5} aria-hidden />
+                        )}
                         <div>
-                          <h3 className="text-xl font-medium text-text-light">
+                          <h3 className="text-xl font-medium text-fg">
                             {activeNode.title}
                           </h3>
                           <span className="text-primary text-sm">
@@ -156,20 +185,20 @@ export default function SkillsMobile() {
                         className={`flex-1 py-2 text-center text-sm font-medium ${
                           activeTab === "about" 
                             ? "text-primary border-b-2 border-primary" 
-                            : "text-text-secondary"
+                            : "text-muted"
                         }`}
                       >
-                        About
+                        {messages.skills.tabAbout}
                       </button>
                       <button
                         onClick={() => setActiveTab("tools")}
                         className={`flex-1 py-2 text-center text-sm font-medium ${
                           activeTab === "tools" 
                             ? "text-primary border-b-2 border-primary" 
-                            : "text-text-secondary"
+                            : "text-muted"
                         }`}
                       >
-                        Tools
+                        {messages.skills.tabTools}
                       </button>
                       {activeNode.projects && (
                         <button
@@ -177,16 +206,16 @@ export default function SkillsMobile() {
                           className={`flex-1 py-2 text-center text-sm font-medium ${
                             activeTab === "projects"
                               ? "text-primary border-b-2 border-primary"
-                              : "text-text-secondary"
+                              : "text-muted"
                           }`}
                         >
-                          Projects
+                          {messages.skills.tabProjects}
                         </button>
                       )}
                     </div>
                     
                     {/* Tab Content */}
-                    <div className="bg-dark-light/20 rounded-b-lg p-4 border border-primary/30 border-t-0 min-h-[50vh]">
+                    <div className="bg-card-muted/60 rounded-b-lg p-4 border border-primary/30 border-t-0 min-h-[50vh]">
                       <AnimatePresence mode="wait">
                         {/* About Tab */}
                         {activeTab === "about" && (
@@ -197,17 +226,17 @@ export default function SkillsMobile() {
                             exit={{ opacity: 0, x: 10 }}
                             transition={{ duration: 0.2 }}
                           >
-                            <h4 className="text-text-light font-medium mb-3">Overview</h4>
-                            <p className="text-text-secondary mb-6 text-sm">
+                            <h4 className="text-fg font-medium mb-3">{messages.skills.panelOverview}</h4>
+                            <p className="text-muted mb-6 text-sm">
                               {activeNode.description}
                             </p>
                             
-                            <h4 className="text-text-light font-medium mb-3">Technologies</h4>
+                            <h4 className="text-fg font-medium mb-3">{messages.skills.panelTechnologies}</h4>
                             <div className="flex flex-wrap gap-2 mb-4">
                               {activeNode.tools.map((tool) => (
                                 <span
                                   key={tool}
-                                  className="px-2 py-1 rounded-full text-xs bg-dark-light/30 
+                                  className="px-2 py-1 rounded-full text-xs bg-card-muted/80 
                                           border border-primary/20 text-primary"
                                 >
                                   {tool}
@@ -217,10 +246,7 @@ export default function SkillsMobile() {
                             
                             <div className="bg-primary/5 rounded-lg p-3 border border-primary/20 mt-6">
                               <h4 className="text-primary text-sm font-medium mb-2">{activeNode.workspace.environment}</h4>
-                              <p className="text-text-secondary text-xs">
-                                {activeNode.workspace.title} with specialized tools for optimal productivity
-                                and efficient workflow. Tap the Tools tab to learn more.
-                              </p>
+                              <p className="text-muted text-xs">{messages.skills.workspaceHint}</p>
                             </div>
                           </motion.div>
                         )}
@@ -234,7 +260,7 @@ export default function SkillsMobile() {
                             exit={{ opacity: 0, x: 10 }}
                             transition={{ duration: 0.2 }}
                           >
-                            <h4 className="text-text-light font-medium mb-4">
+                            <h4 className="text-fg font-medium mb-4">
                               {activeNode.workspace.title}
                             </h4>
                             
@@ -245,30 +271,19 @@ export default function SkillsMobile() {
                                   initial={{ opacity: 0, y: 10 }}
                                   animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: index * 0.05 }}
-                                  className="bg-dark-light/30 p-3 rounded-lg border border-primary/20 flex flex-col items-center"
+                                  className="flex flex-col items-center rounded-lg border border-border bg-card p-3 dark:border-border-strong"
                                   whileTap={{ scale: 0.95 }}
                                 >
-                                  <div className="relative w-10 h-10 mb-2">
-                                    <Image
-                                      src={tool.icon}
-                                      alt={tool.name}
-                                      fill
-                                      sizes="40px"
-                                      style={{ objectFit: "contain" }}
-                                    />
+                                  <div className="mb-2 flex justify-center">
+                                    <TechIconTile src={tool.icon} alt="" size="md" />
                                   </div>
-                                  <span className="text-center text-xs text-text-secondary">
-                                    {tool.name}
-                                  </span>
+                                  <span className="text-center text-xs text-muted">{tool.name}</span>
                                 </motion.div>
                               ))}
                             </div>
                             
                             <div className="mt-6 p-3 bg-primary/5 rounded-lg border border-primary/20">
-                              <p className="text-xs text-text-secondary">
-                                These are the primary tools and technologies I use for {activeNode.title.toLowerCase()} projects, 
-                                allowing me to deliver high-quality results efficiently.
-                              </p>
+                              <p className="text-xs text-muted">{messages.skills.toolsTabFooter}</p>
                             </div>
                           </motion.div>
                         )}
@@ -282,7 +297,7 @@ export default function SkillsMobile() {
                             exit={{ opacity: 0, x: 10 }}
                             transition={{ duration: 0.2 }}
                           >
-                            <h4 className="text-text-light font-medium mb-4">Featured Projects</h4>
+                            <h4 className="text-fg font-medium mb-4">{messages.skills.featuredProjects}</h4>
                             
                             <div className="space-y-3">
                               {activeNode.projects.map((project, index) => (
@@ -291,25 +306,17 @@ export default function SkillsMobile() {
                                   initial={{ opacity: 0, y: 10 }}
                                   animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: index * 0.1 }}
-                                  className="p-3 bg-dark-light/30 rounded-lg border border-primary/20"
+                                  className="p-3 bg-card-muted/80 rounded-lg border border-primary/20"
                                 >
                                   <div className="flex items-center justify-between">
-                                    <h5 className="text-sm font-medium text-text-light">{project}</h5>
-                                    <span className="text-xs text-primary">View →</span>
+                                    <h5 className="text-sm font-medium text-fg">{project}</h5>
+                                    <span className="text-xs text-primary">{messages.skills.viewCta}</span>
                                   </div>
-                                  <p className="text-xs text-text-secondary mt-1">
-                                    A {activeNode.title.toLowerCase()} project showcasing my skills in
-                                    {activeNode.tools.slice(0, 2).join(", ")} and more.
-                                  </p>
+                                  <p className="text-xs text-muted mt-1">{messages.skills.projectsCardBlurb}</p>
                                 </motion.div>
                               ))}
                             </div>
                             
-                            <div className="mt-6 text-center">
-                              <button className="px-4 py-2 bg-primary/10 text-primary text-sm rounded-lg border border-primary/30">
-                                See all projects
-                              </button>
-                            </div>
                           </motion.div>
                         )}
                       </AnimatePresence>
