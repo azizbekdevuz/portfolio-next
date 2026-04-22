@@ -1,0 +1,31 @@
+name: Bug report
+description: Something is broken in the app, build, or dev workflow
+title: "[bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for **reproducible** issues (UI bug, build failure, i18n regression).  
+        For **security** vulnerabilities, do **not** use this form — see **SECURITY.md** at the repo root.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What you expected vs what happened.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Steps, URL path (e.g. `/en`), browser, and theme (light/dark) if relevant.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: e.g. Node 20.x, Windows, `npm` version, commit SHA if not `main`
+    validations:
+      required: false
