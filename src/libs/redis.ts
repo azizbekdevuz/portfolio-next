@@ -7,6 +7,9 @@ export function getRedisClient() {
   if (!redis) {
     const url = process.env.REDIS_URL || "redis://localhost:6379";
     redis = new Redis(url);
+    redis.on("error", () => {
+      /* Avoid crashing Node on DNS/network failures; callers use fetch fallback. */
+    });
   }
   return redis;
 }
