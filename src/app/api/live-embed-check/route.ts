@@ -9,6 +9,13 @@ export const runtime = "nodejs";
 
 const FETCH_TIMEOUT_MS = 10_000;
 
+/**
+ * Opaque “passed policy” URL for this route only. All instances are created only after
+ * `assertPublicHttpUrl` (or a wrapper that calls it) succeeds, so fetches may only be issued for
+ * these values.
+ */
+type SafePublicUrl = URL & { readonly __brand: "PublicHttp" };
+
 function assertPublicHttpUrl(url: URL): { ok: true } | { ok: false; message: string } {
   const protocol = url.protocol.toLowerCase();
   if (protocol !== "http:" && protocol !== "https:") {
@@ -47,6 +54,21 @@ function assertPublicHttpUrl(url: URL): { ok: true } | { ok: false; message: str
   return { ok: true };
 }
 
+function toSafePublicUrl(u: URL): { ok: true; url: SafePublicUrl } | { ok: false; message: string } {
+  const g = assertPublicHttpUrl(u);
+  if (!g.ok) return g;
+  return { ok: true, url: u as SafePublicUrl };
+}
+
+/** Only this helper issues outbound requests for embed policy checks. */
+function safeFetch(
+  method: "HEAD" | "GET",
+  target: SafePublicUrl,
+  init: { signal: AbortSignal; headers: Record<string, string> },
+): Promise<Response> {
+  return fetch(target, { method, redirect: "manual" as const, ...init });
+}
+
 /** Avoid fetch auto-follow: each redirect target must pass `assertPublicHttpUrl` (SSRF / internal bypass). */
 const MAX_REDIRECTS = 8;
 
@@ -56,7 +78,10 @@ function isRedirectStatus(status: number): boolean {
   return REDIRECT_STATUSES.has(status);
 }
 
-function tryNextFromRedirectResponse(res: Response, current: URL): URL | null {
+function tryNextFromRedirectResponse(
+  res: Response,
+  current: SafePublicUrl,
+): SafePublicUrl | null {
   const raw = res.headers.get("location")?.trim();
   if (!raw) return null;
   let next: URL;
@@ -65,16 +90,16 @@ function tryNextFromRedirectResponse(res: Response, current: URL): URL | null {
   } catch {
     return null;
   }
-  const gate = assertPublicHttpUrl(next);
-  if (!gate.ok) return null;
-  return next;
+  const p = toSafePublicUrl(next);
+  if (!p.ok) return null;
+  return p.url;
 }
 
 /**
  * Fetches a response to inspect framing headers, without following redirects the platform would
  * otherwise follow without re-validating each URL (SSRF / internal bypass on redirect chains).
  */
-async function fetchResponseForHeaders(start: URL): Promise<Response | null> {
+async function fetchResponseForHeaders(start: SafePublicUrl): Promise<Response | null> {
   const controller = new AbortController();
   const t = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
@@ -83,12 +108,9 @@ async function fetchResponseForHeaders(start: URL): Promise<Response | null> {
     Accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
   };
 
-  const initBase = {
-    redirect: "manual" as const,
-    signal: controller.signal,
-  };
+  const signal = controller.signal;
 
-  let current = new URL(start.href);
+  let current: SafePublicUrl = start;
   let redirects = 0;
 
   try {
@@ -96,11 +118,8 @@ async function fetchResponseForHeaders(start: URL): Promise<Response | null> {
       if (redirects > MAX_REDIRECTS) {
         return null;
       }
-      if (!assertPublicHttpUrl(current).ok) {
-        return null;
-      }
 
-      let res = await fetch(current.href, { ...initBase, method: "HEAD", headers: baseHeaders });
+      let res = await safeFetch("HEAD", current, { signal, headers: baseHeaders });
       if (isRedirectStatus(res.status)) {
         const next = tryNextFromRedirectResponse(res, current);
         if (!next) return null;
@@ -112,9 +131,8 @@ async function fetchResponseForHeaders(start: URL): Promise<Response | null> {
         return res;
       }
 
-      res = await fetch(current.href, {
-        ...initBase,
-        method: "GET",
+      res = await safeFetch("GET", current, {
+        signal,
         headers: { ...baseHeaders, Range: "bytes=0-0" },
       });
       if (isRedirectStatus(res.status)) {
@@ -151,9 +169,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ embeddable: null, reason: "invalid_url" }, { status: 400 });
   }
 
-  const gate = assertPublicHttpUrl(parsed);
-  if (!gate.ok) {
-    return NextResponse.json({ embeddable: false, reason: gate.message });
+  const safe = toSafePublicUrl(parsed);
+  if (!safe.ok) {
+    return NextResponse.json({ embeddable: false, reason: safe.message });
   }
 
   let origin: string | null = null;
@@ -165,12 +183,12 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  const res = await fetchResponseForHeaders(parsed);
+  const res = await fetchResponseForHeaders(safe.url);
   if (!res) {
     return NextResponse.json({ embeddable: null, reason: "fetch_failed" });
   }
 
-  const finalUrl = res.url || parsed.href;
+  const finalUrl = res.url || safe.url.href;
 
   const xfo = parseXFrameOptions(res.headers.get("x-frame-options"));
   if (isBlockedByXFrameOptions(xfo)) {
