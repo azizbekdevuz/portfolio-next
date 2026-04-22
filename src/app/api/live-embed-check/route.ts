@@ -47,7 +47,34 @@ function assertPublicHttpUrl(url: URL): { ok: true } | { ok: false; message: str
   return { ok: true };
 }
 
-async function fetchResponseForHeaders(target: string): Promise<Response | null> {
+/** Avoid fetch auto-follow: each redirect target must pass `assertPublicHttpUrl` (SSRF / internal bypass). */
+const MAX_REDIRECTS = 8;
+
+const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
+
+function isRedirectStatus(status: number): boolean {
+  return REDIRECT_STATUSES.has(status);
+}
+
+function tryNextFromRedirectResponse(res: Response, current: URL): URL | null {
+  const raw = res.headers.get("location")?.trim();
+  if (!raw) return null;
+  let next: URL;
+  try {
+    next = new URL(raw, current);
+  } catch {
+    return null;
+  }
+  const gate = assertPublicHttpUrl(next);
+  if (!gate.ok) return null;
+  return next;
+}
+
+/**
+ * Fetches a response to inspect framing headers, without following redirects the platform would
+ * otherwise follow without re-validating each URL (SSRF / internal bypass on redirect chains).
+ */
+async function fetchResponseForHeaders(start: URL): Promise<Response | null> {
   const controller = new AbortController();
   const t = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
@@ -57,20 +84,48 @@ async function fetchResponseForHeaders(target: string): Promise<Response | null>
   };
 
   const initBase = {
-    redirect: "follow" as const,
+    redirect: "manual" as const,
     signal: controller.signal,
   };
 
+  let current = new URL(start.href);
+  let redirects = 0;
+
   try {
-    let res = await fetch(target, { ...initBase, method: "HEAD", headers: baseHeaders });
-    if (!res.ok || res.status === 405 || res.status === 501) {
-      res = await fetch(target, {
+    for (;;) {
+      if (redirects > MAX_REDIRECTS) {
+        return null;
+      }
+      if (!assertPublicHttpUrl(current).ok) {
+        return null;
+      }
+
+      let res = await fetch(current.href, { ...initBase, method: "HEAD", headers: baseHeaders });
+      if (isRedirectStatus(res.status)) {
+        const next = tryNextFromRedirectResponse(res, current);
+        if (!next) return null;
+        current = next;
+        redirects += 1;
+        continue;
+      }
+      if (res.ok && res.status !== 405 && res.status !== 501) {
+        return res;
+      }
+
+      res = await fetch(current.href, {
         ...initBase,
         method: "GET",
         headers: { ...baseHeaders, Range: "bytes=0-0" },
       });
+      if (isRedirectStatus(res.status)) {
+        const next = tryNextFromRedirectResponse(res, current);
+        if (!next) return null;
+        current = next;
+        redirects += 1;
+        continue;
+      }
+      return res;
     }
-    return res;
   } catch {
     return null;
   } finally {
@@ -110,7 +165,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  const res = await fetchResponseForHeaders(parsed.href);
+  const res = await fetchResponseForHeaders(parsed);
   if (!res) {
     return NextResponse.json({ embeddable: null, reason: "fetch_failed" });
   }
