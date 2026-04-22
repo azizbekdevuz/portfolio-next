@@ -2,236 +2,217 @@
 
 import { useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { Award, Trophy } from "lucide-react";
 import { AchievementsContext } from "../sections/AboutSection";
+import { useI18n } from "@/components/i18n/I18nProvider";
+
+function CertificateFrame({ src, alt, caption }: { src: string; alt: string; caption: string }) {
+  return (
+    <figure className="group relative mx-auto w-full max-w-lg">
+      {/* Ambient glow — theme-aware */}
+      <div
+        className="pointer-events-none absolute -inset-4 rounded-3xl opacity-40 blur-2xl transition-opacity duration-500 group-hover:opacity-70 dark:opacity-30 dark:group-hover:opacity-50"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 50%, color-mix(in srgb, var(--color-accent) 35%, transparent), transparent 70%)",
+        }}
+        aria-hidden
+      />
+
+      {/* Gradient bezel (cutting-edge frame) */}
+      <div className="relative rounded-2xl p-px shadow-[0_1px_0_0_rgba(255,255,255,0.06)_inset] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset]">
+        <div
+          className="rounded-[15px] p-px"
+          style={{
+            background:
+              "linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 55%, transparent) 0%, var(--color-border-strong) 45%, color-mix(in srgb, var(--color-accent) 40%, transparent) 100%)",
+          }}
+        >
+          <div className="relative overflow-hidden rounded-[14px] bg-card dark:bg-page-elevated">
+            {/* Inner glass edge */}
+            <div
+              className="pointer-events-none absolute inset-0 rounded-[14px] ring-1 ring-inset ring-fg/5 dark:ring-white/8"
+              aria-hidden
+            />
+
+            {/* L-corner brackets */}
+            <span
+              className="pointer-events-none absolute left-3 top-3 z-[1] h-5 w-5 border-l-2 border-t-2 border-accent/70"
+              aria-hidden
+            />
+            <span
+              className="pointer-events-none absolute right-3 top-3 z-[1] h-5 w-5 border-r-2 border-t-2 border-accent/70"
+              aria-hidden
+            />
+            <span
+              className="pointer-events-none absolute bottom-3 left-3 z-[1] h-5 w-5 border-b-2 border-l-2 border-accent/50"
+              aria-hidden
+            />
+            <span
+              className="pointer-events-none absolute bottom-3 right-3 z-[1] h-5 w-5 border-b-2 border-r-2 border-accent/50"
+              aria-hidden
+            />
+
+            {/* Scan-line sheen (subtle, on hover) */}
+            <div
+              className="pointer-events-none absolute inset-0 z-[2] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{
+                background:
+                  "linear-gradient(105deg, transparent 40%, color-mix(in srgb, var(--color-accent) 12%, transparent) 50%, transparent 60%)",
+              }}
+              aria-hidden
+            />
+
+            <div className="relative aspect-[4/3] w-full sm:aspect-[3/2]">
+              <Image
+                src={src}
+                alt={alt}
+                fill
+                className="object-contain p-3 sm:p-4"
+                sizes="(max-width: 640px) 100vw, 28rem"
+                quality={92}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <figcaption className="mt-3 flex items-center justify-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-subtle">
+        <Award className="h-3 w-3 text-accent/80" strokeWidth={2} aria-hidden />
+        {caption}
+      </figcaption>
+    </figure>
+  );
+}
 
 export function Achievements() {
-  // Use context instead of fetching
+  const { messages } = useI18n();
   const achievements = useContext(AchievementsContext);
+  const [selectedId, setSelectedId] = useState("");
+  const ids = achievements.map((a) => a.id);
+  const activeId = selectedId && ids.includes(selectedId) ? selectedId : (ids[0] ?? "");
 
-  const [activeCategory, setActiveCategory] = useState("");
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-
-  // Set the first category as active if we have data and no active category
-  if (achievements.length > 0 && activeCategory === "") {
-    setActiveCategory(achievements[0].id);
-  }
-
-  // Show loading skeleton if no achievements yet
   if (achievements.length === 0) {
     return (
-      <div className="mb-20">
-        <div className="flex items-center gap-3 mb-10 font-mono">
-          <div className="h-6 w-24 bg-primary/10 animate-pulse rounded"></div>
-          <div className="h-8 w-48 bg-primary/20 animate-pulse rounded"></div>
-          <div className="h-6 w-8 bg-primary/10 animate-pulse rounded"></div>
-        </div>
-
-        <div className="flex flex-wrap gap-4 mb-8">
-          {["Education", "Projects", "Skills"].map((label, i) => (
-            <div
-              key={i}
-              className="h-10 w-32 bg-dark-light/20 animate-pulse rounded-lg flex items-center justify-center"
-            >
-              <span className="text-text-secondary/50 text-sm">
-                Loading {label}...
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <div className="space-y-6">
-          {[
-            "Fetching academic background...",
-            "Loading project achievements...",
-          ].map((text, i) => (
-            <div
-              key={i}
-              className="p-6 rounded-lg border border-primary/20 bg-dark-light/20"
-            >
-              <div className="flex justify-between">
-                <div className="space-y-3 w-4/5">
-                  <div className="h-7 w-1/2 bg-primary/20 animate-pulse rounded flex items-center">
-                    <span className="text-text-secondary/50 text-sm px-2">
-                      {text}
-                    </span>
-                  </div>
-                  <div className="h-5 w-2/5 bg-primary/10 animate-pulse rounded"></div>
-                  <div className="h-4 w-3/4 bg-dark-light/40 animate-pulse rounded"></div>
-                  <div className="h-4 w-3/5 bg-primary/5 animate-pulse rounded"></div>
-                </div>
-                <div className="h-6 w-20 bg-primary/10 animate-pulse rounded-full"></div>
-              </div>
-            </div>
-          ))}
-        </div>
+      <div className="mb-16">
+        <div className="mb-8 h-8 w-48 animate-pulse rounded bg-card-muted" />
+        <div className="h-40 animate-pulse rounded-xl border border-border bg-surface-soft" />
       </div>
     );
   }
 
   return (
-    <div className="mb-20">
-      {/* Section Title */}
-      <motion.div
-        className="flex items-center gap-3 mb-10 font-mono"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        <span className="text-primary/50">function</span>
-        <h3 className="text-2xl font-bold text-text-light">achievements()</h3>
-        <span className="text-primary/50">{" {"}</span>
-      </motion.div>
+    <section className="relative mb-20" aria-labelledby="achievements-heading">
+      {/* Section backdrop — ties block together */}
+      <div
+        className="pointer-events-none absolute -inset-x-4 -inset-y-6 rounded-[2rem] bg-gradient-to-b from-surface-soft/80 via-transparent to-transparent dark:from-card-muted/25 md:-inset-x-8"
+        aria-hidden
+      />
 
-      {/* Categories Tabs */}
-      <div className="flex flex-wrap gap-4 mb-8">
-        {achievements.map((category) => (
-          <motion.button
-            key={category.id}
-            onClick={() => setActiveCategory(category.id)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg 
-                       transition-all duration-300 ${
-                         activeCategory === category.id
-                           ? "bg-primary/10 border-primary"
-                           : "bg-dark-light/20 border-primary/20"
-                       } border`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="text-xl">{category.icon}</span>
-            <span className="text-text-light">{category.title}</span>
-          </motion.button>
-        ))}
-      </div>
-
-      {/* Achievement Cards */}
       <div className="relative">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="grid gap-6"
-          >
-            {achievements
-              .find((cat) => cat.id === activeCategory)
-              ?.items.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  className="relative"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onHoverStart={() => setHoveredItem(item.title)}
-                  onHoverEnd={() => setHoveredItem(null)}
-                >
-                  {/* Achievement Card */}
-                  <motion.div
-                    className="relative p-6 rounded-lg border border-primary/20
-                             bg-dark-light/20 overflow-hidden group"
-                    whileHover={{ scale: 1.02 }}
+        <div className="mb-2 flex items-center gap-3">
+          <div className="h-px flex-1 max-w-[3rem] bg-gradient-to-r from-transparent to-accent/50" aria-hidden />
+          <Award className="h-5 w-5 text-accent" strokeWidth={1.5} aria-hidden />
+          <div className="h-px flex-1 max-w-[3rem] bg-gradient-to-l from-transparent to-accent/50" aria-hidden />
+        </div>
+
+        <motion.div
+          className="mb-8 flex flex-wrap items-end justify-between gap-4"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent">
+              {messages.achievements.recognition}
+            </p>
+            <h3 id="achievements-heading" className="mt-1 text-2xl font-bold tracking-tight text-fg md:text-3xl">
+              {messages.achievements.heading}
+            </h3>
+            <p className="mt-1 text-sm text-muted">{messages.achievements.subtitle}</p>
+          </div>
+        </motion.div>
+
+        <div className="mb-8 flex flex-wrap gap-2">
+          {achievements.map((category) => {
+            const on = activeId === category.id;
+            return (
+              <motion.button
+                key={category.id}
+                type="button"
+                onClick={() => setSelectedId(category.id)}
+                className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-all ${
+                  on
+                    ? "border-accent/40 bg-card font-semibold text-fg shadow-md shadow-accent/10 ring-1 ring-accent/25 dark:bg-card-muted/80"
+                    : "border-border bg-page-elevated/80 text-muted hover:border-border-strong hover:text-fg dark:bg-card/60"
+                }`}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Trophy className={`h-4 w-4 ${on ? "text-accent" : "text-subtle"}`} strokeWidth={1.75} aria-hidden />
+                {category.title}
+              </motion.button>
+            );
+          })}
+        </div>
+
+        <div className="relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeId}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col gap-8"
+            >
+              {achievements
+                .find((cat) => cat.id === activeId)
+                ?.items.map((item, index) => (
+                  <motion.article
+                    key={item.title}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.06 }}
+                    className="overflow-hidden rounded-3xl border border-border bg-page-elevated/90 shadow-[0_20px_50px_-24px_rgba(15,23,42,0.2)] dark:border-border-strong dark:bg-card/90 dark:shadow-[0_24px_56px_-20px_rgba(0,0,0,0.45)]"
                   >
-                    {/* Year Badge */}
-                    <div className="absolute top-4 right-4">
+                    <div
+                      className={`grid gap-0 ${item.certificateMedia ? "lg:grid-cols-12" : ""}`}
+                    >
                       <div
-                        className="px-3 py-1 rounded-full bg-primary/10 
-                                    text-primary text-sm font-mono"
+                        className={`flex flex-col justify-center border-border p-6 md:p-8 dark:border-border-strong/80 ${
+                          item.certificateMedia ? "lg:col-span-7 lg:border-r" : ""
+                        }`}
                       >
-                        {item.year}
+                        <div className="mb-4 flex flex-wrap items-center gap-2">
+                          <span className="rounded-full border border-accent/25 bg-accent/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wide text-accent">
+                            {item.highlight}
+                          </span>
+                          <span className="rounded-full border border-border bg-surface-soft px-2.5 py-0.5 font-mono text-xs text-muted dark:bg-card-muted">
+                            {item.year}
+                          </span>
+                        </div>
+                        <h4 className="text-xl font-bold tracking-tight text-fg md:text-2xl">{item.title}</h4>
+                        <p className="mt-2 text-sm font-medium text-accent/90">{item.subtitle}</p>
+                        <p className="mt-4 text-sm leading-relaxed text-muted md:max-w-prose">{item.description}</p>
                       </div>
+
+                      {item.certificateMedia ? (
+                        <div className="flex flex-col justify-center border-t border-border bg-gradient-to-b from-surface-soft/90 to-page-elevated p-6 dark:border-border-strong/80 dark:from-card-muted/40 dark:to-card/50 lg:col-span-5 lg:border-l-0 lg:border-t-0 lg:p-8">
+                          <CertificateFrame
+                            src={item.certificateMedia}
+                            alt={`Certificate: ${item.title}`}
+                            caption={messages.achievements.credentialCaption}
+                          />
+                        </div>
+                      ) : null}
                     </div>
-
-                    {/* Content */}
-                    <div className="max-w-[80%]">
-                      <h4 className="text-xl text-text-light font-bold mb-2">
-                        {item.title}
-                      </h4>
-                      <div className="text-primary mb-2">{item.subtitle}</div>
-                      <p className="text-text-secondary mb-4">
-                        {item.description}
-                      </p>
-                      <div className="font-mono text-sm text-primary/70">
-                        &gt; {item.highlight}
-                      </div>
-                    </div>
-
-                    {/* Hover Effects */}
-                    <AnimatePresence>
-                      {hoveredItem === item.title && (
-                        <>
-                          {/* Circuit Board Effect */}
-                          <motion.div
-                            className="absolute inset-0 pointer-events-none"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 0.1 }}
-                            exit={{ opacity: 0 }}
-                          >
-                            <svg className="w-full h-full">
-                              <pattern
-                                id="circuit"
-                                x="0"
-                                y="0"
-                                width="20"
-                                height="20"
-                                patternUnits="userSpaceOnUse"
-                              >
-                                <path
-                                  d="M 10 0 L 10 10 M 0 10 L 20 10"
-                                  stroke="currentColor"
-                                  strokeWidth="0.5"
-                                />
-                              </pattern>
-                              <rect
-                                width="100%"
-                                height="100%"
-                                fill="url(#circuit)"
-                              />
-                            </svg>
-                          </motion.div>
-
-                          {/* Glowing Lines */}
-                          <motion.div
-                            className="absolute inset-0 pointer-events-none"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                          >
-                            {[...Array(3)].map((_, i) => (
-                              <motion.div
-                                key={i}
-                                className="absolute bg-primary/10"
-                                style={{
-                                  height: "1px",
-                                  width: "100%",
-                                  top: `${(i + 1) * 25}%`,
-                                  left: 0,
-                                }}
-                                initial={{ scaleX: 0 }}
-                                animate={{ scaleX: 1 }}
-                                transition={{ delay: i * 0.1 }}
-                              />
-                            ))}
-                          </motion.div>
-                        </>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                </motion.div>
-              ))}
-          </motion.div>
-        </AnimatePresence>
+                  </motion.article>
+                ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
-
-      {/* Closing Bracket */}
-      <motion.div
-        className="flex items-center gap-2 mt-8 font-mono text-primary/50"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-      >
-        {"}"}
-      </motion.div>
-    </div>
+    </section>
   );
 }

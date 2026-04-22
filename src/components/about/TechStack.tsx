@@ -2,262 +2,127 @@
 
 import { useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import { Code2, LayoutGrid, Server, Wrench } from "lucide-react";
+import { TechIconTile } from "@/components/ui/TechIconTile";
+import type { LucideIcon } from "lucide-react";
 import { TechStackContext } from "../sections/AboutSection";
+import { ABOUT_TECH_CARD_SHELL } from "@/lib/about-tech-surface";
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  frontend: LayoutGrid,
+  backend: Server,
+  languages: Code2,
+  tools: Wrench,
+};
 
 export function TechStack() {
   const techStack = useContext(TechStackContext);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-  const error = null;
+  const keys = Object.keys(techStack);
+  const activeKey =
+    selectedCategory && keys.includes(selectedCategory) ? selectedCategory : (keys[0] ?? "");
 
-  if (Object.keys(techStack).length > 0 && selectedCategory === "") {
-    setSelectedCategory(Object.keys(techStack)[0]);
-  }
-
-  // Loading state
   if (Object.keys(techStack).length === 0) {
     return (
-      <div className="mb-20">
-        <div className="flex items-center gap-3 mb-10 font-mono">
-          <span className="text-primary/50">{"<"}</span>
-          <h3 className="text-2xl font-bold text-text-light">TechStack</h3>
-          <span className="text-primary/50">{"/>"}</span>
+      <div className="mb-16">
+        <div className="mb-8 flex items-center gap-3 font-mono">
+          <span className="text-accent/50">{"<"}</span>
+          <h3 className="text-2xl font-bold text-fg">TechStack</h3>
+          <span className="text-accent/50">{"/>"}</span>
         </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="p-4 rounded-lg border border-primary/20 animate-pulse">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl opacity-50">🎨</span>
-              <span className="text-text-secondary/70">
-                Loading Frontend...
-              </span>
-            </div>
-          </div>
-          <div className="p-4 rounded-lg border border-primary/20 animate-pulse">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl opacity-50">⚡</span>
-              <span className="text-text-secondary/70">Loading Backend...</span>
-            </div>
-          </div>
-          <div className="p-4 rounded-lg border border-primary/20 animate-pulse">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl opacity-50">💻</span>
-              <span className="text-text-secondary/70">
-                Loading Languages...
-              </span>
-            </div>
-          </div>
-          <div className="p-4 rounded-lg border border-primary/20 animate-pulse">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl opacity-50">🛠️</span>
-              <span className="text-text-secondary/70">Loading Tools...</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative bg-dark-light/20 rounded-lg p-8 border border-primary/20">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {[
-              "HTML",
-              "CSS",
-              "JavaScript",
-              "React",
-              "Next.js",
-              "TypeScript",
-              "Tailwind",
-            ].map((tech, i) => (
-              <div
-                key={i}
-                className="p-4 rounded-lg bg-dark border border-primary/20 animate-pulse"
-              >
-                <div className="flex items-center justify-center mb-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full"></div>
-                </div>
-                <div className="text-center">
-                  <h4 className="text-text-secondary/50 font-medium mb-2">
-                    {tech}
-                  </h4>
-                  <div className="h-1 bg-primary/20 rounded-full"></div>
-                  <div className="text-xs text-primary/50 mt-1">Loading...</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Background Grid Effect */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,black,transparent)]" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Error state
-  if (error || Object.keys(techStack).length === 0) {
-    return (
-      <div className="mb-20 text-center py-10">
-        <div className="text-red-500 text-lg">
-          {error || "No tech stack data found"}
+        <div className="rounded-xl border border-border bg-surface-soft p-8 dark:bg-card-muted/40">
+          <p className="text-sm text-muted">Loading…</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="mb-20">
-      {/* Section Title */}
+    <div className="mb-16">
       <motion.div
-        className="flex items-center gap-3 mb-10 font-mono"
+        className="mb-8 flex items-center gap-3 font-mono"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <span className="text-primary/50">{"<"}</span>
-        <h3 className="text-2xl font-bold text-text-light">TechStack</h3>
-        <span className="text-primary/50">{"/>"}</span>
+        <span className="text-accent/50">{"<"}</span>
+        <h3 className="text-2xl font-bold text-fg">TechStack</h3>
+        <span className="text-accent/50">{"/>"}</span>
       </motion.div>
 
-      {/* Category Navigation */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {Object.entries(techStack).map(([key, category]) => (
-          <motion.button
-            key={key}
-            className={`p-4 rounded-lg text-left transition-all duration-300
-                       border ${
-                         selectedCategory === key
-                           ? "border-primary bg-primary/10"
-                           : "border-primary/20 hover:border-primary/50"
-                       }`}
-            onClick={() => setSelectedCategory(key)}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">{category.icon}</span>
-              <span className="text-text-light font-medium">
-                {category.title}
-              </span>
-            </div>
-          </motion.button>
-        ))}
+      <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+        {Object.entries(techStack).map(([key, category]) => {
+          const CatIcon = CATEGORY_ICONS[key] ?? LayoutGrid;
+          const active = activeKey === key;
+          return (
+            <motion.button
+              key={key}
+              type="button"
+              className={`rounded-xl border p-4 text-left transition-colors ${
+                active
+                  ? "border-border-strong bg-card shadow-sm ring-1 ring-accent/20"
+                  : "border-border bg-page-elevated hover:border-border-strong dark:bg-card/80"
+              }`}
+              onClick={() => setSelectedCategory(key)}
+              whileTap={{ scale: 0.99 }}
+            >
+              <div className="flex items-center gap-3">
+                <CatIcon className="h-5 w-5 shrink-0 text-accent" strokeWidth={1.75} aria-hidden />
+                <span className="font-medium text-fg">{category.title}</span>
+              </div>
+            </motion.button>
+          );
+        })}
       </div>
 
-      {/* Tech Grid */}
-      <div className="relative bg-dark-light/20 rounded-lg p-8 border border-primary/20">
+      <div className="relative rounded-2xl border border-border bg-surface-soft p-6 dark:border-border-strong dark:bg-card-muted/35 md:p-8">
+        <div
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-70 dark:opacity-100"
+          aria-hidden
+        />
         <AnimatePresence mode="wait">
-          {selectedCategory && techStack[selectedCategory] && (
+          {activeKey && techStack[activeKey] && (
             <motion.div
-              key={selectedCategory}
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-              initial={{ opacity: 0, y: 20 }}
+              key={activeKey}
+              className="relative z-[1] grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
             >
-              {techStack[selectedCategory].techs.map((tech, index) => (
+              {techStack[activeKey].techs.map((tech, index) => (
                 <motion.div
                   key={tech.name}
-                  className="relative group"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                  onHoverStart={() => setHoveredTech(tech.name)}
-                  onHoverEnd={() => setHoveredTech(null)}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.04 }}
+                  className={`p-4 ${ABOUT_TECH_CARD_SHELL}`}
                 >
-                  {/* Tech Card */}
-                  <motion.div
-                    className="relative p-4 rounded-lg bg-dark border border-primary/20
-                             hover:border-primary/50 transition-colors"
-                    whileHover={{ y: -5 }}
-                  >
-                    {/* Tech Icon */}
-                    <div className="flex items-center justify-center mb-4">
-                      <div className="relative w-12 h-12">
-                        <Image
-                          src={tech.icon}
-                          alt={`${tech.name} icon`}
-                          fill
-                          style={{ objectFit: "contain" }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Tech Name */}
-                    <div className="text-center">
-                      <h4 className="text-text-light font-medium mb-2">
-                        {tech.name}
-                      </h4>
-
-                      {/* Progress Bar */}
-                      <div className="h-1 bg-primary/20 rounded-full overflow-hidden">
+                  <div className="mb-3 flex items-center justify-center">
+                    <TechIconTile src={tech.icon} alt="" size="lg" />
+                  </div>
+                  <h4 className="text-center text-sm font-semibold text-fg">{tech.name}</h4>
+                  {tech.level != null ? (
+                    <>
+                      <div className="mt-2 h-1 overflow-hidden rounded-full bg-card-muted">
                         <motion.div
-                          className="h-full bg-primary"
+                          className="h-full bg-accent"
                           initial={{ width: 0 }}
                           whileInView={{ width: `${tech.level}%` }}
                           viewport={{ once: true }}
-                          transition={{ duration: 1, delay: index * 0.1 }}
+                          transition={{ duration: 0.8, delay: index * 0.05 }}
                         />
                       </div>
-                      <div className="text-xs text-primary mt-1">
-                        {tech.level}%
-                      </div>
-                    </div>
-
-                    {/* Hover Effects */}
-                    <AnimatePresence>
-                      {hoveredTech === tech.name && (
-                        <>
-                          {/* Glow Effect */}
-                          <motion.div
-                            className="absolute inset-0 -z-10 rounded-lg blur-xl"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 0.2 }}
-                            exit={{ opacity: 0 }}
-                            style={{
-                              backgroundColor:
-                                techStack[selectedCategory].color,
-                            }}
-                          />
-
-                          {/* Circuit Lines */}
-                          <motion.div
-                            className="absolute inset-0 pointer-events-none"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                          >
-                            {[...Array(3)].map((_, i) => (
-                              <motion.div
-                                key={i}
-                                className="absolute bg-primary/20"
-                                style={{
-                                  height: "1px",
-                                  width: "100%",
-                                  top: `${(i + 1) * 25}%`,
-                                  left: 0,
-                                }}
-                                initial={{ scaleX: 0 }}
-                                animate={{ scaleX: 1 }}
-                                transition={{ delay: i * 0.1 }}
-                              />
-                            ))}
-                          </motion.div>
-                        </>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
+                      <p className="mt-1 text-center text-xs text-muted">{tech.level}%</p>
+                    </>
+                  ) : (
+                    <p className="mt-2 text-center text-[11px] text-subtle">In use</p>
+                  )}
                 </motion.div>
               ))}
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Background Grid Effect */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,black,transparent)]" />
-        </div>
       </div>
     </div>
   );
