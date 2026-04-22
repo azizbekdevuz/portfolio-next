@@ -333,7 +333,7 @@ export function InteractiveProfile({
           transition={{ duration: 0.3 }}
         >
           <Image
-            src="/assets/img/profile-img.jpg"
+            src="/assets/img/profile-img.webp"
             alt="Azizbek Arzikulov"
             fill
             sizes="(max-width: 768px) 200px, 400px" // Added sizes for better image loading

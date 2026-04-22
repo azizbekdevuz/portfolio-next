@@ -34,7 +34,7 @@ export function GlowEffect({ mouseX, mouseY }: Props) {
 
   return (
     <motion.div
-      className="pointer-events-none absolute opacity-50"
+      className="pointer-events-none absolute opacity-30 dark:opacity-50"
       style={{
         width: size,
         height: size,

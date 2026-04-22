@@ -32,7 +32,7 @@ export function MobileInteractiveProfile() {
         {/* Main Image with priority loading */}
         <div className="relative w-full h-full">
           <Image
-            src="/assets/img/profile-img.jpg"
+            src="/assets/img/profile-img.webp"
             alt="Azizbek Arzikulov"
             fill
             sizes="(max-width: 768px) 200px, 400px"

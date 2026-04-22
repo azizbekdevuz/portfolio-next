@@ -1,19 +1,21 @@
 "use client";
 
-import React, { useEffect, useCallback, memo } from "react";
+import React, { useEffect, useCallback, memo, useState } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
+import { CUSTOM_CURSOR_EVENT, type CustomCursorEventDetail } from "@/lib/custom-cursor";
 
-// Optimized cursor component with performance improvements
 export const OptimizedCursor = memo(function OptimizedCursor() {
+  const [suppressed, setSuppressed] = useState(false);
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
 
-  // Use springs with optimized settings for smoother movement
   const springConfig = { damping: 25, stiffness: 400, mass: 0.1 };
+  const ringSpring = { ...springConfig, damping: 35 };
   const springX = useSpring(cursorX, springConfig);
   const springY = useSpring(cursorY, springConfig);
+  const ringSpringX = useSpring(cursorX, ringSpring);
+  const ringSpringY = useSpring(cursorY, ringSpring);
 
-  // Debounced cursor update using RAF for better performance
   const updateCursor = useCallback(
     (e: MouseEvent) => {
       requestAnimationFrame(() => {
@@ -25,20 +27,33 @@ export const OptimizedCursor = memo(function OptimizedCursor() {
   );
 
   useEffect(() => {
+    const onChrome = (e: Event) => {
+      const ce = e as CustomEvent<CustomCursorEventDetail>;
+      setSuppressed(Boolean(ce.detail?.suppress));
+    };
+    window.addEventListener(CUSTOM_CURSOR_EVENT, onChrome);
+    return () => window.removeEventListener(CUSTOM_CURSOR_EVENT, onChrome);
+  }, []);
+
+  useEffect(() => {
+    if (suppressed) {
+      document.body.style.cursor = "";
+      return;
+    }
     document.body.style.cursor = "none";
     window.addEventListener("mousemove", updateCursor, { passive: true });
-
     return () => {
       document.body.style.cursor = "";
       window.removeEventListener("mousemove", updateCursor);
     };
-  }, [updateCursor]);
+  }, [suppressed, updateCursor]);
+
+  if (suppressed) return null;
 
   return (
     <>
-      {/* Main cursor dot */}
       <motion.div
-        className="fixed top-0 left-0 w-4 h-4 bg-primary rounded-full pointer-events-none z-50 mix-blend-difference"
+        className="pointer-events-none fixed left-0 top-0 z-[220] h-4 w-4 rounded-full bg-accent mix-blend-difference"
         style={{
           x: springX,
           y: springY,
@@ -46,13 +61,11 @@ export const OptimizedCursor = memo(function OptimizedCursor() {
           translateY: "-50%",
         }}
       />
-
-      {/* Outer ring with separate spring config for trail effect */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 border border-primary rounded-full pointer-events-none z-50 mix-blend-difference"
+        className="pointer-events-none fixed left-0 top-0 z-[220] h-8 w-8 rounded-full border border-accent mix-blend-difference"
         style={{
-          x: useSpring(cursorX, { ...springConfig, damping: 35 }),
-          y: useSpring(cursorY, { ...springConfig, damping: 35 }),
+          x: ringSpringX,
+          y: ringSpringY,
           translateX: "-50%",
           translateY: "-50%",
         }}
