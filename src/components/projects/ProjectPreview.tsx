@@ -1,35 +1,118 @@
-import { useState, useEffect } from "react";
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import ProjectUnavailable from "./ProjectUnavaliable";
+import { useI18n } from "@/components/i18n/I18nProvider";
+
+const EMBED_CACHE_PREFIX = "live-embed:";
+const EMBED_CACHE_TTL_MS = 60 * 60 * 1000;
+
+function readEmbedCache(url: string, origin: string): boolean | null | undefined {
+  if (typeof sessionStorage === "undefined") return undefined;
+  try {
+    const raw = sessionStorage.getItem(EMBED_CACHE_PREFIX + url + "|" + origin);
+    if (!raw) return undefined;
+    const { v, t } = JSON.parse(raw) as { v: boolean | null; t: number };
+    if (Date.now() - t > EMBED_CACHE_TTL_MS) return undefined;
+    return v;
+  } catch {
+    return undefined;
+  }
+}
+
+function writeEmbedCache(url: string, origin: string, value: boolean | null) {
+  try {
+    sessionStorage.setItem(
+      EMBED_CACHE_PREFIX + url + "|" + origin,
+      JSON.stringify({ v: value, t: Date.now() }),
+    );
+  } catch {
+    /* private mode / quota */
+  }
+}
 
 interface ProjectPreviewProps {
   liveLink?: string;
   title: string;
+  /** Data override: never iframe (e.g. meta-only CSP or odd CORP/COEP cases). */
+  forceExternalOnly?: boolean;
 }
 
 export default function ProjectPreview({
   liveLink,
   title,
+  forceExternalOnly = false,
 }: ProjectPreviewProps) {
+  const { messages } = useI18n();
+  const pv = messages.projectPreview;
   const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  // Add client-side only rendering flag
+  const [embedAllowed, setEmbedAllowed] = useState<boolean | null>(null);
+  const [checkDone, setCheckDone] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
-    // Set mounted state
-    setIsMounted(true);
-    
-    // Reset states when liveLink changes
-    setIsLoading(true);
-    setHasError(false);
-  }, [liveLink]);
+  const runEmbedCheck = useCallback(async (url: string) => {
+    if (forceExternalOnly) {
+      setEmbedAllowed(false);
+      setCheckDone(true);
+      setIsLoading(false);
+      return;
+    }
 
-  // Don't render anything on the server
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const cached = readEmbedCache(url, origin);
+    if (cached !== undefined) {
+      setEmbedAllowed(cached === true ? true : cached === false ? false : null);
+      setCheckDone(true);
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `/api/live-embed-check?url=${encodeURIComponent(url)}&origin=${encodeURIComponent(origin)}`,
+      );
+      if (!res.ok) {
+        setEmbedAllowed(null);
+        writeEmbedCache(url, origin, null);
+        setCheckDone(true);
+        setIsLoading(false);
+        return;
+      }
+      const data = (await res.json()) as { embeddable?: boolean | null };
+      const next =
+        data.embeddable === true ? true : data.embeddable === false ? false : null;
+      setEmbedAllowed(next);
+      writeEmbedCache(url, origin, next);
+    } catch {
+      setEmbedAllowed(null);
+    } finally {
+      setCheckDone(true);
+      setIsLoading(false);
+    }
+  }, [forceExternalOnly]);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!liveLink || !isMounted) return;
+
+    setIsLoading(true);
+    setCheckDone(false);
+    setEmbedAllowed(null);
+    void runEmbedCheck(liveLink);
+  }, [liveLink, isMounted, runEmbedCheck]);
+
+  const showIframe = embedAllowed !== false && checkDone;
+  const showBlockedPanel = embedAllowed === false && checkDone;
+
   if (!isMounted) {
     return (
-      <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-primary/20 bg-dark/80 flex items-center justify-center">
-        <div className="text-text-secondary">Loading preview...</div>
+      <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-lg border border-border bg-card-muted/50">
+        <div className="text-sm text-muted">{pv.loadingPreview}</div>
       </div>
     );
   }
@@ -38,99 +121,101 @@ export default function ProjectPreview({
     return <ProjectUnavailable />;
   }
 
+  const openHref = liveLink;
+  const openLabel = pv.openLiveAria.replace("{title}", title);
+
+  const OpenChrome = ({ className }: { className?: string }) => (
+    <a
+      href={openHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={openLabel}
+      title={openLabel}
+      className={
+        className ??
+        "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card/95 text-fg shadow-sm backdrop-blur-sm transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
+      }
+    >
+      <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
+    </a>
+  );
+
   return (
-    <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-primary/20">
-      {/* Loading Overlay */}
+    <div className="relative w-full aspect-video overflow-hidden rounded-lg border border-border bg-card-muted/30">
+      <div className="absolute right-2 top-2 z-20">
+        <OpenChrome />
+      </div>
+
       <AnimatePresence>
-        {isLoading && (
+        {isLoading && !checkDone && (
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-dark/80 backdrop-blur-sm z-10
-                      flex items-center justify-center"
+            className="absolute inset-0 z-10 flex items-center justify-center bg-page/85 backdrop-blur-sm"
           >
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-3">
               <motion.div
-                className="w-12 h-12 rounded-full border-2 border-primary/20 border-t-primary"
+                className="h-10 w-10 rounded-full border-2 border-primary/20 border-t-primary"
                 animate={{ rotate: 360 }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
               />
-              <div className="text-text-secondary font-mono">
-                Loading preview...
-              </div>
+              <p className="font-mono text-xs text-muted">{pv.checkingEmbed}</p>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Error Overlay */}
       <AnimatePresence>
-        {hasError && (
+        {showBlockedPanel && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="absolute inset-0 bg-dark/80 backdrop-blur-sm z-10
-                      flex items-center justify-center text-center p-6"
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-[15] flex items-center justify-center bg-gradient-to-b from-page/95 via-card-muted/90 to-page/95 p-6 text-center backdrop-blur-sm"
           >
-            <div className="flex flex-col items-center gap-4">
-              <div
-                className="w-12 h-12 rounded-full bg-red-500/10 border-2 border-red-500/20
-                          flex items-center justify-center text-red-500"
-              >
+            <div className="max-w-sm space-y-4">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card-muted/80 text-muted">
                 <svg
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                   />
                 </svg>
               </div>
               <div>
-                <div className="text-red-500 font-medium mb-2">
-                  Preview Unavailable
-                </div>
-                <div className="text-text-secondary text-sm">
-                  The live preview cannot be displayed.
-                  <br />
-                  Please visit the site directly.
-                </div>
+                <p className="text-sm font-semibold text-fg">{pv.blockedTitle}</p>
+                <p className="mt-2 text-xs leading-relaxed text-muted">{pv.blockedBody}</p>
               </div>
               <a
-                href={liveLink}
+                href={openHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded bg-primary/10 text-primary
-                         hover:bg-primary/20 transition-colors"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary to-blue-500 py-2.5 text-sm font-medium text-white shadow-md shadow-primary/20 transition-[filter] hover:brightness-110"
               >
-                Open in New Tab
+                <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
+                {pv.openLiveSite}
               </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* iframe - only rendered on client side now */}
-      {isMounted && (
+      {showIframe && (
         <iframe
           src={liveLink}
-          title={`${title} preview`}
-          className="w-full h-full bg-white"
-          sandbox="allow-scripts allow-same-origin"
+          title={pv.livePreviewTitle.replace("{title}", title)}
+          className="h-full w-full bg-white"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+          referrerPolicy="strict-origin-when-cross-origin"
           onLoad={() => setIsLoading(false)}
-          onError={() => {
-            setIsLoading(false);
-            setHasError(true);
-          }}
         />
       )}
     </div>

@@ -1,10 +1,11 @@
 import { memo } from "react";
-import { motion} from "framer-motion";
-import Image from "next/image";
+import { motion } from "framer-motion";
 import { Project } from "@/models/Project";
+import { TechIconTile } from "@/components/ui/TechIconTile";
+import { ABOUT_TECH_CARD_SHELL } from "@/lib/about-tech-surface";
 
 // === DESKTOP COMPONENTS ===
-// Memoized components for better performance
+// Memoized components for better performance'
 
 export const EditorTab = memo(({ 
   project, 
@@ -21,8 +22,8 @@ export const EditorTab = memo(({
               flex items-center gap-2 transition-colors relative
               ${
                 isActive
-                  ? "bg-dark-light/50 text-text-light"
-                  : "text-text-secondary hover:bg-primary/5"
+                  ? "bg-card-muted text-fg"
+                  : "text-muted hover:bg-accent/10"
               }`}
   >
     <span className={`w-2 h-2 rounded-full ${isActive ? "bg-primary" : "bg-primary/50"}`} />
@@ -53,8 +54,8 @@ export const ProjectFile = memo(({
               flex items-center gap-2 transition-colors
               ${
                 isSelected
-                  ? "bg-primary/10 text-text-light"
-                  : "text-text-secondary hover:bg-primary/5"
+                  ? "bg-accent/10 text-fg"
+                  : "text-muted hover:bg-accent/10"
               }`}
   >
     <svg
@@ -76,25 +77,43 @@ export const ProjectFile = memo(({
 
 ProjectFile.displayName = 'ProjectFile';
 
-export const TechBadge = memo(({ tech }: { tech: { name: string; icon: string } }) => (
-  <div
-    className="px-3 py-1.5 rounded-full bg-primary/5 
-              border border-primary/20 text-sm text-primary
-              flex items-center gap-2 group hover:bg-primary/10 
-              transition-all duration-300"
-  >
-    <div className="relative w-4 h-4">
-      <Image
-        src={tech.icon}
-        alt={`${tech.name} icon`}
-        fill
-        className="object-contain"
-      />
-    </div>
-    <span className="group-hover:text-text-light transition-colors">
-      {tech.name}
-    </span>
-  </div>
-));
+export const TechBadge = memo(
+  ({
+    tech,
+    surface = "default",
+  }: {
+    tech: { name: string; icon: string };
+    surface?: "default" | "embeddedEditor";
+  }) => {
+
+    const tileSurface = surface === "embeddedEditor" ? "emphasis" : "default";
+
+    if (surface === "embeddedEditor") {
+      return (
+        <div
+          className={`group flex min-w-0 items-center gap-2.5 px-3 py-2 text-sm transition-shadow duration-200 ${ABOUT_TECH_CARD_SHELL} hover:shadow-md`}
+        >
+          <div className="flex shrink-0 items-center justify-center">
+            <TechIconTile src={tech.icon} alt="" size="md" surface={tileSurface} />
+          </div>
+          <span className="min-w-0 font-semibold leading-tight text-fg">
+            {tech.name}
+          </span>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className="group flex items-center gap-2 rounded-lg border border-border/70 bg-card-muted/40 px-2.5 py-1.5 text-sm text-fg transition-colors duration-200 hover:border-border-strong hover:bg-card-muted/70"
+      >
+        <TechIconTile src={tech.icon} alt="" size="sm" surface={tileSurface} />
+        <span className="font-medium text-muted group-hover:text-fg">
+          {tech.name}
+        </span>
+      </div>
+    );
+  }
+);
 
 TechBadge.displayName = 'TechBadge';

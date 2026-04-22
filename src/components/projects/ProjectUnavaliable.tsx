@@ -1,45 +1,41 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-
-const glitchText = [
-  "ACCESS DENIED",
-  "PROJECT OFFLINE",
-  "CLASSIFIED",
-  "RESTRICTED",
-];
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 export default function ProjectUnavailable() {
+  const { messages } = useI18n();
+  const pu = messages.projectUnavailable;
   const [glitchIndex, setGlitchIndex] = useState(0);
-  // Add client-side only rendering flag
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    // Set mounted flag
     setIsMounted(true);
-    
+    const len = pu.statusLines.length;
     const interval = setInterval(() => {
-      setGlitchIndex((prev) => (prev + 1) % glitchText.length);
+      setGlitchIndex((prev) => (prev + 1) % len);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [pu.statusLines.length]);
 
-  // Server-side fallback
   if (!isMounted) {
     return (
-      <div className="relative w-full h-full bg-dark/80 rounded-lg overflow-hidden flex items-center justify-center">
-        <div className="text-primary">Loading...</div>
+      <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-dark/80">
+        <div className="text-primary">{pu.loading}</div>
       </div>
     );
   }
 
   return (
-    <div className="relative w-full h-full bg-dark/80 rounded-lg overflow-hidden">
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-20" suppressHydrationWarning />
+    <div className="relative h-full w-full overflow-hidden rounded-lg bg-dark/80">
+      <div
+        className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-20"
+        suppressHydrationWarning
+      />
 
-      {/* Scanning Line Effect */}
       <motion.div
-        className="absolute top-0 w-full h-1 bg-primary/30 blur-sm"
+        className="absolute top-0 h-1 w-full bg-primary/30 blur-sm"
         animate={{
           y: ["0%", "100%", "0%"],
         }}
@@ -50,11 +46,9 @@ export default function ProjectUnavailable() {
         }}
       />
 
-      {/* Main Content */}
-      <div className="relative h-full flex flex-col items-center justify-center p-6 text-center">
-        {/* Warning Icon */}
+      <div className="relative flex h-full flex-col items-center justify-center p-6 text-center">
         <motion.div
-          className="mb-6 text-primary w-16 h-16 flex items-center justify-center border-2 border-primary rounded-full"
+          className="mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-primary text-primary"
           animate={{
             scale: [1, 1.1, 1],
             opacity: [1, 0.8, 1],
@@ -64,12 +58,7 @@ export default function ProjectUnavailable() {
             repeat: Infinity,
           }}
         >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            className="w-8 h-8"
-          >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-8 w-8">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -79,9 +68,8 @@ export default function ProjectUnavailable() {
           </svg>
         </motion.div>
 
-        {/* Glitch Text Effect */}
         <motion.div
-          className="text-2xl font-bold text-primary mb-4 font-mono relative"
+          className="relative mb-4 font-mono text-2xl font-bold text-primary"
           animate={{
             opacity: [1, 0.8, 1],
           }}
@@ -91,23 +79,17 @@ export default function ProjectUnavailable() {
             repeatType: "reverse",
           }}
         >
-          {glitchText[glitchIndex]}
+          {pu.statusLines[glitchIndex]}
         </motion.div>
 
-        {/* Descriptive Text */}
-        <p className="text-text-secondary max-w-md">
-          This project is not publicly available at the moment.
-          <br />
-          Check back later for updates.
-        </p>
+        <p className="max-w-md text-muted">{pu.body}</p>
 
-        {/* Binary Rain Effect - only rendered client-side */}
         {isMounted && (
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
             {[...Array(10)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute text-primary/10 text-xs font-mono whitespace-nowrap"
+                className="absolute whitespace-nowrap font-mono text-xs text-primary/10"
                 initial={{
                   x: `${Math.random() * 100}%`,
                   y: -20,

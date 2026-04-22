@@ -1,18 +1,26 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { motion} from "framer-motion";
 import { Project } from "../../models/Project";
 import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 import { DesktopProjectsSection } from "../projects/desktop/DesktopProjectsSection";
 import MobileProjectsSection from "../projects/mobile/MobileProjectsSection";
+import { useI18n } from "@/components/i18n/I18nProvider";
+import {
+  DEEP_DIVE_SLUG_MIRROR_KEY,
+  PENDING_DEEP_DIVE_SLUG_KEY,
+} from "@/lib/locale-switch-persistence";
 
 interface ProjectsSectionProps {
   projects: Project[];
+  /** Full-viewport shell: tighter chrome, no duplicate hero title. */
+  embedded?: boolean;
 }
 
 // Main ProjectsSection component that chooses between mobile and desktop
-export function ProjectsSection({ projects }: ProjectsSectionProps) {
+export function ProjectsSection({ projects, embedded = false }: ProjectsSectionProps) {
+  const { messages } = useI18n();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const containerRef = useRef<HTMLElement>(null);
   const [hasMounted, setHasMounted] = useState(false);
@@ -21,19 +29,41 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
   // Check screen size and initialize component
   useEffect(() => {
     setHasMounted(true);
-    
+
     if (projects.length > 0 && !selectedProject) {
       setSelectedProject(projects[0]);
     }
   }, [projects, selectedProject]);
+
+  useEffect(() => {
+    if (!embedded || !selectedProject) return;
+    try {
+      sessionStorage.setItem(DEEP_DIVE_SLUG_MIRROR_KEY, selectedProject.slug);
+    } catch {
+      /* ignore */
+    }
+  }, [embedded, selectedProject]);
+
+  useLayoutEffect(() => {
+    if (!embedded) return;
+    try {
+      const pending = sessionStorage.getItem(PENDING_DEEP_DIVE_SLUG_KEY);
+      if (!pending) return;
+      sessionStorage.removeItem(PENDING_DEEP_DIVE_SLUG_KEY);
+      const match = projects.find((p) => p.slug === pending && p.status !== "archived");
+      if (match) setSelectedProject(match);
+    } catch {
+      /* ignore */
+    }
+  }, [embedded, projects]);
   
   // Show loading state
   if (!hasMounted || projects.length === 0) {
     return (
-      <section id="projects" className="relative min-h-screen py-12">
+      <section id="projects" className={`relative py-12 ${embedded ? "min-h-0" : "min-h-screen"}`}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-text-light mb-2">Projects</h2>
+            <h2 className="mb-2 text-3xl font-bold text-fg">{messages.projectsSection.loadingTitle}</h2>
             <div className="h-1 w-16 bg-primary rounded-full mx-auto"></div>
           </div>
           
@@ -41,7 +71,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             {[1, 2, 3].map(i => (
               <div 
                 key={i} 
-                className="h-40 rounded-lg bg-dark-light/30 border border-primary/20 animate-pulse"
+                className="h-40 animate-pulse rounded-lg border border-border bg-card-muted"
               />
             ))}
           </div>
@@ -53,8 +83,11 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
   // Show error state
   if (!selectedProject) {
     return (
-      <section id="projects" className="relative min-h-screen py-12 flex items-center justify-center">
-        <div className="text-red-500 text-lg">No projects found</div>
+      <section
+        id="projects"
+        className={`relative flex items-center justify-center py-12 ${embedded ? "min-h-0" : "min-h-screen"}`}
+      >
+        <div className="text-red-500 text-lg">{messages.projectsSection.noProjects}</div>
       </section>
     );
   }
@@ -63,7 +96,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
     <motion.section
       ref={containerRef}
       id="projects"
-      className="relative min-h-screen py-12 md:py-20 overflow-hidden"
+      className={`relative overflow-hidden py-12 md:py-20 ${embedded ? "min-h-0 md:py-8" : "min-h-screen"}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
@@ -71,29 +104,30 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(20,157,221,0.05),transparent)]" />
-        <div 
-          className="absolute inset-0 bg-[linear-gradient(to_right,#0a101f_1px,transparent_1px),linear-gradient(to_bottom,#0a101f_1px,transparent_1px)]
-                   bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)]
-                   opacity-50"
+        <div
+          className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)] opacity-60 dark:opacity-50"
         />
       </div>
 
       {/* Section Title for desktop only */}
-      {!isMobile && (
+      {!isMobile && !embedded && (
         <motion.div
-          className="flex flex-col items-center mb-16"
+          className="mb-12 flex flex-col items-center px-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="flex items-center gap-3 mb-4 font-mono">
-            <span className="text-primary/50">class</span>
-            <h2 className="text-4xl font-bold text-text-light">PortfolioMatrix</h2>
-            <span className="text-primary/50">extends</span>
-            <span className="text-text-light">Work</span>
-          </div>
+          <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">
+            {messages.projectsSection.optionalDepth}
+          </p>
+          <h2 className="text-center text-3xl font-bold tracking-tight text-fg md:text-4xl">
+            {messages.projectsSection.title}
+          </h2>
+          <p className="mt-3 max-w-lg text-center text-sm text-muted">
+            {messages.projectsSection.subtitle}
+          </p>
           <motion.div
-            className="h-1 w-20 bg-primary rounded-full"
+            className="mt-4 h-1 w-20 rounded-full bg-accent"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -103,16 +137,18 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
 
       {/* Conditionally render mobile or desktop version */}
       {isMobile ? (
-        <MobileProjectsSection 
+        <MobileProjectsSection
           projects={projects}
           selectedProject={selectedProject}
           setSelectedProject={setSelectedProject}
+          embedded={embedded}
         />
       ) : (
-        <DesktopProjectsSection 
+        <DesktopProjectsSection
           projects={projects}
           selectedProject={selectedProject}
           setSelectedProject={setSelectedProject}
+          embedded={embedded}
         />
       )}
     </motion.section>
