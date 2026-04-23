@@ -82,19 +82,16 @@ export const TechBadge = memo(
     tech,
     surface = "default",
   }: {
-    tech: { name: string; icon: string };
+    tech: Project["technologies"][number];
     surface?: "default" | "embeddedEditor";
   }) => {
-
-    const tileSurface = surface === "embeddedEditor" ? "emphasis" : "default";
-
     if (surface === "embeddedEditor") {
       return (
         <div
           className={`group flex min-w-0 items-center gap-2.5 px-3 py-2 text-sm transition-shadow duration-200 ${ABOUT_TECH_CARD_SHELL} hover:shadow-md`}
         >
           <div className="flex shrink-0 items-center justify-center">
-            <TechIconTile src={tech.icon} alt="" size="md" surface={tileSurface} />
+            <TechIconTile iconId={tech.iconId} size="md" />
           </div>
           <span className="min-w-0 font-semibold leading-tight text-fg">
             {tech.name}
@@ -107,7 +104,7 @@ export const TechBadge = memo(
       <div
         className="group flex items-center gap-2 rounded-lg border border-border/70 bg-card-muted/40 px-2.5 py-1.5 text-sm text-fg transition-colors duration-200 hover:border-border-strong hover:bg-card-muted/70"
       >
-        <TechIconTile src={tech.icon} alt="" size="sm" surface={tileSurface} />
+        <TechIconTile iconId={tech.iconId} size="sm" />
         <span className="font-medium text-muted group-hover:text-fg">
           {tech.name}
         </span>

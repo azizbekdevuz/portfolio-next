@@ -229,7 +229,7 @@ export default function SkillsDesktop({ embedded = false }: { embedded?: boolean
                           whileHover={{ y: -3 }}
                         >
                           <div className="mx-auto mb-3 flex justify-center">
-                            <TechIconTile src={tool.icon} alt="" size="md" surface="emphasis" />
+                            <TechIconTile iconId={tool.iconId} size="md" />
                           </div>
                           <p className="text-center text-sm text-muted group-hover:text-fg">
                             {tool.name}

@@ -22,11 +22,6 @@
   --gradient-mesh-c: #e8eef8;
   /** Light panels: cool tint, not flat grey (#issueColour) */
   --color-surface-soft: #eef4fa;
-  /** Behind dark SVG brand marks — high contrast in both themes */
-  --color-icon-plate: #ffffff;
-  /** Inner well on tech tiles — slightly off-white so dark brand marks separate from the outer plate in light mode */
-  --color-icon-well: #eef2f7;
-  --color-icon-plate-ring: rgba(15, 23, 42, 0.08);
   /** Desktop non-cockpit shell: reserved outer lanes for language (L) + theme/nav (R); center column is the content stage */
   --shell-chrome-left: 5.75rem;
   /** Theme column only — primary section nav moved to header / panel top (fits `ThemeToggle` lane `max-w`) */
@@ -60,8 +55,4 @@
   --gradient-mesh-b: #0a1628;
   --gradient-mesh-c: #040b14;
   --color-surface-soft: #0f1a2e;
-  --color-icon-plate: #f1f5f9;
-  /** Brighter inner field so marks read clearly on dark section surfaces */
-  --color-icon-well: #ffffff;
-  --color-icon-plate-ring: rgba(241, 245, 249, 0.2);
 }

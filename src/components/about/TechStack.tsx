@@ -99,7 +99,7 @@ export function TechStack() {
                   className={`p-4 ${ABOUT_TECH_CARD_SHELL}`}
                 >
                   <div className="mb-3 flex items-center justify-center">
-                    <TechIconTile src={tech.icon} alt="" size="lg" />
+                    <TechIconTile iconId={tech.iconId} size="lg" />
                   </div>
                   <h4 className="text-center text-sm font-semibold text-fg">{tech.name}</h4>
                   {tech.level != null ? (

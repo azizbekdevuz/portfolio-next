@@ -24,7 +24,6 @@ const config: Config = {
         "accent-dim": "var(--color-accent-dim)",
         "accent-fg": "var(--color-accent-fg)",
         "surface-soft": "var(--color-surface-soft)",
-        "icon-plate": "var(--color-icon-plate)",
         /** Alias legacy `primary` to theme accent */
         primary: "var(--color-accent)",
         secondary: "#173b6c",

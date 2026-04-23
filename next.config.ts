@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
     optimizePackageImports: [
       'framer-motion',
       'lucide-react',
+      'react-icons',
+      'react-circle-flags',
     ],
   },
   // Enable compression

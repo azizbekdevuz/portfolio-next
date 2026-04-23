@@ -275,7 +275,7 @@ export default function SkillsMobile({ embedded = false }: { embedded?: boolean 
                                   whileTap={{ scale: 0.95 }}
                                 >
                                   <div className="mb-2 flex justify-center">
-                                    <TechIconTile src={tool.icon} alt="" size="md" />
+                                    <TechIconTile iconId={tool.iconId} size="md" />
                                   </div>
                                   <span className="text-center text-xs text-muted">{tool.name}</span>
                                 </motion.div>

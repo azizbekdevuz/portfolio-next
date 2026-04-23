@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { TechIconTile } from "@/components/ui/TechIconTile";
+import { isUsableImageSrc } from "@/lib/image-src";
 
 // === MOBILE OPTIMIZED VERSION ===
 // Mobile project section implementation
@@ -126,7 +127,7 @@ const MobileProjectsSection = ({
                     <div className="flex flex-col">
                       {/* Project Image/Banner */}
                       <div className="relative h-32 w-full bg-card-muted/90 border-b border-primary/20">
-                        {project.imageUrl ? (
+                        {isUsableImageSrc(project.imageUrl) ? (
                           <Image 
                             src={project.imageUrl} 
                             alt={`${project.title} preview`}
@@ -147,7 +148,7 @@ const MobileProjectsSection = ({
                               key={tech.name}
                               className="flex items-center gap-1 rounded-full border border-border/70 bg-card-muted/90 px-1.5 py-0.5 text-xs backdrop-blur-sm"
                             >
-                              <TechIconTile src={tech.icon} alt="" size="xs" />
+                              <TechIconTile iconId={tech.iconId} size="xs" />
                               <span className="text-fg">{tech.name}</span>
                             </div>
                           ))}
@@ -284,9 +285,9 @@ const MobileProjectsSection = ({
               {/* Project Image */}
               <div className="mb-6 rounded-lg overflow-hidden border border-primary/20">
                 <div className="relative h-48 w-full bg-card-muted/90">
-                  {selectedProject.imageUrl ? (
-                    <Image 
-                      src={selectedProject.imageUrl} 
+                  {isUsableImageSrc(selectedProject.imageUrl) ? (
+                    <Image
+                      src={selectedProject.imageUrl}
                       alt={`${selectedProject.title} preview`}
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
@@ -320,7 +321,7 @@ const MobileProjectsSection = ({
                         key={tech.name}
                         className="flex items-center gap-2 rounded-lg border border-border/70 bg-card-muted/50 px-2.5 py-1.5"
                       >
-                        <TechIconTile src={tech.icon} alt="" size="sm" />
+                        <TechIconTile iconId={tech.iconId} size="sm" />
                         <span className="whitespace-nowrap text-sm font-medium text-fg">{tech.name}</span>
                       </div>
                     ))}
