@@ -177,7 +177,7 @@ export function ProofPanel({
                   key={t.name}
                   className={`flex min-w-0 items-center gap-2 px-2.5 py-1.5 ${ABOUT_TECH_CARD_SHELL}`}
                 >
-                  <TechIconTile src={t.icon} alt="" size="sm" />
+                  <TechIconTile iconId={t.iconId} size="sm" />
                   <span className="text-xs font-medium text-fg">{t.name}</span>
                 </li>
               ))}

@@ -22,7 +22,7 @@ import { getDefaultFeaturedSlugForTrack, sortExperienceItemsByTrack } from "@/li
 import type { HomeData } from "@/content/home-data";
 import { experienceSnapshot } from "@/content/experience-snapshot";
 import { useI18n } from "@/components/i18n/I18nProvider";
-import { DownloadMenu } from "./DownloadMenu";
+import { DocumentDownloadLauncher } from "./DocumentDownloadLauncher";
 import { ProofWorkspaceSurface } from "./ProofWorkspaceSurface";
 import { TestimonialsModal } from "./TestimonialsModal";
 import { ProfileIdentityExpandable } from "./ProfileIdentityExpandable";
@@ -275,9 +275,8 @@ export function ProofCockpit({
                 </ul>
               </div>
 
-              <div className="mt-5 flex flex-wrap items-center gap-2 md:gap-3">
-                <DownloadMenu variant="resume" />
-                <DownloadMenu variant="portfolio" />
+              <div className="mt-5 flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start">
+                <DocumentDownloadLauncher />
                 <button
                   type="button"
                   onClick={() => setTestimonialsOpen(true)}
