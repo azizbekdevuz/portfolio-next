@@ -17,7 +17,7 @@ export const experienceSnapshot = {
     {
       id: "ebit",
       title: "EBIT Co., Ltd. — AI trainer (contractor)",
-      detail: "Dec 2025 – present · Repository-based engineering tasks, debugging, verifier-backed correctness, and actionable technical feedback.",
+      detail: "Dec 2025 – Apr 2026 · Repository-based engineering tasks, debugging, verifier-backed correctness, and actionable technical feedback.",
     },
   ],
   ossNote: "Additional repositories and smaller systems are on GitHub; scope and maintenance status vary by repo.",

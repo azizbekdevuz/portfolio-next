@@ -1,16 +1,17 @@
+import type { BrandIconId } from "@/lib/brand-icons";
+
 export interface Tech {
   name: string;
   /** Omit to hide proficiency bars (recommended). */
   level?: number;
-  icon: string;
+  /** Resolved via `src/lib/brand-icons.tsx` */
+  iconId: BrandIconId;
 }
 
 export interface TechCategory {
   id: string;
   title: string;
   techs: Tech[];
-  /** @deprecated Prefer lucide map by id in UI */
-  icon?: string;
   color?: string;
 }
 

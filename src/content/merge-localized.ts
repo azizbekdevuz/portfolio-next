@@ -12,11 +12,7 @@ function mergeHomeData(base: HomeData, o: LocalizedOverrides): HomeData {
     projects: base.projects.map((p) => {
       const t = o.projectsBySlug[p.slug];
       if (!t) return p;
-      return {
-        ...p,
-        ...(t.summary != null ? { summary: t.summary } : {}),
-        ...(t.whyItMatters != null ? { whyItMatters: t.whyItMatters } : {}),
-      };
+      return { ...p, ...t };
     }),
     bioSections: base.bioSections.map((b) => {
       const t = o.bio[b.id];

@@ -1,3 +1,5 @@
+import type { BrandIconId } from "@/lib/brand-icons";
+
 export type ProjectStatus = "live" | "wip" | "archived";
 
 export type RoleTrack = "frontend" | "fullstack" | "ai";
@@ -17,14 +19,13 @@ export interface Project {
   description: string;
   technologies: {
     name: string;
-    icon: string;
+    iconId: BrandIconId;
   }[];
   liveLink?: string;
   /** Skip iframe preview (COEP/CORP, meta CSP, or manual override when server check is wrong). */
   livePreviewExternalOnly?: boolean;
   githubLink?: string;
   codeSnippet: string;
-  mockupImage: string;
   imageUrl?: string;
   category?: string;
   featured: boolean;

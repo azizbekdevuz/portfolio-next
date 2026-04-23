@@ -14,8 +14,31 @@ export type LocalizedSiteOverride = {
 /** Server-only merge payloads for non-English locales. */
 export type LocalizedOverrides = {
   site: LocalizedSiteOverride;
+  /** Locale-specific project copy. Omitted fields keep base `content/projects-data` strings. */
   projectsBySlug: Partial<
-    Record<string, Partial<Pick<Project, "summary" | "whyItMatters">>>
+    Record<
+      string,
+      Partial<
+        Pick<
+          Project,
+          | "title"
+          | "summary"
+          | "whyItMatters"
+          | "description"
+          | "projectType"
+          | "role"
+          | "timeline"
+          | "teamContext"
+          | "problem"
+          | "outcome"
+          | "owned"
+          | "architectureNotes"
+          | "challenges"
+          | "metrics"
+          | "codeSnippet"
+        >
+      >
+    >
   >;
   bio: Record<string, { title: string; content: string }>;
   journey: Record<

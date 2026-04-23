@@ -2,10 +2,13 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import { usePathname } from "next/navigation";
 import emailjs from "@emailjs/browser";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import type { SiteProfile } from "@/content/site";
+import { BrandIcon, type BrandIconId } from "@/lib/brand-icons";
+import { LanguageFlagIcon } from "@/components/contact/LanguageFlagIcon";
+import { QRCodeDisplay } from "@/components/contact/QRCodeDisplay";
 
 // Types
 interface FormData {
@@ -18,7 +21,7 @@ interface SocialLink {
   id: string;
   name: string;
   url: string;
-  icon: string;
+  iconId: BrandIconId;
 }
 
 // Export as named export for importing in other components
@@ -43,6 +46,14 @@ export function MobileContactSection({
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const pathname = usePathname();
+  const [qrOrigin, setQrOrigin] = useState("https://portfolio-next-silk-two.vercel.app");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") setQrOrigin(window.location.origin);
+  }, []);
+
+  const qrValue = `${qrOrigin}${pathname}`;
 
   // Social media links
   const socialLinks: SocialLink[] = [
@@ -50,39 +61,31 @@ export function MobileContactSection({
       id: "github",
       name: "GitHub",
       url: "https://github.com/azizbekdevuz",
-      icon: "/icons/github.svg",
+      iconId: "github",
     },
     {
       id: "linkedin",
       name: "LinkedIn",
       url: "https://linkedin.com/in/azizbekdev",
-      icon: "/icons/linkedin.svg",
+      iconId: "linkedin",
     },
     {
       id: "telegram",
       name: "Telegram",
       url: "https://t.me/azizbek_dev",
-      icon: "/icons/telegram.svg",
+      iconId: "telegram",
     },
     {
       id: "linktree",
       name: "LinkTree",
       url: "https://linktr.ee/azizbekuz",
-      icon: "/icons/linktree.svg",
+      iconId: "linktree",
     },
   ];
 
-  const languages = (
-    [
-      ["en", "/icons/uk.svg"],
-      ["ko", "/icons/kr.svg"],
-      ["uz", "/icons/uz.svg"],
-      ["ru", "/icons/ru.svg"],
-    ] as const
-  ).map(([code, icon]) => ({
+  const languages = (["en", "ko", "uz", "ru"] as const).map((code) => ({
     code,
     name: lm[code].name,
-    icon,
   }));
 
   // Clear success/error messages after 5 seconds
@@ -191,14 +194,12 @@ export function MobileContactSection({
       >
         <div className="flex items-center gap-4">
           {/* QR Code - Smaller size for mobile */}
-          <div className="w-16 h-16 flex-shrink-0">
-            <div className="p-1 rounded border-white">
-              <Image 
-                src="/icons/contact.png" 
-                alt={mc.qrAlt}
-                width={56} 
-                height={56}
-              />
+          <div
+            className="flex h-16 w-16 flex-shrink-0 items-center justify-center overflow-hidden rounded border border-border bg-white p-0.5 dark:bg-white"
+            title={mc.qrAlt}
+          >
+            <div className="origin-center scale-[0.64]">
+              <QRCodeDisplay value={qrValue} isHovered={false} />
             </div>
           </div>
           
@@ -361,12 +362,12 @@ export function MobileContactSection({
                   transition={{ delay: index * 0.1 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  <div className="relative w-10 h-10">
-                    <Image
-                      src={link.icon}
-                      alt={link.name}
-                      fill
-                      className="object-contain"
+                  <div className="flex h-10 w-10 items-center justify-center">
+                    <BrandIcon
+                      id={link.iconId}
+                      sizePx={40}
+                      aria-label={link.name}
+                      aria-hidden={false}
                     />
                   </div>
                   <span className="text-fg font-medium text-sm">{link.name}</span>
@@ -430,14 +431,7 @@ export function MobileContactSection({
                     key={lang.code}
                     className={`flex items-center gap-3 p-3 ${index !== languages.length - 1 ? 'border-b border-primary/10' : ''}`}
                   >
-                    <div className="relative w-6 h-6 flex-shrink-0">
-                      <Image
-                        src={lang.icon}
-                        alt={`${lang.name} flag`}
-                        fill
-                        className="object-contain rounded-sm"
-                      />
-                    </div>
+                    <LanguageFlagIcon code={lang.code} label={lang.name} size={24} />
                     <span className="text-fg">{lang.name}</span>
                   </div>
                 ))}

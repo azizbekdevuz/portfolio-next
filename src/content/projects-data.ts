@@ -1,10 +1,10 @@
 import type { Project } from "@/models/Project";
 
 const nx = [
-  { name: "Next.js", icon: "/icons/nextjs.svg" },
-  { name: "React", icon: "/icons/react.svg" },
-  { name: "TypeScript", icon: "/icons/typescript.svg" },
-];
+  { name: "Next.js", iconId: "nextjs" },
+  { name: "React", iconId: "react" },
+  { name: "TypeScript", iconId: "typescript" },
+] as const;
 
 /**
  * Case-study copy is aligned to local resume materials and shipped repositories.
@@ -24,12 +24,15 @@ export const projects: Project[] = [
       "A production-aimed monorepo-style delivery: public storefront, staff/admin areas, and customer account flows tied together with consistent navigation and state. Emphasis is on how catalog, cart, checkout, and operations stay coherent as surfaces multiply—integration work (payments, providers, real-time channels, i18n) as part of the product, not an afterthought.",
     technologies: [
       ...nx,
-      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
-      { name: "PostgreSQL", icon: "/icons/mysql.svg" },
-      { name: "Prisma", icon: "/icons/web.svg" },
-      { name: "Node.js", icon: "/icons/nodejs.svg" },
-      { name: "Docker", icon: "/icons/docker.svg" },
-      { name: "Nginx", icon: "/icons/nginx.svg" },
+      { name: "Tailwind CSS", iconId: "tailwindcss" },
+      { name: "PostgreSQL", iconId: "postgresql" },
+      { name: "Prisma", iconId: "prisma" },
+      { name: "Next.js", iconId: "nextjs" },
+      { name: "Docker", iconId: "docker" },
+      { name: "Nginx", iconId: "nginx" },
+      { name: "Turborepo", iconId: "turborepo" },
+      { name: "Socket.io", iconId: "socketio" },
+      { name: "NextAuth.js", iconId: "nextauth" },
     ],
     liveLink: "https://trainium.shop/en",
     githubLink: "https://github.com/azizbekdevuz/trainium",
@@ -39,7 +42,6 @@ export default async function ProductPage({ params }: { params: { locale: string
   const product = await fetchProduct(params.slug, params.locale);
   return <ProductLayout product={product} role={session?.role} locale={params.locale} />;
 }`,
-    mockupImage: "",
     featured: true,
     featuredTier: "primary",
     status: "live",
@@ -77,9 +79,13 @@ export default async function ProductPage({ params }: { params: { locale: string
       "A retrieval-oriented, citation-aware chat product where the hard part is not the chat box—it is end-to-end behavior across locales (including RTL), streaming responses, and stable handoffs between the Next.js app and a FastAPI/SQLAlchemy backend with migrations. Work focuses on product-shaped reliability, not a thin demo of an API key.",
     technologies: [
       ...nx,
-      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
-      { name: "FastAPI", icon: "/icons/python.svg" },
-      { name: "PostgreSQL", icon: "/icons/mysql.svg" },
+      { name: "Tailwind CSS", iconId: "tailwindcss" },
+      { name: "FastAPI", iconId: "fastapi" },
+      { name: "PostgreSQL", iconId: "postgresql" },
+      { name: "SQLAlchemy", iconId: "sqlalchemy" },
+      { name: "jwt", iconId: "jwt" },
+      { name: "Ollama", iconId: "llm" },
+      { name: "RAG", iconId: "rag" },
     ],
     githubLink: "https://github.com/azizbekdevuz/rumi-ai",
     codeSnippet: `// Client boundary: streaming + locale/RTL
@@ -88,7 +94,6 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
   const { messages, pending } = useStreamingThread(locale);
   return <Thread dir={locale === "fa" ? "rtl" : "ltr"} messages={messages} status={pending} />;
 }`,
-    mockupImage: "",
     featured: true,
     featuredTier: "primary",
     status: "live",
@@ -121,10 +126,12 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
       "Smart-aquaculture monitoring: sensor and bridge data feeds a TypeScript/Next.js dashboard with live visualizations, controls (including feeder/camera–related operator flows in product scope), and AI-assisted analysis path on the data side. The work is in making changing telemetry legible, trustworthy in the UI, and tied to what operators need to decide.",
     technologies: [
       ...nx,
-      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
-      { name: "Node.js", icon: "/icons/nodejs.svg" },
-      { name: "Python", icon: "/icons/python.svg" },
-      { name: "PostgreSQL", icon: "/icons/mysql.svg" },
+      { name: "Tailwind CSS", iconId: "tailwindcss" },
+      { name: "Python", iconId: "python" },
+      { name: "PostgreSQL", iconId: "postgresql" },
+      { name: "Node.js", iconId: "nodejs" },
+      { name: "Arduino", iconId: "arduino" },
+      { name: "IoT", iconId: "iot" },
     ],
     liveLink: "https://fishlinic.vercel.app/",
     githubLink: "https://github.com/azizbekdevuz/fishlinic",
@@ -137,7 +144,6 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
     </DashboardShell>
   );
 }`,
-    mockupImage: "",
     featured: true,
     featuredTier: "primary",
     status: "live",
@@ -168,9 +174,12 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
       "Cross-platform tool combining CLI snapshot capture with a web experience for classifying common git failure modes (e.g. merge/rebase detours, detached states) and presenting reversible plans. The product intent is to keep humans in control with explicit gating and verification, matching how recovery work is actually done.",
     technologies: [
       ...nx,
-      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
-      { name: "Python", icon: "/icons/python.svg" },
-      { name: "Prisma", icon: "/icons/web.svg" },
+      { name: "Tailwind CSS", iconId: "tailwindcss" },
+      { name: "Python", iconId: "python" },
+      { name: "Prisma", iconId: "prisma" },
+      { name: "Zod", iconId: "zod" },
+      { name: "CLI", iconId: "cli" },
+      { name: "NPM Package", iconId: "npm" },
     ],
     liveLink: "https://gitguardian.online",
     githubLink: "https://github.com/azizbekdevuz/gitguardian",
@@ -178,7 +187,6 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
   const plan = useVerifiedPlan(incidentId);
   return <PlanSteps steps={plan.steps} checks={plan.verification} />;
 }`,
-    mockupImage: "",
     featured: true,
     featuredTier: "primary",
     status: "live",
@@ -209,16 +217,15 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
       "A Next.js/TypeScript product that couples World App wallet sign-in and World ID verification to category, question, answer, and social actions. Work centers on the security-sensitive glue: proof capture, server-side validation, and avoiding replay-style abuse, while still presenting a normal product UI.",
     technologies: [
       ...nx,
-      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
-      { name: "PostgreSQL", icon: "/icons/mysql.svg" },
-      { name: "Prisma", icon: "/icons/web.svg" },
+      { name: "Tailwind CSS", iconId: "tailwindcss" },
+      { name: "PostgreSQL", iconId: "postgresql" },
+      { name: "Prisma", iconId: "prisma" },
     ],
     liveLink: "https://proofboard.vercel.app",
     githubLink: "https://github.com/azizbekdevuz/proofboard",
     codeSnippet: `export default function VerifyFlow() {
   return <ProofStep onVerified={(proof) => persistSession(proof)} />;
 }`,
-    mockupImage: "",
     featured: true,
     featuredTier: "secondary",
     status: "live",
@@ -249,8 +256,11 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
       "A multi-service product (public org repo) that pairs a Next.js client with a FastAPI/Gemini-backed backend to move from recordings and context into spec-like outputs and test execution. I treat it as evidence of working on stepwise, reviewable automation—not claiming sole authorship of the whole upstream tree in this portfolio.",
     technologies: [
       ...nx,
-      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
-      { name: "FastAPI", icon: "/icons/python.svg" },
+      { name: "Tailwind CSS", iconId: "tailwindcss" },
+      { name: "FastAPI", iconId: "fastapi" },
+      { name: "Playwright", iconId: "playwright" },
+      { name: "OpenCV", iconId: "opencv" },
+      { name: "Decord", iconId: "decord" },
     ],
     liveLink: "https://patchpilot-frontend-beta.vercel.app",
     githubLink: "https://github.com/Prithwis-2023/patchpilot",
@@ -259,7 +269,6 @@ export function WorkflowRunner({ bugId }: { bugId: string }) {
   const { stage, artifacts } = useWorkflow(bugId);
   return <StageView stage={stage} artifacts={artifacts} />;
 }`,
-    mockupImage: "",
     featured: true,
     featuredTier: "secondary",
     status: "live",
@@ -290,17 +299,17 @@ export function WorkflowRunner({ bugId }: { bugId: string }) {
       "A production site for a research profile: validated content entry, Zod-shaped boundaries, and admin/editor tooling so updates stay safe and repeatable. The implementation prioritizes a stable information architecture, controlled publishing, and defensible data handling over decorative novelty.",
     technologies: [
       ...nx,
-      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
-      { name: "Prisma", icon: "/icons/web.svg" },
-      { name: "PostgreSQL", icon: "/icons/mysql.svg" },
+      { name: "Tailwind CSS", iconId: "tailwindcss" },
+      { name: "Prisma", iconId: "prisma" },
+      { name: "PostgreSQL", iconId: "postgresql" },
+      { name: "Mammoth", iconId: "mammoth" },
     ],
-    liveLink: "https://www.abolghasemniaraki.com",
-    githubLink: "https://github.com/azizbekdevuz/dr-niaraki-website",
+    liveLink: "https://dr-niaraki-new.vercel.app/",
+    githubLink: "https://github.com/azizbekdevuz/dr-niaraki-new",
     codeSnippet: `export const metadata = { title: "Research & profile" };
 export default function Page() {
   return <ProfileLayout />;
 }`,
-    mockupImage: "",
     featured: true,
     featuredTier: "secondary",
     status: "live",
@@ -329,17 +338,19 @@ export default function Page() {
     description:
       "A NestJS project organized as modules with GraphQL and JWT-flavored access patterns and MongoDB via Mongoose. It is a concise slice of how I model APIs and persistence when the task is not primarily a single-page app.",
     technologies: [
-      { name: "Node.js", icon: "/icons/nodejs.svg" },
-      { name: "NestJS", icon: "/icons/web.svg" },
-      { name: "GraphQL", icon: "/icons/api.svg" },
-      { name: "MongoDB", icon: "/icons/mongodb.svg" },
-      { name: "TypeScript", icon: "/icons/typescript.svg" },
+      { name: "Node.js", iconId: "nodejs" },
+      { name: "NestJS", iconId: "nestjs" },
+      { name: "GraphQL", iconId: "graphql" },
+      { name: "MongoDB", iconId: "mongodb" },
+      { name: "TypeScript", iconId: "typescript" },
+      { name: "Apollo", iconId: "apollo" },
+      { name: "Material UI", iconId: "mui" },
+      { name: "CSS/SCSS", iconId: "scss" },
     ],
     githubLink: "https://github.com/azizbekdevuz/nestar",
     codeSnippet: `// Illustrative: Nest module graph
 @Module({ imports: [GraphQLModule.forRoot({ autoSchemaFile: true }), MongooseModule.forRoot(process.env.MONGO_URI!)] })
 export class AppModule {}`,
-    mockupImage: "",
     featured: false,
     status: "live",
     order: 50,
