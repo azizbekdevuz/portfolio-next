@@ -60,3 +60,6 @@ docs/
 # agents & skills
 .agents/
 skills-lock.json
+
+# resumes
+resumes/
