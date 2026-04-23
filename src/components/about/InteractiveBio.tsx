@@ -21,8 +21,8 @@ export function InteractiveBio() {
   if (bioSections.length === 0) {
     return (
       <div className="mb-16 grid gap-8 md:grid-cols-[1fr_2fr]">
-        <div className="h-40 animate-pulse rounded-xl border border-border bg-surface-soft dark:bg-card-muted/40" />
-        <div className="h-64 animate-pulse rounded-xl border border-border bg-surface-soft dark:bg-card-muted/40" />
+        <div className="h-40 rounded-xl border border-border bg-surface-soft/90 dark:bg-card-muted/35" />
+        <div className="h-64 rounded-xl border border-border bg-surface-soft/90 dark:bg-card-muted/35" />
       </div>
     );
   }

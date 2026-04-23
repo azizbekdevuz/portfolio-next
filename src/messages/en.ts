@@ -31,6 +31,8 @@ export const messages = {
   shell: {
     backToProof: "Back to proof",
     optionalDepth: "Optional depth",
+    /** Route transitions + code-split placeholders (announced to assistive tech). */
+    pageLoading: "Loading…",
   },
   theme: {
     groupAria: "Color theme",

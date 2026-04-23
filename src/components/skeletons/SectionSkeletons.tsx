@@ -1,589 +1,392 @@
-// ProjectsSkeleton.tsx
-export function ProjectsSkeleton() {
-    return (
-      <div className="py-20 px-4">
-        {/* Section Title */}
-        <div className="flex flex-col items-center mb-16">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-6 bg-card-muted/50 rounded-md" />
-            <div className="w-64 h-10 bg-card-muted/50 rounded-md" />
-            <div className="w-12 h-6 bg-card-muted/50 rounded-md" />
-            <div className="w-20 h-6 bg-card-muted/50 rounded-md" />
-          </div>
-          <div className="h-1 w-20 bg-primary/50 rounded-full" />
-        </div>
-  
-        {/* VS Code Editor Style */}
-        <div className="relative max-w-6xl mx-auto">
-          {/* Editor Header */}
-          <div className="h-12 bg-card-muted/80 rounded-t-lg animate-pulse mb-0 flex items-center px-4">
-            <div className="w-32 h-4 bg-card-muted/50 rounded-md" />
-            <div className="ml-auto flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-500/50" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-              <div className="w-3 h-3 rounded-full bg-green-500/50" />
-            </div>
-          </div>
-  
-          {/* Editor Body */}
-          <div className="flex border border-border rounded-b-lg">
-            {/* File Explorer */}
-            <div className="hidden md:block w-64 border-r border-border bg-card-muted/30 p-4">
-              <div className="w-full h-4 bg-card-muted/50 rounded-md mb-4" />
-              <div className="space-y-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-full h-6 bg-card-muted/40 rounded-md" />
+"use client";
+
+import { useI18n } from "@/components/i18n/I18nProvider";
+import { CockpitStageSkeleton } from "@/components/skeletons/CockpitStageSkeleton";
+import { ProjectsIdeSkeleton } from "@/components/skeletons/ProjectsIdeSkeleton";
+import { SkeletonRegion, skBlock, skLineStrong } from "@/components/skeletons/skeleton-primitives";
+
+function OptionalDepthHeading({ embedded }: { embedded?: boolean }) {
+  if (embedded) return null;
+  return (
+    <div className="mb-12 flex flex-col items-center md:mb-16">
+      <div className="mb-4 flex flex-wrap items-center justify-center gap-2 md:gap-3">
+        <div className={`h-6 w-12 ${skBlock}`} />
+        <div className={`h-10 w-56 md:w-64 ${skLineStrong}`} />
+        <div className={`h-6 w-12 ${skBlock}`} />
+        <div className={`h-6 w-20 ${skBlock}`} />
+      </div>
+      <div className="h-1 w-20 rounded-full bg-accent/45" />
+    </div>
+  );
+}
+
+export function HeroSkeleton() {
+  const { messages } = useI18n();
+  const label = messages.shell.pageLoading;
+
+  return (
+    <SkeletonRegion
+      label={label}
+      className="skeleton-pulse relative min-h-dvh scroll-mt-24 border-b border-border bg-page"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,black,transparent)]"
+        aria-hidden
+      />
+      <div className="relative z-10 mx-auto w-full min-w-0 max-w-[var(--cockpit-hero-stage-max-width)] px-4 pb-10 pt-12 md:px-5 md:pb-14 md:pt-12 lg:pb-16 lg:pt-14">
+        <CockpitStageSkeleton />
+      </div>
+    </SkeletonRegion>
+  );
+}
+
+export function ProjectsSkeleton({ embedded = false }: { embedded?: boolean }) {
+  return <ProjectsIdeSkeleton embedded={embedded} />;
+}
+
+export function SkillsSkeleton({ embedded = false }: { embedded?: boolean }) {
+  const { messages } = useI18n();
+  const label = messages.shell.pageLoading;
+
+  return (
+    <SkeletonRegion
+      label={label}
+      className={`skeleton-pulse px-4 ${embedded ? "min-h-0 py-4 md:py-6" : "py-20"}`}
+    >
+      <OptionalDepthHeading embedded={embedded} />
+
+      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.5fr_2.5fr]">
+        <div className="space-y-3">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className={`w-full rounded-lg border border-border p-5 ${skBlock}`}>
+              <div className="mb-3 flex items-center gap-4">
+                <div className={`h-12 w-12 rounded-full ${skLineStrong}`} />
+                <div className="min-w-0 flex-1">
+                  <div className={`mb-2 h-6 w-32 ${skLineStrong}`} />
+                  <div className={`h-4 w-24 rounded-md bg-primary/15`} />
+                </div>
+              </div>
+              <div className={`mb-3 h-12 w-full ${skBlock}`} />
+              <div className="flex flex-wrap gap-2">
+                {[1, 2, 3].map((j) => (
+                  <div key={j} className={`h-6 w-16 rounded-full ${skBlock}`} />
                 ))}
               </div>
             </div>
-  
-            {/* Main Content */}
-            <div className="flex-1 bg-card-muted/20 min-h-[500px] p-6">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                  <div className="w-48 h-8 bg-card-muted/40 rounded-md" />
-                  <div className="w-full h-20 bg-card-muted/30 rounded-md" />
-                  <div className="space-y-2">
-                    <div className="w-full h-4 bg-card-muted/40 rounded-md" />
-                    <div className="flex flex-wrap gap-2">
-                      {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="w-20 h-6 bg-card-muted/40 rounded-full" />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex gap-3 pt-4">
-                    <div className="w-32 h-10 bg-primary/30 rounded-md" />
-                    <div className="w-32 h-10 bg-card-muted/40 rounded-md" />
-                  </div>
-                </div>
-                <div>
-                  <div className="w-full h-8 bg-card-muted/40 rounded-md mb-4" />
-                  <div className="w-full h-64 bg-card-muted/30 rounded-md animate-pulse" />
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          {/* Terminal */}
-          <div className="h-32 bg-card-muted/80 rounded-b-lg mt-0 p-4">
-            <div className="w-32 h-4 bg-card-muted/50 rounded-md mb-3" />
-            <div className="space-y-2">
-              <div className="w-3/4 h-3 bg-card-muted/40 rounded-md" />
-              <div className="w-1/2 h-3 bg-card-muted/40 rounded-md" />
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
-    );
-  }
-  
-  // SkillsSkeleton.tsx
-  export function SkillsSkeleton() {
-    return (
-      <div className="py-20 px-4">
-        {/* Section Title */}
-        <div className="flex flex-col items-center mb-16">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-6 bg-card-muted/50 rounded-md" />
-            <div className="w-64 h-10 bg-card-muted/50 rounded-md" />
-            <div className="w-12 h-6 bg-card-muted/50 rounded-md" />
-            <div className="w-20 h-6 bg-card-muted/50 rounded-md" />
-          </div>
-          <div className="h-1 w-20 bg-primary/50 rounded-full" />
-        </div>
-  
-        {/* Grid Layout */}
-        <div className="grid lg:grid-cols-[1.5fr_2.5fr] gap-8 max-w-6xl mx-auto">
-          {/* Skill Navigation */}
-          <div className="space-y-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div 
-                key={i} 
-                className="w-full p-6 rounded-lg bg-card-muted/30 border border-border animate-pulse"
-              >
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="w-12 h-12 bg-card-muted/50 rounded-full" />
-                  <div>
-                    <div className="w-32 h-6 bg-card-muted/50 rounded-md mb-2" />
-                    <div className="w-20 h-4 bg-primary/30 rounded-md" />
-                  </div>
-                </div>
-                <div className="w-full h-12 bg-card-muted/40 rounded-md mb-3" />
-                <div className="flex gap-2">
-                  {[1, 2, 3].map((j) => (
-                    <div key={j} className="w-16 h-6 bg-card-muted/40 rounded-full" />
-                  ))}
-                </div>
+
+        <div className={`min-h-[420px] rounded-lg border border-border p-6 md:min-h-[500px] md:p-8 ${skBlock}`}>
+          <div className={`mb-6 h-8 w-48 ${skLineStrong}`} />
+          <div className="mb-8 grid grid-cols-3 gap-3 md:grid-cols-5 md:gap-4">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className={`rounded-lg border border-border p-3 ${skBlock}`}>
+                <div className={`mx-auto mb-2 h-10 w-10 ${skLineStrong}`} />
+                <div className={`mx-auto h-4 w-full ${skBlock}`} />
               </div>
             ))}
           </div>
-  
-          {/* Skill Detail */}
-          <div className="bg-card-muted/20 rounded-lg p-8 border border-border min-h-[500px]">
-            <div className="mb-8">
-              <div className="w-48 h-8 bg-card-muted/50 rounded-md mb-6" />
-              <div className="grid grid-cols-3 md:grid-cols-5 gap-4">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="p-4 rounded-lg bg-card-muted/30 border border-border">
-                    <div className="w-10 h-10 bg-card-muted/50 rounded-md mx-auto mb-3" />
-                    <div className="w-full h-4 bg-card-muted/40 rounded-md mx-auto" />
-                  </div>
-                ))}
-              </div>
-            </div>
-  
-            <div className="space-y-6">
-              <div>
-                <div className="w-36 h-6 bg-card-muted/50 rounded-md mb-3" />
-                <div className="flex flex-wrap gap-3">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="w-32 h-8 bg-primary/10 rounded-lg" />
-                  ))}
-                </div>
-              </div>
-              <div>
-                <div className="w-32 h-6 bg-card-muted/50 rounded-md mb-3" />
-                <div className="flex flex-wrap gap-2">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div key={i} className="w-24 h-8 bg-card-muted/30 rounded-full" />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
-  // InProgressSkeleton.tsx
-  export function InProgressSkeleton() {
-    return (
-      <div className="py-20 px-4">
-        {/* Section Title */}
-        <div className="flex flex-col items-center mb-16">
-          <div className="flex items-center flex-col">
-            <div className="w-72 h-10 bg-card-muted/50 rounded-md mb-5 flex items-center justify-center">
-              <div className="w-40 h-6 bg-card-muted/60 rounded-md" />
-            </div>
-            <div className="w-64 h-2 bg-card-muted/50 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-primary/30 to-primary/50 rounded-full w-2/3" />
-            </div>
-            <div className="mt-3 font-mono flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-primary/50" />
-              <div className="w-48 h-4 bg-card-muted/50 rounded-md" />
-            </div>
-          </div>
-        </div>
-  
-        {/* Main Content */}
-        <div className="relative max-w-6xl mx-auto">
-          <div className="bg-card-muted/30 backdrop-blur-sm border border-border rounded-lg p-8">
-            <div className="text-center">
-              <div className="flex justify-center mb-6">
-                <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center">
-                  <div className="w-12 h-12 bg-primary/30 rounded-md" />
-                </div>
-              </div>
-              <div className="w-72 h-8 bg-card-muted/50 rounded-md mx-auto mb-4" />
-              <div className="max-w-2xl mx-auto space-y-2 mb-6">
-                <div className="w-full h-4 bg-card-muted/40 rounded-md" />
-                <div className="w-full h-4 bg-card-muted/40 rounded-md" />
-                <div className="w-3/4 h-4 bg-card-muted/40 rounded-md" />
-              </div>
-  
-              {/* Construction Stages */}
-              <div className="grid md:grid-cols-3 gap-4 mt-6">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="bg-card-muted/30 p-6 rounded-lg border border-border">
-                    <div className="w-12 h-12 bg-card-muted/50 rounded-full mx-auto mb-4" />
-                    <div className="w-32 h-6 bg-primary/30 rounded-md mx-auto mb-2" />
-                    <div className="w-full h-12 bg-card-muted/40 rounded-md mb-4" />
-                    <div className="w-full h-2.5 bg-card-muted/20 rounded-full">
-                      <div className="bg-primary/50 h-2.5 rounded-full" style={{ width: `${30 + i * 15}%` }} />
-                    </div>
-                    <div className="w-16 h-4 bg-card-muted/40 rounded-md mt-2 ml-auto" />
-                  </div>
-                ))}
-              </div>
-  
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-4 mt-6">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="bg-card-muted/30 p-4 rounded-lg border border-border">
-                    <div className="w-full h-8 bg-primary/20 rounded-md mb-2" />
-                    <div className="w-full h-4 bg-card-muted/40 rounded-md" />
-                  </div>
-                ))}
-              </div>
-  
-              {/* Button */}
-              <div className="flex justify-center mt-6">
-                <div className="w-48 h-10 bg-primary/10 border border-primary/30 rounded-full" />
-              </div>
-  
-              {/* Progress bar */}
-              <div className="mt-6">
-                <div className="w-48 h-4 bg-card-muted/40 rounded-md mx-auto mb-2" />
-                <div className="w-full h-2.5 bg-card-muted/30 rounded-full">
-                  <div className="bg-primary/60 h-2.5 rounded-full w-2/3" />
-                </div>
-                <div className="flex justify-between mt-2">
-                  <div className="w-24 h-4 bg-card-muted/40 rounded-md" />
-                  <div className="w-24 h-4 bg-primary/30 rounded-md" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
-  // ContactSkeleton.tsx
-  export function ContactSkeleton() {
-    return (
-      <div className="py-20 px-4">
-        {/* Section Title */}
-        <div className="flex flex-col items-center mb-16">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-6 bg-card-muted/50 rounded-md" />
-            <div className="w-64 h-10 bg-card-muted/50 rounded-md" />
-            <div className="w-12 h-6 bg-card-muted/50 rounded-md" />
-            <div className="w-20 h-6 bg-card-muted/50 rounded-md" />
-          </div>
-          <div className="h-1 w-20 bg-primary/50 rounded-full" />
-        </div>
-  
-        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-          {/* Contact Card */}
-          <div className="relative">
-            <div className="p-8 rounded-lg bg-card-muted/30 border border-border backdrop-blur-sm overflow-hidden">
-              <div className="relative z-10 space-y-4">
-                <div className="w-48 h-8 bg-card-muted/50 rounded-md" />
-                <div className="w-36 h-6 bg-card-muted/40 rounded-md" />
-                <div className="w-56 h-6 bg-card-muted/40 rounded-md" />
-                
-                {/* QR Code */}
-                <div className="absolute top-4 right-4">
-                  <div className="p-2 rounded-lg bg-white/90 w-24 h-24" />
-                </div>
-                
-                {/* Bottom line */}
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0" />
-              </div>
-            </div>
-          </div>
-  
-          {/* Contact Form */}
           <div className="space-y-6">
-            {/* Name Field */}
-            <div className="relative">
-              <div className="border border-border rounded-lg p-2">
-                <div className="w-full h-10 bg-card-muted/20 rounded-md" />
+            <div>
+              <div className={`mb-3 h-6 w-36 ${skLineStrong}`} />
+              <div className="flex flex-wrap gap-2">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className={`h-8 w-28 rounded-lg bg-primary/12`} />
+                ))}
               </div>
             </div>
-  
-            {/* Email Field */}
-            <div className="relative">
-              <div className="border border-border rounded-lg p-2">
-                <div className="w-full h-10 bg-card-muted/20 rounded-md" />
+            <div>
+              <div className={`mb-3 h-6 w-32 ${skLineStrong}`} />
+              <div className="flex flex-wrap gap-2">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className={`h-8 w-24 rounded-full ${skBlock}`} />
+                ))}
               </div>
             </div>
-  
-            {/* Message Field */}
-            <div className="relative">
-              <div className="border border-border rounded-lg p-2">
-                <div className="w-full h-32 bg-card-muted/20 rounded-md" />
-                <div className="w-16 h-4 bg-card-muted/30 rounded-md ml-auto mt-2" />
-              </div>
-            </div>
-  
-            {/* Submit Button */}
-            <div className="w-full h-12 bg-primary/30 rounded-lg" />
           </div>
         </div>
-  
-        {/* Social Links Section */}
-        <div className="mt-16">
-          <div className="bg-card-muted/30 rounded-lg border border-border overflow-hidden">
-            {/* Terminal Header */}
-            <div className="flex items-center justify-between px-4 py-2 bg-card-muted/50 border-b border-border">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500/50" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-                <div className="w-3 h-3 rounded-full bg-green-500/50" />
+      </div>
+    </SkeletonRegion>
+  );
+}
+
+export function InProgressSkeleton({ embedded = false }: { embedded?: boolean }) {
+  const { messages } = useI18n();
+  const label = messages.shell.pageLoading;
+
+  return (
+    <SkeletonRegion
+      label={label}
+      className={`skeleton-pulse px-4 ${embedded ? "min-h-0 py-4" : "py-20"}`}
+    >
+      {!embedded ? (
+        <div className="mb-12 flex flex-col items-center md:mb-16">
+          <div className="flex flex-col items-center">
+            <div className={`mb-5 flex h-12 w-72 max-w-full items-center justify-center rounded-md ${skLineStrong}`} />
+            <div className={`h-2 w-64 max-w-full rounded-full ${skBlock}`} />
+            <div className="mt-3 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-accent/50" />
+              <div className={`h-4 w-48 ${skBlock}`} />
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      <div className="relative mx-auto max-w-6xl">
+        <div className={`rounded-lg border border-border p-6 backdrop-blur-sm md:p-8 ${skBlock}`}>
+          <div className="text-center">
+            <div className="mb-5 flex justify-center">
+              <div className={`flex h-24 w-24 items-center justify-center rounded-full bg-primary/12`}>
+                <div className={`h-12 w-12 rounded-md ${skBlock}`} />
               </div>
-              <div className="w-48 h-4 bg-card-muted/40 rounded-md" />
-              <div className="w-4 h-4 bg-card-muted/40 rounded-full" />
             </div>
-  
-            {/* Terminal Body */}
-            <div className="p-4 h-32">
-              <div className="w-full h-6 bg-card-muted/40 rounded-md mb-4" />
-              <div className="w-3/4 h-4 bg-card-muted/30 rounded-md" />
+            <div className={`mx-auto mb-4 h-8 w-64 max-w-full ${skLineStrong}`} />
+            <div className="mx-auto mb-6 max-w-2xl space-y-2">
+              <div className={`h-4 w-full ${skBlock}`} />
+              <div className={`h-4 w-full ${skBlock}`} />
+              <div className={`mx-auto h-4 w-3/4 ${skBlock}`} />
             </div>
-  
-            {/* Social Links Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-card-muted/20">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="p-4 rounded-lg border backdrop-blur-sm border-border bg-card-muted/30">
-                  <div className="w-10 h-10 mx-auto mb-3 bg-card-muted/40 rounded-full" />
-                  <div className="text-center space-y-1">
-                    <div className="w-16 h-5 mx-auto bg-card-muted/50 rounded-md" />
-                    <div className="w-24 h-4 mx-auto bg-card-muted/40 rounded-md" />
+
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className={`rounded-lg border border-border p-5 ${skBlock}`}>
+                  <div className={`mx-auto mb-4 h-12 w-12 rounded-full ${skLineStrong}`} />
+                  <div className={`mx-auto mb-2 h-6 w-32 rounded-md bg-primary/15`} />
+                  <div className={`mb-4 h-12 w-full ${skBlock}`} />
+                  <div className={`h-2.5 w-full rounded-full ${skBlock}`}>
+                    <div className="h-2.5 rounded-full bg-accent/35" style={{ width: `${30 + i * 15}%` }} />
                   </div>
                 </div>
               ))}
             </div>
-  
-            {/* Terminal Footer */}
-            <div className="flex items-center justify-between px-4 py-2 bg-card-muted/50 border-t border-border">
-              <div className="w-40 h-4 bg-card-muted/40 rounded-md" />
-              <div className="w-20 h-4 bg-card-muted/50 rounded-md" />
+
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className={`rounded-lg border border-border p-4 ${skBlock}`}>
+                  <div className={`mb-2 h-8 w-full rounded-md bg-primary/15`} />
+                  <div className={`h-4 w-full ${skBlock}`} />
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 flex justify-center">
+              <div className={`h-10 w-48 rounded-full border border-accent/25 bg-primary/8`} />
             </div>
           </div>
         </div>
-  
-        {/* Language Section */}
-        <div className="mt-16 py-6">
-          <div className="flex flex-col items-center gap-4 mb-12">
-            <div className="w-64 h-6 bg-card-muted/50 rounded-md" />
-            <div className="w-32 h-1 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 rounded-full" />
+      </div>
+    </SkeletonRegion>
+  );
+}
+
+export function ContactSkeleton({ embedded = false }: { embedded?: boolean }) {
+  const { messages } = useI18n();
+  const label = messages.shell.pageLoading;
+
+  return (
+    <SkeletonRegion
+      label={label}
+      className={`skeleton-pulse px-4 ${embedded ? "min-h-0 py-4" : "py-20"}`}
+    >
+      <OptionalDepthHeading embedded={embedded} />
+
+      <div className="mx-auto grid max-w-6xl items-start gap-10 lg:grid-cols-2 lg:gap-12">
+        <div className="relative">
+          <div className={`overflow-hidden rounded-lg border border-border p-8 backdrop-blur-sm ${skBlock}`}>
+            <div className="relative z-10 space-y-4">
+              <div className={`h-8 w-48 ${skLineStrong}`} />
+              <div className={`h-5 w-40 ${skBlock}`} />
+              <div className={`h-5 w-56 ${skBlock}`} />
+              <div className="absolute right-4 top-4 hidden sm:block">
+                <div className="h-24 w-24 rounded-lg border border-border bg-card/90 dark:bg-card-muted/80" />
+              </div>
+            </div>
           </div>
-          
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        </div>
+
+        <div className="space-y-5">
+          {[1, 2].map((i) => (
+            <div key={i} className="rounded-lg border border-border p-2">
+              <div className={`h-10 w-full ${skBlock}`} />
+            </div>
+          ))}
+          <div className="rounded-lg border border-border p-2">
+            <div className={`h-32 w-full ${skBlock}`} />
+            <div className={`ml-auto mt-2 h-4 w-16 ${skBlock}`} />
+          </div>
+          <div className={`h-12 w-full rounded-lg bg-primary/20`} />
+        </div>
+      </div>
+
+      <div className={`mx-auto max-w-6xl rounded-lg border border-border ${embedded ? "mt-8" : "mt-16"}`}>
+        <div className="flex items-center justify-between border-b border-border bg-card-muted/50 px-4 py-2">
+          <div className="flex gap-2">
+            <div className="h-3 w-3 rounded-full bg-[#ff5f57]/60" />
+            <div className="h-3 w-3 rounded-full bg-[#febc2e]/60" />
+            <div className="h-3 w-3 rounded-full bg-[#28c840]/60" />
+          </div>
+          <div className={`h-4 w-40 ${skBlock}`} />
+          <div className={`h-4 w-4 rounded-full ${skBlock}`} />
+        </div>
+        <div className="h-28 p-4">
+          <div className={`mb-3 h-6 w-full ${skBlock}`} />
+          <div className={`h-4 w-3/4 ${skBlock}`} />
+        </div>
+        <div className="grid grid-cols-2 gap-3 bg-card-muted/25 p-4 md:grid-cols-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className={`rounded-lg border border-border p-4 ${skBlock}`}>
+              <div className={`mx-auto mb-2 h-10 w-10 rounded-full ${skLineStrong}`} />
+              <div className={`mx-auto mb-1 h-5 w-16 ${skBlock}`} />
+              <div className={`mx-auto h-4 w-24 ${skBlock}`} />
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-between border-t border-border bg-card-muted/50 px-4 py-2">
+          <div className={`h-4 w-36 ${skBlock}`} />
+          <div className={`h-4 w-20 ${skBlock}`} />
+        </div>
+      </div>
+
+      {!embedded ? (
+        <div className="mx-auto mt-16 max-w-5xl py-6">
+          <div className="mb-10 flex flex-col items-center gap-3">
+            <div className={`h-6 w-64 ${skLineStrong}`} />
+            <div className="h-px w-32 rounded-full bg-gradient-to-r from-transparent via-accent/45 to-transparent" />
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="p-6 rounded-lg border border-border bg-card-muted/50">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-card-muted/40 rounded-sm" />
-                  <div className="flex-1">
-                    <div className="w-24 h-6 bg-card-muted/50 rounded-md mb-1" />
-                    <div className="w-16 h-4 bg-primary/30 rounded-md" />
+              <div key={i} className={`rounded-lg border border-border p-6 ${skBlock}`}>
+                <div className="mb-4 flex items-center gap-3">
+                  <div className={`h-10 w-10 rounded-sm ${skLineStrong}`} />
+                  <div className="min-w-0 flex-1">
+                    <div className={`mb-1 h-6 w-24 ${skBlock}`} />
+                    <div className={`h-4 w-16 rounded-md bg-primary/15`} />
                   </div>
                 </div>
-                <div className="mb-6">
-                  <div className="flex justify-between mb-1">
-                    <div className="w-24 h-4 bg-card-muted/40 rounded-md" />
-                    <div className="w-10 h-4 bg-card-muted/40 rounded-md" />
+                <div className="mb-4">
+                  <div className="mb-1 flex justify-between">
+                    <div className={`h-4 w-24 ${skBlock}`} />
+                    <div className={`h-4 w-10 ${skBlock}`} />
                   </div>
-                  <div className="h-2 bg-card-muted/60 rounded-full overflow-hidden">
-                    <div className="h-full bg-primary/50 rounded-full" style={{ width: `${50 + i * 10}%` }} />
+                  <div className={`h-2 overflow-hidden rounded-full ${skBlock}`}>
+                    <div className="h-full rounded-full bg-accent/40" style={{ width: `${50 + i * 10}%` }} />
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-1 mb-4">
+                <div className="flex flex-wrap gap-1">
                   {[1, 2, 3].map((j) => (
-                    <div key={j} className="w-16 h-6 bg-primary/10 rounded-full" />
+                    <div key={j} className={`h-6 w-16 rounded-full bg-primary/12`} />
                   ))}
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </div>
-    );
-  }
-  
-  // HeroSkeleton.tsx
-  export function HeroSkeleton() {
-    return (
-      <div className="h-screen flex items-center justify-center px-4">
-        {/* Grid Layout */}
-        <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Text Content */}
-          <div className="text-left">
-            <div className="w-4/5 h-16 bg-card-muted/50 rounded-lg mb-6 relative">
-              <div className="absolute -inset-2 bg-primary/10 rounded-lg blur-2xl" />
+      ) : null}
+    </SkeletonRegion>
+  );
+}
+
+export function AboutSkeleton({ embedded = false }: { embedded?: boolean }) {
+  const { messages } = useI18n();
+  const label = messages.shell.pageLoading;
+
+  const inner = (
+    <SkeletonRegion
+      label={label}
+      className={`skeleton-pulse px-4 ${embedded ? "" : "py-20"}`}
+    >
+      <OptionalDepthHeading embedded={embedded} />
+
+      <div className={`mx-auto mb-12 max-w-6xl rounded-lg border border-border p-6 md:mb-16 ${skBlock}`}>
+        <div className="flex flex-col gap-8 md:flex-row">
+          <div className="md:w-1/3">
+            <div className={`mb-4 aspect-square w-full rounded-2xl ${skLineStrong}`} />
+            <div className="space-y-2">
+              <div className={`h-5 w-full ${skBlock}`} />
+              <div className={`h-5 w-4/5 ${skBlock}`} />
             </div>
-  
-            <div className="w-2/3 h-8 bg-card-muted/40 rounded-lg mb-4" />
-  
-            {/* IDE Tagline */}
-            <div className="bg-dark/30 border border-border rounded-lg p-4 mb-6">
-              <div className="flex mb-2">
-                <div className="w-3 h-3 rounded-full bg-red-500/50 mr-2" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/50 mr-2" />
-                <div className="w-3 h-3 rounded-full bg-green-500/50" />
-              </div>
-              <div className="space-y-2">
-                <div className="w-full h-4 bg-card-muted/30 rounded-md" />
-                <div className="w-4/5 h-4 bg-card-muted/30 rounded-md" />
-                <div className="w-3/5 h-4 bg-primary/20 rounded-md" />
-              </div>
+          </div>
+          <div className="min-w-0 space-y-4 md:w-2/3">
+            <div className={`h-8 w-48 rounded-md bg-primary/15`} />
+            <div className="space-y-2">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className={`h-4 w-full ${skBlock}`} />
+              ))}
+              <div className={`h-4 w-4/5 ${skBlock}`} />
             </div>
-  
-            {/* Specializations */}
-            <div className="flex flex-wrap gap-3 mb-6">
+            <div className="space-y-2 pt-2">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="px-4 py-1.5 bg-primary/5 rounded-full border border-border backdrop-blur-sm">
-                  <div className="w-24 h-6 bg-card-muted/30 rounded-md" />
-                </div>
+                <div key={i} className={`h-4 w-full ${skBlock}`} />
               ))}
             </div>
-  
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="p-3 rounded-lg bg-primary/5 border border-border">
-                  <div className="w-full h-8 bg-primary/20 rounded-md mb-2" />
-                  <div className="w-full h-4 bg-card-muted/30 rounded-md" />
-                </div>
-              ))}
-            </div>
-  
-            {/* Status Indicators */}
-            <div className="flex items-center gap-6 mb-8">
-              <div className="px-4 py-2 rounded-full bg-primary/5 border border-border flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500" />
-                <div className="w-36 h-4 bg-card-muted/30 rounded-md" />
-              </div>
-              <div className="px-4 py-2 rounded-full bg-primary/5 border border-border">
-                <div className="w-36 h-4 bg-card-muted/30 rounded-md" />
-              </div>
-            </div>
-  
-            {/* CTA Button */}
-            <div className="w-40 h-10 bg-primary/20 border border-primary/50 rounded-full" />
-          </div>
-  
-          {/* Profile Section */}
-          <div className="relative">
-            <div className="w-full aspect-square bg-card-muted/20 rounded-full border-2 border-primary/30 backdrop-blur-lg flex items-center justify-center">
-              <div className="w-3/4 h-3/4 bg-primary/10 rounded-full animate-pulse" />
-            </div>
-          </div>
-        </div>
-  
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="w-6 h-10 border-2 border-text-secondary/30 rounded-full p-1">
-            <div className="w-1.5 h-3 bg-primary/50 rounded-full animate-bounce mx-auto" />
           </div>
         </div>
       </div>
-    );
-  }
-  
-  // AboutSkeleton.tsx
-  export function AboutSkeleton() {
-    return (
-      <div className="py-20 px-4">
-        {/* Section Title */}
-        <div className="flex flex-col items-center mb-16">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-6 bg-card-muted/50 rounded-md" />
-            <div className="w-48 h-10 bg-card-muted/50 rounded-md" />
-            <div className="w-12 h-6 bg-card-muted/50 rounded-md" />
-            <div className="w-16 h-6 bg-card-muted/50 rounded-md" />
-          </div>
-          <div className="h-1 w-20 bg-primary/50 rounded-full" />
-        </div>
-  
-        {/* Bio Section */}
-        <div className="max-w-6xl mx-auto bg-card-muted/20 rounded-lg p-6 border border-border mb-16">
-          <div className="flex flex-col md:flex-row gap-8">
-            <div className="md:w-1/3">
-              <div className="w-full aspect-square bg-card-muted/30 rounded-2xl mb-4 animate-pulse" />
-              <div className="space-y-2">
-                <div className="w-full h-5 bg-card-muted/40 rounded-md" />
-                <div className="w-4/5 h-5 bg-card-muted/40 rounded-md" />
-              </div>
-            </div>
-            <div className="md:w-2/3 space-y-4">
-              <div className="w-48 h-8 bg-primary/30 rounded-md" />
-              <div className="space-y-2">
-                <div className="w-full h-4 bg-card-muted/40 rounded-md" />
-                <div className="w-full h-4 bg-card-muted/40 rounded-md" />
-                <div className="w-full h-4 bg-card-muted/40 rounded-md" />
-                <div className="w-4/5 h-4 bg-card-muted/40 rounded-md" />
-              </div>
-              <div className="space-y-2 pt-4">
-                <div className="w-full h-4 bg-card-muted/40 rounded-md" />
-                <div className="w-full h-4 bg-card-muted/40 rounded-md" />
-                <div className="w-3/4 h-4 bg-card-muted/40 rounded-md" />
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        {/* Journey Timeline */}
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="w-48 h-8 bg-card-muted/50 rounded-md mx-auto mb-10" />
-          <div className="relative pl-10 border-l-2 border-primary/30 space-y-16">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="relative">
-                <div className="absolute -left-[41px] w-8 h-8 rounded-full bg-primary/20 border-4 border-dark" />
-                <div className="w-24 h-5 bg-primary/30 rounded-md mb-2" />
-                <div className="w-48 h-7 bg-card-muted/50 rounded-md mb-3" />
-                <div className="p-4 bg-card-muted/20 rounded-lg border border-border">
-                  <div className="space-y-2 mb-4">
-                    <div className="w-full h-4 bg-card-muted/30 rounded-md" />
-                    <div className="w-full h-4 bg-card-muted/30 rounded-md" />
-                    <div className="w-2/3 h-4 bg-card-muted/30 rounded-md" />
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {[1, 2, 3].map((j) => (
-                      <div key={j} className="px-3 py-1.5 bg-primary/10 rounded-full">
-                        <div className="w-16 h-4 bg-card-muted/40 rounded-md" />
-                      </div>
-                    ))}
-                  </div>
+
+      <div className="mx-auto mb-12 max-w-6xl md:mb-16">
+        <div className={`mx-auto mb-8 h-8 w-48 ${skLineStrong}`} />
+        <div className="relative space-y-12 border-l-2 border-accent/25 pl-10">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="relative">
+              <div className="absolute -left-[41px] top-0 h-8 w-8 rounded-full border-4 border-border bg-accent/20" />
+              <div className={`mb-2 h-5 w-24 rounded-md bg-primary/15`} />
+              <div className={`mb-3 h-7 w-48 ${skLineStrong}`} />
+              <div className={`rounded-lg border border-border p-4 ${skBlock}`}>
+                <div className="mb-3 space-y-2">
+                  {[1, 2, 3].map((j) => (
+                    <div key={j} className={`h-4 w-full ${skBlock}`} />
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {[1, 2, 3].map((j) => (
+                    <div key={j} className={`rounded-full px-3 py-1.5 ${skBlock}`}>
+                      <div className={`h-4 w-16 ${skBlock}`} />
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-  
-        {/* Tech Stack */}
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="w-56 h-8 bg-card-muted/50 rounded-md mx-auto mb-10" />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className="p-4 bg-card-muted/20 rounded-lg border border-border flex flex-col items-center">
-                <div className="w-16 h-16 bg-card-muted/30 rounded-md mb-3" />
-                <div className="w-24 h-5 bg-card-muted/40 rounded-md mb-2" />
-                <div className="w-full h-4 bg-card-muted/30 rounded-md mb-2" />
-                <div className="w-3/4 h-1 bg-primary/30 rounded-full" />
-              </div>
-            ))}
-          </div>
-        </div>
-  
-        {/* Achievements */}
-        <div className="max-w-6xl mx-auto">
-          <div className="w-64 h-8 bg-card-muted/50 rounded-md mx-auto mb-10" />
-          <div className="grid md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-card-muted/20 rounded-lg border border-border p-6">
-                <div className="w-16 h-16 bg-primary/20 rounded-full mb-4 mx-auto" />
-                <div className="w-36 h-6 bg-card-muted/40 rounded-md mx-auto mb-3" />
-                <div className="space-y-2 mb-4">
-                  <div className="w-full h-4 bg-card-muted/30 rounded-md" />
-                  <div className="w-full h-4 bg-card-muted/30 rounded-md" />
-                  <div className="w-2/3 h-4 bg-card-muted/30 rounded-md mx-auto" />
-                </div>
-                <div className="w-24 h-6 bg-primary/20 rounded-full mx-auto" />
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
-    );
-  }
-  
-  // Create a SkeletonWrapper component that provides consistent behaviors
-  export function SkeletonWrapper({ children }: { children: React.ReactNode }) {
-    return (
-      <div className="min-h-screen py-6">
-        {/* Background Elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_400px_at_50%_30%,rgba(20,157,221,0.02),transparent)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)]
-                     bg-[size:3rem_3rem] opacity-40" />
+
+      <div className="mx-auto mb-12 max-w-6xl md:mb-16">
+        <div className={`mx-auto mb-8 h-8 w-56 ${skLineStrong}`} />
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+            <div key={i} className={`flex flex-col items-center rounded-lg border border-border p-4 ${skBlock}`}>
+              <div className={`mb-3 h-16 w-16 ${skLineStrong}`} />
+              <div className={`mb-2 h-5 w-24 ${skBlock}`} />
+              <div className={`mb-2 h-4 w-full ${skBlock}`} />
+              <div className="h-1 w-3/4 rounded-full bg-accent/35" />
+            </div>
+          ))}
         </div>
-        
-        {/* Skeleton Content */}
-        {children}
       </div>
-    );
+
+      <div className="mx-auto max-w-6xl">
+        <div className={`mx-auto mb-8 h-8 w-64 ${skLineStrong}`} />
+        <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className={`rounded-lg border border-border p-6 ${skBlock}`}>
+              <div className={`mx-auto mb-4 h-16 w-16 rounded-full bg-primary/15`} />
+              <div className={`mx-auto mb-3 h-6 w-36 ${skBlock}`} />
+              <div className="mb-3 space-y-2">
+                {[1, 2, 3].map((j) => (
+                  <div key={j} className={`h-4 w-full ${skBlock}`} />
+                ))}
+              </div>
+              <div className={`mx-auto h-6 w-24 rounded-full bg-primary/15`} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </SkeletonRegion>
+  );
+
+  if (embedded) {
+    return <div className="min-h-0 min-w-0 border-t border-border py-4">{inner}</div>;
   }
+
+  return inner;
+}

@@ -11,6 +11,7 @@ import {
   DEEP_DIVE_SLUG_MIRROR_KEY,
   PENDING_DEEP_DIVE_SLUG_KEY,
 } from "@/lib/locale-switch-persistence";
+import { ProjectsIdeSkeleton } from "@/components/skeletons/ProjectsIdeSkeleton";
 
 interface ProjectsSectionProps {
   projects: Project[];
@@ -55,37 +56,21 @@ export function ProjectsSection({ projects, embedded = false }: ProjectsSectionP
     }
   }, [embedded, projects]);
   
-  // Show loading state
-  if (!hasMounted || projects.length === 0) {
+  if (!hasMounted) {
     return (
       <section id="projects" className={`relative py-12 ${embedded ? "min-h-0" : "min-h-screen"}`}>
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="mb-2 text-3xl font-bold text-fg">{messages.projectsSection.loadingTitle}</h2>
-            <div className="h-1 w-16 bg-primary rounded-full mx-auto"></div>
-          </div>
-          
-          <div className="space-y-4">
-            {[1, 2, 3].map(i => (
-              <div 
-                key={i} 
-                className="h-40 animate-pulse rounded-lg border border-border bg-card-muted"
-              />
-            ))}
-          </div>
-        </div>
+        <ProjectsIdeSkeleton embedded={embedded} />
       </section>
     );
   }
-  
-  // Show error state
-  if (!selectedProject) {
+
+  if (projects.length === 0 || !selectedProject) {
     return (
       <section
         id="projects"
         className={`relative flex items-center justify-center py-12 ${embedded ? "min-h-0" : "min-h-screen"}`}
       >
-        <div className="text-red-500 text-lg">{messages.projectsSection.noProjects}</div>
+        <div className="text-lg text-red-500">{messages.projectsSection.noProjects}</div>
       </section>
     );
   }

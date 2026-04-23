@@ -28,6 +28,7 @@ export const messages = {
   shell: {
     backToProof: "Dalillarga qaytish",
     optionalDepth: "Ixtiyoriy chuqurlik",
+    pageLoading: "Yuklanmoqda…",
   },
   theme: {
     groupAria: "Rang mavzusi",

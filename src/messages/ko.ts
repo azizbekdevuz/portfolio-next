@@ -28,6 +28,7 @@ export const messages = {
   shell: {
     backToProof: "증거로 돌아가기",
     optionalDepth: "선택 심화",
+    pageLoading: "불러오는 중…",
   },
   theme: {
     groupAria: "색 테마",

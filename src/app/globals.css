@@ -1,4 +1,5 @@
 @import "./theme-tokens.css";
+@import "./ambient-background.css";
 
 @tailwind base;
 @tailwind components;
@@ -41,6 +42,11 @@
 
   .nav-link {
     @apply flex items-center rounded px-4 py-2 text-muted transition-colors duration-200 hover:text-accent;
+  }
+
+  /** Single subtle pulse for loading regions — respects reduced motion. */
+  .skeleton-pulse {
+    @apply animate-pulse motion-reduce:animate-none;
   }
 }
 

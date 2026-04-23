@@ -111,8 +111,21 @@ export default function ProjectPreview({
 
   if (!isMounted) {
     return (
-      <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-lg border border-border bg-card-muted/50">
-        <div className="text-sm text-muted">{pv.loadingPreview}</div>
+      <div
+        role="status"
+        aria-live="polite"
+        className="relative aspect-video w-full overflow-hidden rounded-lg border border-border bg-card-muted/35"
+      >
+        <span className="sr-only">{pv.loadingPreview}</span>
+        <div
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:1.25rem_1.25rem] opacity-[0.12] dark:opacity-[0.18]"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-[10%] rounded-md border border-border/70 bg-page/50 dark:bg-card-muted/25"
+          aria-hidden
+        />
+        <div className="absolute bottom-3 left-3 right-3 h-2 rounded bg-card-muted/60 dark:bg-card-muted/50" aria-hidden />
       </div>
     );
   }

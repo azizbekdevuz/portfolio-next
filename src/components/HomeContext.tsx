@@ -21,23 +21,23 @@ const HeroSection = dynamic(
 );
 const AboutSection = dynamic(
   () => import("@/components/sections/AboutSection").then((mod) => mod.AboutSection),
-  { loading: () => <AboutSkeleton /> },
+  { loading: () => <AboutSkeleton embedded /> },
 );
 const SkillsSection = dynamic(
   () => import("@/components/sections/SkillsSection").then((mod) => mod.SkillsSection),
-  { loading: () => <SkillsSkeleton /> },
+  { loading: () => <SkillsSkeleton embedded /> },
 );
 const ProjectsSection = dynamic(
   () => import("@/components/sections/ProjectsSection").then((mod) => mod.ProjectsSection),
-  { loading: () => <ProjectsSkeleton /> },
+  { loading: () => <ProjectsSkeleton embedded /> },
 );
 const ContactSection = dynamic(
   () => import("@/components/sections/ContactSection").then((mod) => mod.ContactSection),
-  { loading: () => <ContactSkeleton /> },
+  { loading: () => <ContactSkeleton embedded /> },
 );
 const InProgressSection = dynamic(
   () => import("@/components/sections/InProgressSection").then((mod) => mod.InProgressSection),
-  { loading: () => <InProgressSkeleton /> },
+  { loading: () => <InProgressSkeleton embedded /> },
 );
 
 export default function HomeContent({ data }: { data: HomeData }) {

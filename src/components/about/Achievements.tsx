@@ -96,8 +96,8 @@ export function Achievements() {
   if (achievements.length === 0) {
     return (
       <div className="mb-16">
-        <div className="mb-8 h-8 w-48 animate-pulse rounded bg-card-muted" />
-        <div className="h-40 animate-pulse rounded-xl border border-border bg-surface-soft" />
+        <div className="mb-8 h-8 w-48 rounded-md bg-card-muted/50 dark:bg-card-muted/40" />
+        <div className="h-40 rounded-xl border border-border bg-surface-soft/90 dark:bg-card-muted/35" />
       </div>
     );
   }
