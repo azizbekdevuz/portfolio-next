@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { ExternalLink } from "lucide-react";
 import type { SiteProfile } from "@/content/site";
 import type { Project } from "@/models/Project";
@@ -20,21 +21,24 @@ export function CockpitCredibilityStrip({
   track: ProofTrackFilter;
 }) {
   const { messages } = useI18n();
-  const flagshipTitles = new Set(site.flagshipProjects as readonly string[]);
-  let liveProducts = [...projects].filter((p) => p.status !== "archived" && p.liveLink);
-  if (track !== "all") {
-    const inTrack = liveProducts.filter((p) => p.roleTracks?.includes(track));
-    const rest = liveProducts.filter((p) => !p.roleTracks?.includes(track));
-    liveProducts = [...inTrack, ...rest];
-  }
-  liveProducts = liveProducts
-    .sort((a, b) => {
-      const fa = flagshipTitles.has(a.title) ? 0 : 1;
-      const fb = flagshipTitles.has(b.title) ? 0 : 1;
-      if (fa !== fb) return fa - fb;
-      return a.order - b.order;
-    })
-    .slice(0, 4);
+
+  const liveProducts = useMemo(() => {
+    const flagshipTitles = new Set(site.flagshipProjects as readonly string[]);
+    let filtered = projects.filter((p) => p.status !== "archived" && p.liveLink);
+    if (track !== "all") {
+      const inTrack = filtered.filter((p) => p.roleTracks?.includes(track));
+      const rest = filtered.filter((p) => !p.roleTracks?.includes(track));
+      filtered = [...inTrack, ...rest];
+    }
+    return filtered
+      .sort((a, b) => {
+        const fa = flagshipTitles.has(a.title) ? 0 : 1;
+        const fb = flagshipTitles.has(b.title) ? 0 : 1;
+        if (fa !== fb) return fa - fb;
+        return a.order - b.order;
+      })
+      .slice(0, 4);
+  }, [projects, track, site.flagshipProjects]);
 
   return (
     <div className="mt-4 hidden rounded-xl border border-border bg-surface-soft/90 px-4 py-3 shadow-sm dark:border-border-strong dark:bg-card-muted/50 lg:block">

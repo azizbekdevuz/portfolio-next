@@ -1,6 +1,6 @@
 import type { BrandIconId } from "@/lib/brand-icons";
 
-interface SkillNode {
+export interface SkillNode {
   id: string;
   title: string;
   description: string;

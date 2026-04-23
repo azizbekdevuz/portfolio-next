@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { Award, Briefcase, FolderKanban, Layers, Mail } from "lucide-react";
 import { TechIconTile } from "@/components/ui/TechIconTile";
 import type { SiteProfile } from "@/content/site";
@@ -63,7 +64,10 @@ export function ProofWorkspaceSurface({
   ];
 
   const orderedKeys = techCategoryOrder(track);
-  const flatAchievements = achievements.flatMap((a) => a.items.map((it) => ({ cat: a.title, ...it })));
+  const flatAchievements = useMemo(
+    () => achievements.flatMap((a) => a.items.map((it) => ({ cat: a.title, ...it }))),
+    [achievements],
+  );
 
   const lensTrackLabel =
     track === "all" ? messages.cockpit.allProof : messages.roleTracks[track].label;

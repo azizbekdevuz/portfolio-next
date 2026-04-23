@@ -1,15 +1,13 @@
 "use client";
 
 import { Project } from "@/models/Project";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { TechIconTile } from "@/components/ui/TechIconTile";
 import { isUsableImageSrc } from "@/lib/image-src";
 
-// === MOBILE OPTIMIZED VERSION ===
-// Mobile project section implementation
 const MobileProjectsSection = ({
   projects,
   selectedProject,
@@ -26,20 +24,24 @@ const MobileProjectsSection = ({
     const [isDetailView, setIsDetailView] = useState(false);
     const [selectedTech, setSelectedTech] = useState<string | null>(null);
     
-    // Extract unique tech names from all projects
-    const allTechnologies = Array.from(
-      projects.reduce((techSet, project) => {
-        project.technologies.forEach(tech => techSet.add(tech.name));
-        return techSet;
-      }, new Set<string>())
-    ).sort();
-    
-    // Filter projects by selected technology
-    const filteredProjects = selectedTech 
-      ? projects.filter(project => 
-          project.technologies.some(tech => tech.name === selectedTech)
-        )
-      : projects;
+    const allTechnologies = useMemo(
+      () => Array.from(
+        projects.reduce((techSet, project) => {
+          project.technologies.forEach(tech => techSet.add(tech.name));
+          return techSet;
+        }, new Set<string>())
+      ).sort(),
+      [projects],
+    );
+
+    const filteredProjects = useMemo(
+      () => selectedTech 
+        ? projects.filter(project => 
+            project.technologies.some(tech => tech.name === selectedTech)
+          )
+        : projects,
+      [projects, selectedTech],
+    );
     
     // Handle viewing project details
     const handleViewProject = (project: Project) => {

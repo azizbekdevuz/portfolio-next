@@ -131,27 +131,19 @@ export const messages = {
       emphasisTags: ["Ish jarayoni pipeline", "Tekshiruvga yo‘naltirilgan UX", "Yupqa chat emas"] as const,
     },
   },
-  downloads: {
-    flowTitle: "Hujjatlar",
-    flowIntro:
-      "Hujjat turi, yo‘nalish va tilni tanlang. Fayl `content/downloads.ts` dagi jadvalda yo‘l bilan bog‘langan bo‘lsa, yuklab olinadi.",
-    triggerResume: "Rezyume",
+  downloads: {    triggerResume: "Rezyume",
     triggerPortfolio: "Portfolio",
     triggerGroupLabel: "PDF yuklab olish",
     triggerResumeAria: "Rezyume PDF tanlash oynasini ochish",
     triggerPortfolioAria: "Portfolio PDF tanlash oynasini ochish",
     pickerSubtitle: "Avval fokus, keyin tilni tanlang. Fayl kontent jadvalida bo‘lsa yuklab olinadi.",
     closeOverlay: "Yopish",
-    closeOverlayBackdrop: "Yuklab olish oynasini yopish",
-    stepDocument: "Tur",
-    stepFocus: "Yo‘nalish",
+    closeOverlayBackdrop: "Yuklab olish oynasini yopish",    stepFocus: "Yo‘nalish",
     stepLanguage: "Til",
     categoryResume: "Rezyume (PDF)",
     categoryPortfolio: "Portfolio (PDF)",
     download: "Yuklab olish",
-    unavailableTitle: "Fayl hali serverda yo‘q",
-    helperHint: "PDF larni public/ ga qo‘shing va content/downloads.ts ichidagi downloadGrid da href ni bering.",
-    pdfPending: "Ushbu kombinatsiya uchun content/downloads.ts dagi downloadGrid da href qo‘shing.",
+    unavailableTitle: "Fayl hali serverda yo‘q",    pdfPending: "Ushbu kombinatsiya uchun content/downloads.ts dagi downloadGrid da href qo‘shing.",
     localeName: { en: "Ingliz tili", ko: "Koreys tili", uz: "O‘zbek tili" },
     lens: {
       fullstack: { resume: "Full-stack rezyume", portfolio: "Full-stack portfolio (PDF)" },
@@ -248,9 +240,7 @@ export const messages = {
       },
     },
   },
-  experience: {
-    headline: "Ish qayerda bo‘lgan",
-    items: {
+  experience: {    items: {
       independent: {
         title: "Mustaqil — mahsulot va platforma muhandisi",
         detail:
@@ -326,7 +316,6 @@ export const messages = {
     panelOverview: "Umumiy qarash",
     panelTechnologies: "Texnologiyalar",
     featuredProjects: "Taniqli loyihalar",
-    back: "Orqaga",
     viewDetails: "Batafsil",
     backToAll: "Barcha ko‘nikmalarga",
     viewCta: "Ko‘rish →",

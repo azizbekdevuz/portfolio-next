@@ -114,8 +114,6 @@ export const messages = {
     },
   },
   downloads: {
-    flowTitle: "문서",
-    flowIntro: "문서 유형·초점·언어를 고른 뒤 내려받습니다. 레지스트리에 경로가 있을 때만 다운로드됩니다.",
     triggerResume: "이력서",
     triggerPortfolio: "포트폴리오",
     triggerGroupLabel: "PDF 내려받기",
@@ -124,14 +122,12 @@ export const messages = {
     pickerSubtitle: "초점을 고른 뒤 언어를 선택하세요. 파일이 콘텐츠에 등록된 경우에만 내려받을 수 있습니다.",
     closeOverlay: "닫기",
     closeOverlayBackdrop: "내려받기 옵션 닫기",
-    stepDocument: "유형",
     stepFocus: "초점",
     stepLanguage: "언어",
     categoryResume: "이력서 (PDF)",
     categoryPortfolio: "포트폴리오 (PDF)",
     download: "다운로드",
     unavailableTitle: "아직 서버에 없음",
-    helperHint: "public/에 PDF를 올리고 content/downloads.ts의 downloadGrid에 경로를 연결하세요.",
     pdfPending: "content/downloads.ts의 downloadGrid에 이 조합의 경로를 추가하세요.",
     localeName: { en: "영어", ko: "한국어", uz: "우즈베크어" },
     lens: {
@@ -230,7 +226,6 @@ export const messages = {
     },
   },
   experience: {
-    headline: "일이 이뤄진 곳",
     items: {
       independent: {
         title: "독립 — 프로덕트·플랫폼 엔지니어",
@@ -307,7 +302,6 @@ export const messages = {
     panelOverview: "개요",
     panelTechnologies: "기술 스택",
     featuredProjects: "대표 프로젝트",
-    back: "뒤로",
     viewDetails: "자세히",
     backToAll: "전체 역량으로",
     viewCta: "보기 →",

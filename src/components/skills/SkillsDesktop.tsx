@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useMemo } from "react";
+import { localizeSkillNodes } from "./localizeSkillNodes";
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 import { Cpu, Palette } from "lucide-react";
 import { TechIconTile } from "@/components/ui/TechIconTile";
@@ -17,23 +18,8 @@ export default function SkillsDesktop({ embedded = false }: { embedded?: boolean
   const mouseY = useMotionValue(0);
 
   const localizedNodes = useMemo(
-    () =>
-      skillNodes.map((node) => {
-        const loc = messages.skills.nodes[node.id as keyof typeof messages.skills.nodes];
-        if (!loc) return node;
-        return {
-          ...node,
-          title: loc.title,
-          description: loc.description,
-          experience: loc.experience,
-          workspace: {
-            ...node.workspace,
-            title: loc.workspaceTitle,
-            environment: loc.workspaceEnvironment,
-          },
-        };
-      }),
-    [messages],
+    () => localizeSkillNodes(skillNodes, messages.skills),
+    [messages.skills],
   );
 
   const activeNode = localizedNodes.find((node) => node.id === activeSkill);

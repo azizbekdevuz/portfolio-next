@@ -1,42 +1,6 @@
 import { motion } from "framer-motion";
-import { BrandIcon, type BrandIconId } from "@/lib/brand-icons";
-
-const socialLinks: {
-  id: string;
-  name: string;
-  url: string;
-  iconId: BrandIconId;
-  description: string;
-}[] = [
-  {
-    id: "github",
-    name: "GitHub",
-    url: "https://github.com/azizbekdevuz",
-    iconId: "github",
-    description: "Code and contributions",
-  },
-  {
-    id: "linkedin",
-    name: "LinkedIn",
-    url: "https://linkedin.com/in/azizbek-arzikulov",
-    iconId: "linkedin",
-    description: "Professional profile",
-  },
-  {
-    id: "telegram",
-    name: "Telegram",
-    url: "https://t.me/+Abz6kYFkTX9hNzFi",
-    iconId: "telegram",
-    description: "Direct message",
-  },
-  {
-    id: "linktree",
-    name: "Linktree",
-    url: "https://linktr.ee/azizbekuz",
-    iconId: "linktree",
-    description: "Other links",
-  },
-];
+import { BrandIcon } from "@/lib/brand-icons";
+import { SOCIAL_PLATFORM_LIST } from "@/content/social-platforms";
 
 export const SocialLinks: React.FC = () => {
   return (
@@ -52,7 +16,7 @@ export const SocialLinks: React.FC = () => {
           Direct links—no extra steps. Pick what you need for screening or a conversation.
         </p>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-          {socialLinks.map((link, index) => (
+          {SOCIAL_PLATFORM_LIST.map((link, index) => (
             <motion.a
               key={link.id}
               href={link.url}
@@ -73,7 +37,7 @@ export const SocialLinks: React.FC = () => {
                 />
               </div>
               <span className="text-center text-sm font-medium text-fg">{link.name}</span>
-              <span className="mt-1 text-center text-xs text-muted">{link.description}</span>
+              <span className="mt-1 text-center text-xs text-muted">{link.cardBlurb}</span>
             </motion.a>
           ))}
         </div>

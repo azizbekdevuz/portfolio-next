@@ -5,26 +5,24 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import emailjs from "@emailjs/browser";
 import { useI18n } from "@/components/i18n/I18nProvider";
+import { siteProfile, SITE_URL } from "@/content/site";
 
-// Import components
-import { CircuitBackground } from "../contact/CircuitBackground";
-import { QRCodeDisplay } from "../contact/QRCodeDisplay";
-import { LanguageSection } from "../contact/LanguageSection";
-import { SocialLinks } from "../contact/SociallLinks";
+import { CircuitBackground } from "./CircuitBackground";
+import { QRCodeDisplay } from "./QRCodeDisplay";
+import { LanguageSection } from "./LanguageSection";
+import { SocialLinks } from "./SocialLinks";
 
-// Types
 interface FormData {
   from_name: string;
   email: string;
   message: string;
 }
 
-// Interactive Contact Card Component
 const ContactCard: React.FC = () => {
   const { messages } = useI18n();
   const pathname = usePathname();
   const [isHovered, setIsHovered] = useState(false);
-  const [qrOrigin, setQrOrigin] = useState("https://portfolio-next-silk-two.vercel.app");
+  const [qrOrigin, setQrOrigin] = useState(SITE_URL);
 
   useEffect(() => {
     if (typeof window !== "undefined") setQrOrigin(window.location.origin);
@@ -49,15 +47,15 @@ const ContactCard: React.FC = () => {
             color: isHovered ? "#2980b9" : "#149ddd",
           }}
         >
-          Azizbek Arzikulov
+          {siteProfile.name}
         </motion.h2>
         <p className="text-fg">{messages.contact.profileSubtitle}</p>
         <motion.a
-          href="mailto:azizbek.dev.uz@gmail.com"
+          href={`mailto:${siteProfile.email}`}
           className="block text-muted hover:text-primary transition-colors"
           whileHover={{ x: 5 }}
         >
-          azizbek.dev.uz@gmail.com
+          {siteProfile.email}
         </motion.a>
 
         {/* QR Code with animation */}
@@ -83,7 +81,6 @@ const ContactCard: React.FC = () => {
   );
 };
 
-// Renamed to ContactSectionDesktop
 export function DesktopContactSection({ embedded = false }: { embedded?: boolean }) {
   const { messages } = useI18n();
   const [formData, setFormData] = useState<FormData>({

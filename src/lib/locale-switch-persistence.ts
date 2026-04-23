@@ -1,5 +1,5 @@
 import type { HomeShellView } from "@/components/shell/HomeShellContext";
-import type { ProofTrackFilter } from "@/lib/proof-track";
+import { isProofTrackFilter, type ProofTrackFilter } from "@/lib/proof-track";
 import type { ProofWorkspaceMode } from "@/lib/proof-workspace";
 import { proofWorkspaceModes } from "@/lib/proof-workspace";
 
@@ -8,14 +8,8 @@ const PROOF_KEY = "portfolio:localeSwitch:proof";
 
 const SHELL_SET = new Set<HomeShellView>(["cockpit", "projects", "about", "skills", "contact", "in-progress"]);
 
-const TRACK_SET = new Set<ProofTrackFilter>(["all", "frontend", "fullstack", "ai"]);
-
 function isShell(v: unknown): v is HomeShellView {
   return typeof v === "string" && SHELL_SET.has(v as HomeShellView);
-}
-
-function isTrack(v: unknown): v is ProofTrackFilter {
-  return typeof v === "string" && TRACK_SET.has(v as ProofTrackFilter);
 }
 
 function isWorkspaceMode(v: unknown): v is ProofWorkspaceMode {
@@ -69,7 +63,7 @@ export function consumeProofBrowseAfterLocaleSwitch(): Partial<ProofBrowsePersis
     if (!raw) return null;
     const o = JSON.parse(raw) as Record<string, unknown>;
     const out: Partial<ProofBrowsePersisted> = {};
-    if (isTrack(o.track)) out.track = o.track;
+    if (isProofTrackFilter(o.track)) out.track = o.track;
     if (o.selectedSlug === null || typeof o.selectedSlug === "string") out.selectedSlug = o.selectedSlug;
     if (isWorkspaceMode(o.workspaceMode)) out.workspaceMode = o.workspaceMode;
     if (typeof o.deepDiveSlug === "string" && o.deepDiveSlug.length > 0) {

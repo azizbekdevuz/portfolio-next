@@ -4,8 +4,9 @@ import DeviceDetectionWrapper from "@/components/DeviceDetectionWrapper";
 import { I18nProvider } from "@/components/i18n/I18nProvider";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/config";
 import { getMessages } from "@/messages/load";
+import { SITE_URL } from "@/content/site";
 
-const siteUrl = "https://portfolio-next-silk-two.vercel.app/";
+const siteUrl = `${SITE_URL}/`;
 
 export function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ko" }, { locale: "uz" }];

@@ -1,7 +1,8 @@
 "use client";
 
+import { useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { locales, localeLabels, LOCALE_COOKIE, type Locale } from "@/i18n/config";
+import { locales, localeLabels, LOCALE_COOKIE, type Locale, isLocale } from "@/i18n/config";
 import { useProofBrowse } from "@/components/brand/ProofBrowseContext";
 import { useHomeShell } from "@/components/shell/HomeShellContext";
 import { stashStateBeforeLocaleSwitch } from "@/lib/locale-switch-persistence";
@@ -12,26 +13,36 @@ function setLocaleCookie(locale: Locale) {
   document.cookie = `${LOCALE_COOKIE}=${locale}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
 }
 
-export function LanguageSwitcher() {
-  const { locale, messages } = useI18n();
+function useLocaleSwitch() {
+  const { locale } = useI18n();
   const router = useRouter();
   const pathname = usePathname();
   const { shell } = useHomeShell();
   const { track, selectedSlug, workspaceMode } = useProofBrowse();
 
-  const switchTo = (next: Locale) => {
-    if (next === locale) return;
-    stashStateBeforeLocaleSwitch({
-      shell,
-      proof: { track, selectedSlug, workspaceMode },
-    });
-    setLocaleCookie(next);
-    const segments = pathname.split("/").filter(Boolean);
-    const rest = segments.slice(1).join("/");
-    const target = rest ? `/${next}/${rest}` : `/${next}`;
-    router.push(target);
-    router.refresh();
-  };
+  return useCallback(
+    (next: Locale) => {
+      if (next === locale) return;
+      stashStateBeforeLocaleSwitch({
+        shell,
+        proof: { track, selectedSlug, workspaceMode },
+      });
+      setLocaleCookie(next);
+      const segments = pathname.split("/").filter(Boolean);
+      const first = segments[0];
+      const rest =
+        first != null && isLocale(first) ? segments.slice(1).join("/") : "";
+      router.push(rest ? `/${next}/${rest}` : `/${next}`);
+      router.refresh();
+    },
+    [locale, shell, track, selectedSlug, workspaceMode, pathname, router],
+  );
+}
+
+export function LanguageSwitcher() {
+  const { locale, messages } = useI18n();
+  const { shell } = useHomeShell();
+  const switchTo = useLocaleSwitch();
 
   const floatingCockpit = "fixed left-6 top-6 z-[100] hidden md:block";
   const shellLane =
@@ -81,23 +92,7 @@ export function LanguageSwitcher() {
 /** Compact row for mobile drawer / header. */
 export function LanguageSwitcherInline({ className = "" }: { className?: string }) {
   const { locale, messages } = useI18n();
-  const router = useRouter();
-  const pathname = usePathname();
-  const { shell } = useHomeShell();
-  const { track, selectedSlug, workspaceMode } = useProofBrowse();
-
-  const switchTo = (next: Locale) => {
-    if (next === locale) return;
-    stashStateBeforeLocaleSwitch({
-      shell,
-      proof: { track, selectedSlug, workspaceMode },
-    });
-    setLocaleCookie(next);
-    const segments = pathname.split("/").filter(Boolean);
-    const rest = segments.slice(1).join("/");
-    router.push(rest ? `/${next}/${rest}` : `/${next}`);
-    router.refresh();
-  };
+  const switchTo = useLocaleSwitch();
 
   return (
     <div

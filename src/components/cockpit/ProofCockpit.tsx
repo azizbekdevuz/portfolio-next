@@ -17,7 +17,7 @@ import type { Project } from "@/models/Project";
 import { useProofBrowse } from "@/components/brand/ProofBrowseContext";
 import { useHomeShell } from "@/components/shell/HomeShellContext";
 import { getFeaturedProjectsForTrack } from "@/content/home-data";
-import type { ProofTrackFilter } from "@/lib/proof-track";
+import { PROOF_TRACK_FILTERS, type ProofTrackFilter } from "@/lib/proof-track";
 import { getDefaultFeaturedSlugForTrack, sortExperienceItemsByTrack } from "@/lib/reviewer-track-view";
 import type { HomeData } from "@/content/home-data";
 import { experienceSnapshot } from "@/content/experience-snapshot";
@@ -116,12 +116,15 @@ export function ProofCockpit({
     return filteredFeatured[0] ?? null;
   }, [selectedSlug, projects, filteredFeatured]);
 
-  const trackOptions: { id: ProofTrackFilter; label: string }[] = [
-    { id: "all", label: messages.cockpit.allProof },
-    { id: "frontend", label: messages.roleTracks.frontend.label },
-    { id: "fullstack", label: messages.roleTracks.fullstack.label },
-    { id: "ai", label: messages.roleTracks.ai.label },
-  ];
+  const trackOptions = useMemo((): { id: ProofTrackFilter; label: string }[] => {
+    const labelById: Record<ProofTrackFilter, string> = {
+      all: messages.cockpit.allProof,
+      frontend: messages.roleTracks.frontend.label,
+      fullstack: messages.roleTracks.fullstack.label,
+      ai: messages.roleTracks.ai.label,
+    };
+    return PROOF_TRACK_FILTERS.map((id) => ({ id, label: labelById[id] }));
+  }, [messages]);
 
   const experienceLines = useMemo(() => {
     const mapped = experienceSnapshot.items.map((item) => {

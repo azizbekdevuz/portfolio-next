@@ -5,12 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import emailjs from "@emailjs/browser";
 import { useI18n } from "@/components/i18n/I18nProvider";
-import type { SiteProfile } from "@/content/site";
+import { siteProfile, SITE_URL, type SiteProfile } from "@/content/site";
+import { SOCIAL_PLATFORM_LIST } from "@/content/social-platforms";
 import { BrandIcon, type BrandIconId } from "@/lib/brand-icons";
 import { LanguageFlagIcon } from "@/components/contact/LanguageFlagIcon";
 import { QRCodeDisplay } from "@/components/contact/QRCodeDisplay";
 
-// Types
 interface FormData {
   from_name: string;
   email: string;
@@ -24,7 +24,6 @@ interface SocialLink {
   iconId: BrandIconId;
 }
 
-// Export as named export for importing in other components
 export function MobileContactSection({
   site,
   embedded = false,
@@ -47,7 +46,7 @@ export function MobileContactSection({
   const [success, setSuccess] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const pathname = usePathname();
-  const [qrOrigin, setQrOrigin] = useState("https://portfolio-next-silk-two.vercel.app");
+  const [qrOrigin, setQrOrigin] = useState(SITE_URL);
 
   useEffect(() => {
     if (typeof window !== "undefined") setQrOrigin(window.location.origin);
@@ -55,33 +54,12 @@ export function MobileContactSection({
 
   const qrValue = `${qrOrigin}${pathname}`;
 
-  // Social media links
-  const socialLinks: SocialLink[] = [
-    {
-      id: "github",
-      name: "GitHub",
-      url: "https://github.com/azizbekdevuz",
-      iconId: "github",
-    },
-    {
-      id: "linkedin",
-      name: "LinkedIn",
-      url: "https://linkedin.com/in/azizbekdev",
-      iconId: "linkedin",
-    },
-    {
-      id: "telegram",
-      name: "Telegram",
-      url: "https://t.me/azizbek_dev",
-      iconId: "telegram",
-    },
-    {
-      id: "linktree",
-      name: "LinkTree",
-      url: "https://linktr.ee/azizbekuz",
-      iconId: "linktree",
-    },
-  ];
+  const socialLinks: SocialLink[] = SOCIAL_PLATFORM_LIST.map(({ id, name, url, iconId }) => ({
+    id,
+    name,
+    url,
+    iconId,
+  }));
 
   const languages = (["en", "ko", "uz", "ru"] as const).map((code) => ({
     code,
@@ -204,13 +182,13 @@ export function MobileContactSection({
           </div>
           
           <div>
-            <h3 className="text-xl font-bold text-primary">Azizbek Arzikulov</h3>
+            <h3 className="text-xl font-bold text-primary">{siteProfile.name}</h3>
             <p className="text-sm text-fg">{messages.contact.profileSubtitle}</p>
             <a 
-              href="mailto:azizbek.dev.uz@gmail.com" 
+              href={`mailto:${siteProfile.email}`}
               className="text-sm text-muted hover:text-primary transition-colors"
             >
-              azizbek.dev.uz@gmail.com
+              {siteProfile.email}
             </a>
           </div>
         </div>
@@ -392,14 +370,14 @@ export function MobileContactSection({
                   </div>
                   <span>+998 90 1227 88 79</span>
                 </a>
-                <a href="mailto:azizbek.dev.uz@gmail.com" className="flex items-center gap-3 text-fg hover:text-primary">
+                <a href={`mailto:${siteProfile.email}`} className="flex items-center gap-3 text-fg hover:text-primary">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                       <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
                   </div>
-                  <span>azizbek.dev.uz@gmail.com</span>
+                  <span>{siteProfile.email}</span>
                 </a>
               </div>
             </motion.div>

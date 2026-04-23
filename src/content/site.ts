@@ -1,6 +1,8 @@
 /**
  * Positioning and identity. Project facts live in `projects-data.ts`.
  */
+export const SITE_URL = "https://portfolio-next-silk-two.vercel.app";
+
 export const siteProfile = {
   name: "Azizbek Arzikulov",
   headlineRole: "Full-stack product engineer",

@@ -9,14 +9,8 @@ import { locales } from "@/i18n/config";
 export type DownloadCategory = "resume" | "portfolio";
 export type DownloadLens = "fullstack" | "frontend" | "backend";
 
-export const DOWNLOAD_CATEGORIES: DownloadCategory[] = ["resume", "portfolio"];
+const DOWNLOAD_CATEGORIES: DownloadCategory[] = ["resume", "portfolio"];
 export const DOWNLOAD_LENSES: DownloadLens[] = ["fullstack", "frontend", "backend"];
-
-const LOCALE_CODE: Record<Locale, string> = {
-  en: "en",
-  ko: "ko",
-  uz: "uz",
-};
 
 function defaultFilename(
   category: DownloadCategory,
@@ -26,7 +20,7 @@ function defaultFilename(
   const kind = category === "resume" ? "Resume" : "Portfolio";
   const lensPart =
     lens === "fullstack" ? "FullStack" : lens === "frontend" ? "Frontend" : "Backend";
-  return `Azizbek-${kind}-${lensPart}-${LOCALE_CODE[locale]}.pdf`;
+  return `Azizbek-${kind}-${lensPart}-${locale}.pdf`;
 }
 
 export type DownloadCell = { filename: string; href: string | null };
@@ -57,12 +51,23 @@ function makeGrid(): Record<
 /**
  * Single source for download targets. `href: null` means the file is not yet in `public/`.
  */
-export const downloadGrid = makeGrid();
+const downloadGrid = makeGrid();
 
 export function getDownloadCell(
   category: DownloadCategory,
   lens: DownloadLens,
   locale: Locale,
 ): DownloadCell {
-  return downloadGrid[category][lens][locale];
+  const cell = downloadGrid[category]?.[lens]?.[locale];
+  if (
+    cell &&
+    typeof cell.filename === "string" &&
+    (cell.href === null || (typeof cell.href === "string" && cell.href.length > 0))
+  ) {
+    return cell;
+  }
+  return {
+    filename: defaultFilename(category, lens, locale),
+    href: null,
+  };
 }

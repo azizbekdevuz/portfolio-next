@@ -141,8 +141,6 @@ export const messages = {
     },
   },
   downloads: {
-    flowTitle: "Documents",
-    flowIntro: "Select document type, focus, and language. Download when the file is linked in the content registry.",
     triggerResume: "Resume",
     triggerPortfolio: "Portfolio",
     triggerGroupLabel: "Download PDFs",
@@ -151,14 +149,12 @@ export const messages = {
     pickerSubtitle: "Choose a focus, then a language. Download is available when the file is registered in the content layer.",
     closeOverlay: "Close",
     closeOverlayBackdrop: "Close download options",
-    stepDocument: "Type",
     stepFocus: "Focus",
     stepLanguage: "Language",
     categoryResume: "Resume (PDF)",
     categoryPortfolio: "Portfolio (PDF)",
     download: "Download",
     unavailableTitle: "File not on server yet",
-    helperHint: "Unlinked combinations are normal until you add PDFs under public/.",
     pdfPending: "Add the public path in content/downloads.ts (downloadGrid) for this combination.",
     localeName: { en: "English", ko: "Korean", uz: "Uzbek" },
     lens: {
@@ -260,7 +256,6 @@ export const messages = {
     },
   },
   experience: {
-    headline: "Where the work happened",
     items: {
       independent: {
         title: "Independent — product & platform engineer",
@@ -338,7 +333,6 @@ export const messages = {
     panelOverview: "Overview",
     panelTechnologies: "Technologies",
     featuredProjects: "Featured projects",
-    back: "Back",
     viewDetails: "View details",
     backToAll: "Back to all skills",
     viewCta: "View →",
