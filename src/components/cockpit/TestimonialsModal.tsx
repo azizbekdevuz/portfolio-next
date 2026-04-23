@@ -78,13 +78,21 @@ export function TestimonialsModal() {
               >
                 <div className="flex gap-3">
                   <div
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border-strong bg-surface-soft text-xs font-bold text-fg dark:bg-card-muted"
+                    className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-border-strong bg-surface-soft dark:bg-card-muted"
                     aria-hidden
                   >
                     {t.avatar ? (
-                      <Image src={t.avatar} alt={t.name} width={40} height={40} />
+                      <Image
+                        src={t.avatar}
+                        alt={t.name}
+                        fill
+                        className="object-cover"
+                        sizes="40px"
+                      />
                     ) : (
-                      t.initials
+                      <div className="flex h-full w-full items-center justify-center text-xs font-bold text-fg">
+                        {t.initials}
+                      </div>
                     )}
                   </div>
                   <blockquote className="min-w-0 flex-1 text-sm leading-relaxed text-muted">
