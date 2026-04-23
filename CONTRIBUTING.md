@@ -7,6 +7,7 @@ This repository is a **personal portfolio**. External contributions are **option
 - **Open an issue first** for non-trivial changes (behavior, structure, or large refactors) so the owner can confirm direction.
 - **One topic per PR** (e.g. fix a typo, update a dependency, or one UI improvement)—avoid mixing unrelated edits.
 - **Match the existing code style**: TypeScript strictness, component patterns, Tailwind + semantic tokens (`text-fg`, `border-border`, `theme-tokens.css`), and i18n (all user-visible strings in `src/messages/`, with **ko** / **uz** when adding English copy).
+- **Global visuals / stacking**: the ambient background (`BackgroundGradient`) is a **fixed, full-viewport** layer (`z-0`); structure and motion live in **`src/app/ambient-background.css`** with **`--ambient-*`** tokens in `theme-tokens.css`. Avoid another full-viewport **opaque** `bg-page` above it without intent. See **README → Background**.
 
 ## Local checks
 

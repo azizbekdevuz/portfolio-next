@@ -33,6 +33,23 @@
    * which could not shrink the stage on narrower desktop widths.
    */
   --cockpit-hero-stage-max-width: min(80rem, max(17.25rem, calc(100vw - 38rem)));
+
+  /**
+   * Ambient “data-plane” (see ambient-background.css + BackgroundGradient).
+   * Separate from --color-grid (section UI) so the global field can read clearly.
+   */
+  --ambient-grid-step: 48px;
+  --ambient-field-opacity: 0.26;
+  --ambient-field-line: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  --ambient-field-line-soft: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  --ambient-scan-opacity: 0.055;
+  --ambient-scan-line: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  --ambient-horizon-opacity: 0.42;
+  --ambient-horizon-mid: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  --ambient-vignette-opacity: 0.55;
+  --ambient-vignette-edge: color-mix(in srgb, var(--color-fg) 5.5%, transparent);
+  --ambient-node-opacity: 0.14;
+  --ambient-node-core: color-mix(in srgb, var(--color-accent) 28%, transparent);
 }
 
 .dark {
@@ -55,4 +72,17 @@
   --gradient-mesh-b: #0a1628;
   --gradient-mesh-c: #040b14;
   --color-surface-soft: #0f1a2e;
+
+  --ambient-grid-step: 44px;
+  --ambient-field-opacity: 0.32;
+  --ambient-field-line: color-mix(in srgb, var(--color-accent) 28%, transparent);
+  --ambient-field-line-soft: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  --ambient-scan-opacity: 0.065;
+  --ambient-scan-line: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  --ambient-horizon-opacity: 0.38;
+  --ambient-horizon-mid: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  --ambient-vignette-opacity: 0.62;
+  --ambient-vignette-edge: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  --ambient-node-opacity: 0.18;
+  --ambient-node-core: color-mix(in srgb, var(--color-accent) 34%, transparent);
 }

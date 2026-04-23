@@ -22,12 +22,12 @@ export function DeviceShellBody({ children }: { children: React.ReactNode }) {
       {!isMobile && <OptimizedCursor />}
       <BackgroundGradient />
       {isDesktopPanel ? (
-        <div className="grid min-h-dvh w-full grid-cols-[var(--shell-chrome-left)_minmax(0,1fr)_var(--shell-chrome-right)] bg-page">
-          <aside className="sticky top-0 z-40 flex h-dvh max-h-dvh flex-col items-center border-r border-border/50 bg-page/90 py-3 backdrop-blur-md supports-[backdrop-filter]:bg-page/80">
+        <div className="relative z-10 grid min-h-dvh w-full grid-cols-[var(--shell-chrome-left)_minmax(0,1fr)_var(--shell-chrome-right)]">
+          <aside className="sticky top-0 z-40 flex h-dvh max-h-dvh flex-col items-center border-r border-border/50 bg-page/82 py-3 backdrop-blur-md supports-[backdrop-filter]:bg-page/72 dark:bg-page/86 dark:supports-[backdrop-filter]:bg-page/76">
             <LanguageSwitcher />
           </aside>
-          <div className="relative min-h-0 min-w-0">{children}</div>
-          <aside className="sticky top-0 z-40 flex h-dvh max-h-dvh min-h-0 flex-col items-center border-l border-border/50 bg-page/90 py-3 backdrop-blur-md supports-[backdrop-filter]:bg-page/80">
+          <div className="relative z-10 min-h-0 min-w-0">{children}</div>
+          <aside className="sticky top-0 z-40 flex h-dvh max-h-dvh min-h-0 flex-col items-center border-l border-border/50 bg-page/82 py-3 backdrop-blur-md supports-[backdrop-filter]:bg-page/72 dark:bg-page/86 dark:supports-[backdrop-filter]:bg-page/76">
             <ThemeToggle />
           </aside>
         </div>
@@ -36,7 +36,7 @@ export function DeviceShellBody({ children }: { children: React.ReactNode }) {
           <LanguageSwitcher />
           <ThemeToggle />
           {isMobile ? <MobileNavigation /> : null}
-          <div className="relative min-h-dvh">{children}</div>
+          <div className="relative z-10 min-h-dvh min-w-0">{children}</div>
         </>
       )}
     </>

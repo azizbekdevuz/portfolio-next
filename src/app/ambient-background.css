@@ -1,0 +1,212 @@
+/**
+ * Global ambient “data-plane” — orthogonal field + diagonal scan + horizon + vignette.
+ * Motion is CSS-only (GPU-friendly background-position / opacity). No canvas.
+ * Paired with tokens in theme-tokens.css (--ambient-*).
+ */
+
+.ambient-root {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  contain: layout paint;
+}
+
+/* Axial depth: linear bias (distinct from prior radial wash language) */
+.ambient-depth {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    168deg,
+    color-mix(in srgb, var(--color-page) 82%, var(--color-accent) 18%) 0%,
+    var(--color-page) 36%,
+    color-mix(in srgb, var(--color-page) 76%, var(--color-accent-dim) 24%) 100%
+  );
+}
+
+.dark .ambient-depth {
+  background: linear-gradient(
+    168deg,
+    color-mix(in srgb, var(--color-page) 62%, var(--color-accent) 38%) 0%,
+    var(--color-page) 40%,
+    color-mix(in srgb, var(--color-page) 55%, var(--color-accent-dim) 45%) 100%
+  );
+}
+
+/* Primary lattice */
+.ambient-field {
+  position: absolute;
+  inset: 0;
+  opacity: var(--ambient-field-opacity);
+  background-image:
+    linear-gradient(to right, var(--ambient-field-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--ambient-field-line) 1px, transparent 1px);
+  background-size: var(--ambient-grid-step) var(--ambient-grid-step);
+  mask-image: radial-gradient(
+    ellipse 100% 78% at 50% 18%,
+    rgb(0 0 0 / 0.52) 0%,
+    rgb(0 0 0 / 0.12) 48%,
+    transparent 72%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 100% 78% at 50% 18%,
+    rgb(0 0 0 / 0.52) 0%,
+    rgb(0 0 0 / 0.12) 48%,
+    transparent 72%
+  );
+}
+
+/* Offset half-step second lattice → depth / “signal plane” without blend modes */
+.ambient-field-offset {
+  position: absolute;
+  inset: 0;
+  opacity: calc(var(--ambient-field-opacity) * 0.52);
+  background-image:
+    linear-gradient(to right, var(--ambient-field-line-soft) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--ambient-field-line-soft) 1px, transparent 1px);
+  background-size: var(--ambient-grid-step) var(--ambient-grid-step);
+  /* Half-step offset lattice (static moiré depth; drift only on primary field) */
+  background-position: calc(var(--ambient-grid-step) * 0.5) calc(var(--ambient-grid-step) * 0.5);
+  mask-image: radial-gradient(
+    ellipse 100% 72% at 50% 22%,
+    rgb(0 0 0 / 0.45) 0%,
+    rgb(0 0 0 / 0.08) 46%,
+    transparent 70%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 100% 72% at 50% 22%,
+    rgb(0 0 0 / 0.45) 0%,
+    rgb(0 0 0 / 0.08) 46%,
+    transparent 70%
+  );
+}
+
+.ambient-field-drift {
+  animation: ambient-field-drift 240s linear infinite;
+}
+
+@keyframes ambient-field-drift {
+  from {
+    background-position: 0 0, 0 0;
+  }
+  to {
+    background-position: 960px 540px, 960px 540px;
+  }
+}
+
+/* Diagonal scan / data trace — signature non-radial layer */
+.ambient-scan {
+  position: absolute;
+  inset: -40%;
+  opacity: var(--ambient-scan-opacity);
+  background: repeating-linear-gradient(
+    108deg,
+    transparent 0,
+    transparent 72px,
+    var(--ambient-scan-line) 72px,
+    var(--ambient-scan-line) 73px
+  );
+  mask-image: radial-gradient(ellipse 90% 65% at 50% 30%, rgb(0 0 0 / 0.35), transparent 62%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 65% at 50% 30%, rgb(0 0 0 / 0.35), transparent 62%);
+}
+
+.ambient-scan-drift {
+  animation: ambient-scan-drift 520s linear infinite;
+}
+
+@keyframes ambient-scan-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-4%, 2.5%, 0);
+  }
+}
+
+/* Soft horizon band — volumetric read (static; motion handled by field/scan only) */
+.ambient-horizon {
+  position: absolute;
+  inset: 0;
+  opacity: var(--ambient-horizon-opacity);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 34%,
+    var(--ambient-horizon-mid) 48.5%,
+    transparent 57%,
+    transparent 100%
+  );
+}
+
+/* Edge framing */
+.ambient-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 96% 96% at 50% 50%,
+    transparent 52%,
+    var(--ambient-vignette-edge) 100%
+  );
+  opacity: var(--ambient-vignette-opacity);
+}
+
+/* Nodal glints — one micro-dot per grid cell (tiled) */
+.ambient-nodes {
+  position: absolute;
+  inset: 0;
+  opacity: var(--ambient-node-opacity);
+  background-image: radial-gradient(
+    circle at center,
+    var(--ambient-node-core) 0.55px,
+    transparent 1.35px
+  );
+  background-size: var(--ambient-grid-step) var(--ambient-grid-step);
+  background-position: calc(var(--ambient-grid-step) * 0.5) calc(var(--ambient-grid-step) * 0.5);
+  mask-image: radial-gradient(ellipse 95% 70% at 50% 20%, rgb(0 0 0 / 0.4), transparent 65%);
+  -webkit-mask-image: radial-gradient(ellipse 95% 70% at 50% 20%, rgb(0 0 0 / 0.4), transparent 65%);
+}
+
+/* Mobile: denser grid, calmer opacities, no long-running motion */
+@media (max-width: 767px) {
+  .ambient-root {
+    --ambient-grid-step: 32px;
+  }
+
+  .ambient-field-drift,
+  .ambient-scan-drift {
+    animation: none !important;
+  }
+
+  .ambient-field {
+    opacity: calc(var(--ambient-field-opacity) * 0.88);
+  }
+
+  .ambient-field-offset {
+    opacity: calc(var(--ambient-field-opacity) * 0.46);
+  }
+
+  .ambient-scan {
+    opacity: calc(var(--ambient-scan-opacity) * 0.82);
+  }
+
+  .ambient-horizon {
+    opacity: calc(var(--ambient-horizon-opacity) * 0.9);
+  }
+
+  .ambient-nodes {
+    opacity: calc(var(--ambient-node-opacity) * 0.85);
+  }
+}
+
+/* Reduced motion: keep full visual structure, drop kinetic layers only */
+@media (prefers-reduced-motion: reduce) {
+  .ambient-field-drift,
+  .ambient-scan-drift {
+    animation: none !important;
+  }
+
+  .ambient-scan {
+    opacity: calc(var(--ambient-scan-opacity) * 0.78);
+  }
+}

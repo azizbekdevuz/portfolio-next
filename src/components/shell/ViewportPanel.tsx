@@ -55,7 +55,7 @@ export function ViewportPanel({
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "tween", duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
     >
-      <header className="sticky top-0 z-30 flex shrink-0 flex-col gap-3 border-b border-border bg-page/95 px-4 py-3 backdrop-blur-md supports-[backdrop-filter]:bg-page/85">
+      <header className="sticky top-0 z-30 flex shrink-0 flex-col gap-3 border-b border-border bg-page/90 px-4 py-3 backdrop-blur-md supports-[backdrop-filter]:bg-page/78 dark:bg-page/92 dark:supports-[backdrop-filter]:bg-page/82">
         <div className="flex min-w-0 items-center gap-3">
           <button
             type="button"
