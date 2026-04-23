@@ -6,7 +6,7 @@ import { getFeaturedProjectsForTrack } from "@/content/home-data";
  * Preferred default flagship (featured) slug when switching into a lens.
  * First slug that appears in the track-filtered featured list wins.
  */
-export const DEFAULT_FEATURED_SLUG_ORDER: Record<Exclude<ProofTrackFilter, "all">, readonly string[]> = {
+const DEFAULT_FEATURED_SLUG_ORDER: Record<Exclude<ProofTrackFilter, "all">, readonly string[]> = {
   frontend: [
     "rumi-ai",
     "fishlinic",
@@ -36,8 +36,7 @@ export const DEFAULT_FEATURED_SLUG_ORDER: Record<Exclude<ProofTrackFilter, "all"
   ],
 };
 
-/** Reorder credibility lines so the most relevant line leads for each lens. */
-export const EXPERIENCE_ORDER_BY_TRACK: Record<ProofTrackFilter, readonly string[]> = {
+const EXPERIENCE_ORDER_BY_TRACK: Record<ProofTrackFilter, readonly string[]> = {
   all: ["independent", "sejong", "ebit"],
   frontend: ["independent", "ebit", "sejong"],
   fullstack: ["independent", "sejong", "ebit"],

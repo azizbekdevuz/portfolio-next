@@ -40,7 +40,7 @@ export function getHomeData(): HomeData {
   };
 }
 
-export function getFeaturedProjects(projects: Project[]): Project[] {
+function getFeaturedProjects(projects: Project[]): Project[] {
   return projects
     .filter((p) => p.featured && p.status !== "archived")
     .sort((a, b) => {

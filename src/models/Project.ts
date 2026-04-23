@@ -1,10 +1,10 @@
 import type { BrandIconId } from "@/lib/brand-icons";
 
-export type ProjectStatus = "live" | "wip" | "archived";
+type ProjectStatus = "live" | "wip" | "archived";
 
 export type RoleTrack = "frontend" | "fullstack" | "ai";
 
-export type FeaturedTier = "primary" | "secondary";
+type FeaturedTier = "primary" | "secondary";
 
 export interface Project {
   id: string;
@@ -48,18 +48,4 @@ export interface Project {
   challenges?: string;
   /** Plain text; omit if no verified metrics */
   metrics?: string;
-}
-
-// This is the type for the database document
-export interface ProjectDocument extends Omit<Project, "id"> {
-  _id: string;
-}
-
-// This helps convert MongoDB document to our Project interface
-export function convertDocToProject(doc: ProjectDocument): Project {
-  const { _id, ...rest } = doc;
-  return {
-    id: _id,
-    ...rest,
-  };
 }

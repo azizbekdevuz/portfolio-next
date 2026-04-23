@@ -4,17 +4,18 @@ import React, { useEffect, useCallback, memo, useState } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
 import { CUSTOM_CURSOR_EVENT, type CustomCursorEventDetail } from "@/lib/custom-cursor";
 
+const SPRING_CONFIG = { damping: 25, stiffness: 400, mass: 0.1 } as const;
+const RING_SPRING = { ...SPRING_CONFIG, damping: 35 } as const;
+
 export const OptimizedCursor = memo(function OptimizedCursor() {
   const [suppressed, setSuppressed] = useState(false);
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
 
-  const springConfig = { damping: 25, stiffness: 400, mass: 0.1 };
-  const ringSpring = { ...springConfig, damping: 35 };
-  const springX = useSpring(cursorX, springConfig);
-  const springY = useSpring(cursorY, springConfig);
-  const ringSpringX = useSpring(cursorX, ringSpring);
-  const ringSpringY = useSpring(cursorY, ringSpring);
+  const springX = useSpring(cursorX, SPRING_CONFIG);
+  const springY = useSpring(cursorY, SPRING_CONFIG);
+  const ringSpringX = useSpring(cursorX, RING_SPRING);
+  const ringSpringY = useSpring(cursorY, RING_SPRING);
 
   const updateCursor = useCallback(
     (e: MouseEvent) => {

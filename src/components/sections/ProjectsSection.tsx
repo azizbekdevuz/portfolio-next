@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
-import { motion} from "framer-motion";
-import { Project } from "../../models/Project";
+import { motion } from "framer-motion";
+import { Project } from "@/models/Project";
 import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 import { DesktopProjectsSection } from "../projects/desktop/DesktopProjectsSection";
 import MobileProjectsSection from "../projects/mobile/MobileProjectsSection";
@@ -18,7 +18,6 @@ interface ProjectsSectionProps {
   embedded?: boolean;
 }
 
-// Main ProjectsSection component that chooses between mobile and desktop
 export function ProjectsSection({ projects, embedded = false }: ProjectsSectionProps) {
   const { messages } = useI18n();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -26,7 +25,6 @@ export function ProjectsSection({ projects, embedded = false }: ProjectsSectionP
   const [hasMounted, setHasMounted] = useState(false);
   const { isMobile } = useDeviceDetection();
   
-  // Check screen size and initialize component
   useEffect(() => {
     setHasMounted(true);
 

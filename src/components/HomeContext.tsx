@@ -40,7 +40,7 @@ const InProgressSection = dynamic(
   { loading: () => <InProgressSkeleton /> },
 );
 
-function MainContent({ data }: { data: HomeData }) {
+export default function HomeContent({ data }: { data: HomeData }) {
   const { shell } = useHomeShell();
   const { bioSections, journeyData, techStack, achievements, projects, site } = data;
   const primaryProjects = projects.filter((p) => p.status !== "archived");
@@ -114,8 +114,4 @@ function MainContent({ data }: { data: HomeData }) {
       ) : null}
     </main>
   );
-}
-
-export default function HomeContent({ data }: { data: HomeData }) {
-  return <MainContent data={data} />;
 }

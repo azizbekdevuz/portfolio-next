@@ -3,7 +3,7 @@
  * Matches common X-Frame-Options and CSP frame-ancestors behavior (not COEP/CORP).
  */
 
-export type XFrameOptionsParse = "allow" | "deny" | "sameorigin";
+type XFrameOptionsParse = "allow" | "deny" | "sameorigin";
 
 export function parseXFrameOptions(value: string | null): XFrameOptionsParse {
   if (!value) return "allow";
@@ -20,7 +20,7 @@ export function isBlockedByXFrameOptions(xfo: XFrameOptionsParse): boolean {
   return false;
 }
 
-export function extractAllFrameAncestorsLists(csp: string | null): string[][] {
+function extractAllFrameAncestorsLists(csp: string | null): string[][] {
   if (!csp) return [];
   const lists: string[][] = [];
   const re = /frame-ancestors\s+([^;]+)/gi;

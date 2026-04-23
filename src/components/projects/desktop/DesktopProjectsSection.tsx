@@ -8,7 +8,6 @@ import { useI18n } from "@/components/i18n/I18nProvider";
 import { ProjectFile, EditorTab, TechBadge } from "./DesktopComponents";
 import ProjectPreview from "../ProjectPreview";
 
-// Desktop VS Code version
 export const DesktopProjectsSection = ({
   projects,
   selectedProject,

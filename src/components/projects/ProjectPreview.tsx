@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import ProjectUnavailable from "./ProjectUnavaliable";
+import ProjectUnavailable from "./ProjectUnavailable";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
 const EMBED_CACHE_PREFIX = "live-embed:";
@@ -124,26 +124,19 @@ export default function ProjectPreview({
   const openHref = liveLink;
   const openLabel = pv.openLiveAria.replace("{title}", title);
 
-  const OpenChrome = ({ className }: { className?: string }) => (
-    <a
-      href={openHref}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={openLabel}
-      title={openLabel}
-      className={
-        className ??
-        "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card/95 text-fg shadow-sm backdrop-blur-sm transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
-      }
-    >
-      <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
-    </a>
-  );
-
   return (
     <div className="relative w-full aspect-video overflow-hidden rounded-lg border border-border bg-card-muted/30">
       <div className="absolute right-2 top-2 z-20">
-        <OpenChrome />
+        <a
+          href={openHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={openLabel}
+          title={openLabel}
+          className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card/95 text-fg shadow-sm backdrop-blur-sm transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
+        >
+          <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
+        </a>
       </div>
 
       <AnimatePresence>

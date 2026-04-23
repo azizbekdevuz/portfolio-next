@@ -1,7 +1,7 @@
 import type { Locale } from "@/i18n/config";
 import type { Testimonial } from "./testimonials";
 
-export const testimonialsByLocale: Record<Locale, Testimonial[]> = {
+const testimonialsByLocale: Record<Locale, Testimonial[]> = {
   en: [
     {
       id: "1",

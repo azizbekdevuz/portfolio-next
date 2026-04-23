@@ -128,7 +128,7 @@ export type BrandIconId = keyof typeof BRAND_ICONS;
  * Theme-aware classes for `currentColor` on vector icons.
  * Tuned for this portfolio’s light page + deep navy dark UI.
  */
-export const BRAND_TONE: Record<BrandIconId, string> = {
+const BRAND_TONE: Record<BrandIconId, string> = {
   react: "text-[#61DAFB] drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(97,218,251,0.28)]",
   nextjs: "text-slate-900 dark:text-white",
   typescript: "text-[#3178C6] dark:text-[#6BA3E6]",
@@ -213,13 +213,6 @@ function toneClass(id: BrandIconId, visualTone: BrandIconVisualTone): string {
   return BRAND_TONE[id];
 }
 
-export function getBrandToneClass(
-  id: BrandIconId,
-  visualTone: BrandIconVisualTone = "brand",
-): string {
-  return toneClass(id, visualTone);
-}
-
 export function BrandIcon({
   id,
   size = "md",
@@ -250,6 +243,3 @@ export function BrandIcon({
   );
 }
 
-export function isBrandIconId(v: string): v is BrandIconId {
-  return v in BRAND_ICONS;
-}
