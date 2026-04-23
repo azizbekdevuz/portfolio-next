@@ -3,15 +3,15 @@
  */
 export const messages = {
   meta: {
-    title: "Azizbek Arzikulov — Product / full-stack engineer",
+    title: "Azizbek Arzikulov — Full-stack product engineer",
     description:
-      "Integration-heavy delivery: Next.js, multilingual products, real-time and data-heavy UIs, AI workflow systems. Proof-first portfolio.",
-    ogTitle: "Azizbek Arzikulov — Full-stack engineer",
+      "Full-stack product engineer in Seoul: Next.js, TypeScript, PostgreSQL/Prisma, FastAPI, real-time and multilingual products, e-commerce, identity-sensitive flows, and AI pipelines. Case studies with live links.",
+    ogTitle: "Azizbek Arzikulov — Full-stack product engineer",
     ogDescription:
-      "Next.js, TypeScript, React. Skim-first portfolio with featured case studies and deeper technical exploration.",
-    twitterTitle: "Azizbek Arzikulov — Full-stack engineer",
+      "Shipped products: Trainium, Rumi AI, Fishlinic, GitGuard Agent, ProofBoard, PatchPilot, and more—integration-first, production-minded web delivery.",
+    twitterTitle: "Azizbek Arzikulov — Full-stack product engineer",
     twitterDescription:
-      "Next.js, TypeScript, React. Featured case studies and proof-first layout.",
+      "Next.js, TypeScript, real-time and multilingual UIs, FastAPI, Prisma, identity flows—evidence-first portfolio.",
   },
   nav: {
     sections: {
@@ -257,20 +257,22 @@ export const messages = {
     headline: "Where the work happened",
     items: {
       independent: {
-        title: "Full-stack / product engineer, Founder",
+        title: "Independent — product & platform engineer",
         detail:
-          "Storefront, admin, multilingual, and AI-adjacent products—integration through ship.",
+          "Jan 2025 – present · Trainium, Fishlinic, GitGuard Agent, ProofBoard, and related work—end-to-end product delivery and deployment.",
       },
       sejong: {
-        title: "Sejong University — Research Lab",
-        detail: "Research-lab engineering support. [Manual: title / dates]",
+        title: "Sejong University — research lab intern",
+        detail:
+          "Oct 2025 – present · Rumi AI: frontend, multilingual/RTL, streaming, BFF and session alignment, integration with the research backend.",
       },
       ebit: {
-        title: "EBIT — AI trainer",
-        detail: "Model-facing product behavior and quality—not generic labeling. [Manual: scope]",
+        title: "EBIT Co., Ltd. — AI trainer (contractor)",
+        detail:
+          "Dec 2025 – present · Repository-based tasks, debugging, verifier-backed correctness, and clear technical feedback for model-training products.",
       },
     },
-    ossNote: "Interior Designer AI — upstream OSS. [Manual: PR link]",
+    ossNote: "More code and smaller systems are on GitHub; scope varies by repository.",
   },
   proofPanel: {
     tabs: {
@@ -296,7 +298,7 @@ export const messages = {
   },
   credibilityStrip: {
     liveProducts: "Live products",
-    openSource: "Open source · ",
+    openSource: "Repositories · ",
   },
   testimonialsModal: {
     closeBackdrop: "Close testimonials",
@@ -346,7 +348,7 @@ export const messages = {
         title: "Software engineering",
         description:
           "End-to-end web delivery: typed React/Next.js UIs, APIs and data access, deployment, and iteration with product constraints.",
-        experience: "3.5+ years",
+        experience: "Ongoing (product + lab + contract)",
         workspaceTitle: "Core toolchain",
         workspaceEnvironment: "Production-oriented setup",
       },
@@ -354,7 +356,7 @@ export const messages = {
         title: "Design & client delivery",
         description:
           "Supporting skills for polished UI and client-facing work—Figma and Adobe tools, brand assets, and clear communication on timelines and scope.",
-        experience: "3.5+ years",
+        experience: "Ongoing (select projects)",
         workspaceTitle: "Design tools",
         workspaceEnvironment: "When visuals are part of the delivery",
       },
@@ -362,7 +364,7 @@ export const messages = {
         title: "Planning & management",
         description:
           "Planning, brainstorming, flowcharting, team discussions, business research and more.",
-        experience: "3.5+ years",
+        experience: "Ongoing (cross-functional)",
         workspaceTitle: "Planning & management tools",
         workspaceEnvironment: "When planning and managing projects",
       },
@@ -376,7 +378,7 @@ export const messages = {
     tabForm: "Message",
     tabSocials: "Connect",
     tabAbout: "About",
-    profileSubtitle: "Product / full-stack engineer",
+    profileSubtitle: "Full-stack product engineer",
     namePlaceholder: "Your name",
     emailPlaceholder: "Your email",
     messagePlaceholder: "Your message",
@@ -391,7 +393,7 @@ export const messages = {
       languagesCard: "Languages",
       aboutCard: "About",
       aboutBio:
-        "Product-minded engineer: React, Next.js, TypeScript—clean UI, solid integrations, maintainable delivery.",
+        "Next.js, TypeScript, and full-stack delivery—coherent UIs, honest integration work, and maintainable product code.",
       locationCard: "Location",
       qrAlt: "Portfolio QR code",
     },
@@ -434,8 +436,8 @@ export const messages = {
         "Accessibility pass",
       ] as const,
       columnNearItems: ["Case studies", "Project deep-dives", "Interactive demos"] as const,
-      progressLabel: "Portfolio completion",
-      progressValue: "65% complete",
+      progressLabel: "Site status",
+      progressValue: "Actively maintained",
       stayTuned: "More soon",
     },
   },

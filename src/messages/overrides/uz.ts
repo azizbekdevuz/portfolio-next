@@ -2,56 +2,70 @@ import type { LocalizedOverrides } from "./types";
 
 export const uzOverrides: LocalizedOverrides = {
   site: {
-    headlineRole: "Mahsulot / full-stack muhandis",
+    headlineRole: "Full-stack product muhandis",
     heroSummaryLines: [
-      "Frontend og‘irlikli mahsulot muhandisi: UI, ma’lumot oqimi, autentifikatsiya va ishonchlilik bitta yetkazish sathida.",
-      "Broshyura saytlar emas — ko‘p tilli, real vaqt va integratsiyali mahsulotlarni chiqarganman.",
+      "Next.js mahsulotlari faqat UI emas — API, autentifikatsiya, real vaqt va deploy bitta yetkazish sifasida.",
+      "Ko‘p tilli va RTL, ma’lumotga boy dashboardlar, e-commerce, identifikatsiya, FastAPI bilan AI oqimlari.",
     ],
     headlineFocus:
-      "UI, ma’lumot oqimi, autentifikatsiya va ishonchlilik uchrashadigan joyda kuchli integratsiya instinkti bilan frontend-markazli yetkazish.",
+      "BFF chegaralari, sessiya va shartnomalar, produksiya chiqarish — TypeScript, Node, Python, Prisma/PostgreSQL oilasini amalda.",
     positioningParagraph:
-      "Ko‘p tilli va real vaqt mahsulot sathlari, BFF uslubidagi integratsiya va alohida qurilgan servislarni yagona mahsulotdek his qoldirishda kuchliman. Lavozimni shishirmasdan, produksiyaga yo‘naltirilgan bajarilishni afzal ko‘raman.",
+      "Alohida servislar bitta mahsulotdek ishlashi kerak bo‘lgan joyda kuchliman. Stack ro‘yxatidan ko‘ra, ishlaydigan tizim muhim.",
     location: "Janubiy Koreya, Seul",
-    availability: "Tanlangan rollar — to‘liq stavka yoki yirik shartnoma",
+    availability: "Tanlangan rollar — to‘liq stavka yoki yirik shartnoma (ishga qabul va ruxsat qoidalariga muvofiq)",
     heroProofTags: [
-      "Integratsiyali yetkazish",
-      "Ko‘p tilli va RTL",
-      "Real vaqt va ma’lumotga boy UI",
-      "AI ish jarayoni tizimlari",
-      "Produksiya bajarilishi",
+      "E-commerce + admin",
+      "Ko‘p tilli + RTL",
+      "Real vaqt va telemetriya UI",
+      "World ID / ishonch",
+      "AI + FastAPI workflow",
     ],
   },
   bio: {
     build: {
       title: "Nima quraman",
       content:
-        "Katta Next.js mahsulotlari — vitrina va admin, ko‘p tilli va RTL sathlar, dashboardlar va AI ish jarayoni UI; integratsiya, autentifikatsiya chegaralari va ishonchlilik tartibdan kam emas.",
+        "Chegarali Next.js mahsulotlari: e-commerce, ko‘p tilli/RTL, real vaqt dashboardlar, AI va tekshiruv. Integratsiya (auth, API, sessiya, to‘lov, socket) qo‘shimcha emas, funksiya qismi.",
     },
     approach: {
       title: "Qanday ishlayman",
       content:
-        "Servislar orasidagi chiziqlarni berkitaman: shartnomalar, sessiya xatti-harakati, oqim va xato holatlari, deploy. Teatr o‘rniga halol doira va ko‘rib chiqiladigan o‘zgarishlar.",
+        "Yuklash, xato, ruxsat holatlarini ochiq qoldiraman; oqim, soket va deploy bo‘yicha qayta ko‘rib chiqiladigan bo‘laklarga bo‘laman.",
     },
     context: {
       title: "Kontekst",
       content:
-        "Seulda yashayman. Ingliz tilida vaqt mintaqalari bo‘ylab hamjihatlik qilishga moslashganman; mijozga yetkazish va mahsulot uslubidagi iteratsiya tajribasi bor.",
+        "Seulda yashayman. Sejong universiteti kompyuter injiniringi bakalavri (kutilayotgan tugash: 2026 dek). Texnik va mahsulot muhokamasi — ingliz tili.",
     },
   },
   journey: {
     j1: {
-      date: "Yaqinda",
-      title: "Full-stack mahsulot yetkazish",
-      subtitle: "Next.js · TypeScript · API · deploy",
+      date: "2025 yan – hozir",
+      title: "Mustaqil mahsulot va platforma",
+      subtitle: "asoschilik / full-stack",
       description:
-        "Marshrutlash va ma’lumot yuklash, formalar va autentifikatsiya oqimlari, integratsiyalar va Vercel kabi hostingga chiqarishgacha uchu-qirchiq egalik.",
+        "Trainium, Rumi (integratsiya), Fishlinic, GitGuard Agent, ProofBoard kabi loyihalarda arxitekturadan deploy va iteratsiyagacha yetkazish.",
     },
     j2: {
-      date: "Yaqinda",
-      title: "Motion bilan UI muhandisligi",
-      subtitle: "Framer Motion · adaptiv tartib",
+      date: "2025 okt – hozir",
+      title: "Sejong — tadqiqot lab. amaliyotchi",
+      subtitle: "frontend + integratsiya",
       description:
-        "Marketing va ilova sathlarida nazoratli animatsiya — ierarxiyaga yordam, kontentni yashirmasdan.",
+        "Rumi AI: BFF, sessiya, ko‘p tilli/RTL, oqimli UX, backend bilan so‘rov-javob tekislash — bitta tajriba sifatida.",
+    },
+    j3: {
+      date: "2025 dek – hozir",
+      title: "EBIT — AI trener (shartnoma)",
+      subtitle: "model mashaqlar va sifat",
+      description:
+        "Repozitoriy asosidagi vazifalar, debug, verifier orqali to‘g‘rilik, saqlanadigan kod mezoniga mos texnik fikr.",
+    },
+    j4: {
+      date: "Kutilayotgan tugash (2026.12)",
+      title: "Sejong universiteti",
+      subtitle: "bakalavr, kompyuter injiniringi (jarayon)",
+      description:
+        "Kapsaytoun (Fishlinic) va boshqa kurslar; tadqiqot va mahsulot yonma-yon ishlatilgan stacklar.",
     },
   },
   techCategories: {
@@ -61,46 +75,40 @@ export const uzOverrides: LocalizedOverrides = {
     tools: { title: "Vositalar va ops" },
   },
   achievementCategories: {
-    work: { title: "Tanlangan yetkazish" },
+    work: { title: "Tan olish va kuchli dalillar" },
   },
   projectsBySlug: {
     trainium: {
-      summary:
-        "Yirik vitrina va admin mahsuloti: ko‘p tilli UX, rollarga asoslangan oqimlar, hisob zonasi, to‘lov, bildirishnomalar.",
-      whyItMatters:
-        "Broshyura emas, haqiqiy mahsulot doirasi dalili — filtrlash, tafsilot, admin va boy integratsiyalar.",
+      summary: "E-commerce, admin, rollar, to‘lov va bildirishnomalar bitta mahsulot sifatida.",
+      whyItMatters: "Bitta landing emas, operatsion va mijoz oqimlari birga aylanadigan kenglik.",
     },
     "rumi-ai": {
-      summary:
-        "Ingliz, forscha (RTL) va koreys sathlari, oqimli javoblar, qayta olish va BFF uslubidagi backend bog‘lanishi.",
-      whyItMatters:
-        "Ko‘p tilli (RTL bilan), oqimli UI va Next.js–Python servislari orasidagi chiziqni yagona mahsulotdek yuritish.",
+      summary: "EN/KO/FA (RTL), oqim, FastAPI/DB bilan BFF va sessiyani birlashtirish.",
+      whyItMatters: "Chat pardasi ortidagi integratsiya va ishonchlilik — asosiy sarlavha.",
     },
     fishlinic: {
-      summary:
-        "Real vaqt suv sifati, ovqatlash va kamera boshqaruvi birlashtirilgan IoT akvarium boshqaruvi uchun full-stack dashboard.",
-      whyItMatters:
-        "Apparatga yaqin real vaqt UI va full-stack dashboard uchrashadigan integratsiyali mahsulot.",
+      summary: "Akvakultura/telemetriyaga yaqin, real vaqt va nazorat oqimlari bilan dashboard.",
+      whyItMatters: "Ma’lumot tez o‘zgarganda ham tushunarli operator UI.",
     },
     patchpilot: {
-      summary: "Tekshiruv va tasdiqlash markazli patch/release ish jarayoni UI.",
-      whyItMatters: "Ma’lumot va huquqlar aralashgan operator oqimini oddiy forma bilan cheklamagan holat.",
+      summary: "Xato kontekstini qadamlarga bo‘lib, test va patchga ulash (ochiq org repozitoriy).",
+      whyItMatters: "Yagona generatsiyadan emas, bosqich va tekshiruvli avtomatlashtirishga yaqin yondashuv.",
     },
     gitguardian: {
-      summary: "Git tiklash rejalarini taklif qiluvchi kross-platform agent, CLI va veb.",
-      whyItMatters: "Xavfli amallarni darvozadan o‘tkazadigan tekshiruvga yo‘naltirilgan dev vosita.",
+      summary: "Git tiklash uchun CLI+veb, snapshot, reja va keyingi snapshot bilan tekshiruv.",
+      whyItMatters: "Haddan xavfli amallar uchun ‘bosqich + tekshiruv’ muhitida ishonch.",
     },
     proofboard: {
-      summary: "Real vaqt taxta va hamkorlik dalillarini bog‘laydigan mahsulot uslubidagi sath.",
-      whyItMatters: "Real vaqt UI va hamkorlik domenini birga ushlagan loyiha.",
+      summary: "World ID va hamyon bilan, inson-ishtirokli Q&A (server tomoni tekshiruv va yozish intizomi).",
+      whyItMatters: "Identifikatsiya va replay kabi cheklovlarda API va skema dizayni.",
     },
     "dr-niaraki-website": {
-      summary: "Tibbiyot mutaxassisi uchun ishonch va accessibility inobatidagi brend veb.",
-      whyItMatters: "Professional xizmatga mos ohang va tuzilma bilan ochiq veb.",
+      summary: "DB va nashr/loyihalash oqimlari — tadqiqot profili; DOCX import va tahrir yo‘llari.",
+      whyItMatters: "Bir martalik emas, uzoq muddatli tarkib tizimi.",
     },
     nestar: {
-      summary: "Ma’lumot va ish jarayoni bo‘lgan ichki/operatsion veb mahsulot.",
-      whyItMatters: "Ichki foydalanuvchilar uchun amaliy UI va oqimlar.",
+      summary: "NestJS + GraphQL + Mongo + JWT — qisqa backend namunasi.",
+      whyItMatters: "Faqat frontdan keyin bo‘lgan modullar qanday yig‘ilganini ko‘rsatish.",
     },
   },
 };

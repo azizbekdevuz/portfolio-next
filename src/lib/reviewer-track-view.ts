@@ -7,9 +7,33 @@ import { getFeaturedProjectsForTrack } from "@/content/home-data";
  * First slug that appears in the track-filtered featured list wins.
  */
 export const DEFAULT_FEATURED_SLUG_ORDER: Record<Exclude<ProofTrackFilter, "all">, readonly string[]> = {
-  frontend: ["rumi-ai", "fishlinic", "trainium", "patchpilot", "proofboard", "gitguardian"],
-  fullstack: ["trainium", "patchpilot", "fishlinic", "rumi-ai", "proofboard", "gitguardian"],
-  ai: ["patchpilot", "gitguardian", "rumi-ai", "fishlinic", "trainium", "proofboard"],
+  frontend: [
+    "rumi-ai",
+    "fishlinic",
+    "trainium",
+    "gitguardian",
+    "dr-niaraki-website",
+    "proofboard",
+    "patchpilot",
+  ],
+  fullstack: [
+    "trainium",
+    "fishlinic",
+    "rumi-ai",
+    "gitguardian",
+    "proofboard",
+    "dr-niaraki-website",
+    "patchpilot",
+  ],
+  ai: [
+    "gitguardian",
+    "patchpilot",
+    "rumi-ai",
+    "fishlinic",
+    "trainium",
+    "proofboard",
+    "dr-niaraki-website",
+  ],
 };
 
 /** Reorder credibility lines so the most relevant line leads for each lens. */

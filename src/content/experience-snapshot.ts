@@ -1,25 +1,24 @@
 /**
- * Compact credibility lines — not autobiography. Expand dates only when verified.
+ * Short credibility lines for the cockpit (aligned to resume PDFs).
  */
 export const experienceSnapshot = {
   headline: "Where the work happened",
   items: [
     {
       id: "independent",
-      title: "Full-stack / product engineer, Founder",
-      detail: "Storefront, admin, multilingual, and AI-adjacent products—integration through ship.",
+      title: "Independent — product & platform engineer",
+      detail: "Jan 2025 – present · Trainium, Fishlinic, GitGuard Agent, ProofBoard, and related builds—ownership from architecture through deployment.",
     },
     {
       id: "sejong",
-      title: "Sejong University — Research Lab",
-      detail: "Research-lab engineering support. [Manual: title / dates]",
+      title: "Sejong University — research lab intern",
+      detail: "Oct 2025 – present · Frontend and integration on Rumi AI (multilingual, RTL, streaming, BFF seams, session stability).",
     },
     {
       id: "ebit",
-      title: "EBIT — AI trainer",
-      detail: "Model-facing product behavior and quality—not generic labeling. [Manual: scope]",
+      title: "EBIT Co., Ltd. — AI trainer (contractor)",
+      detail: "Dec 2025 – present · Repository-based engineering tasks, debugging, verifier-backed correctness, and actionable technical feedback.",
     },
   ],
-  ossNote:
-    "Interior Designer AI — upstream OSS. [Manual: PR link]",
+  ossNote: "Additional repositories and smaller systems are on GitHub; scope and maintenance status vary by repo.",
 } as const;

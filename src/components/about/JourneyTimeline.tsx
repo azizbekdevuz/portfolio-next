@@ -2,12 +2,14 @@
 
 import { useContext } from "react";
 import { motion } from "framer-motion";
-import { Layers, Sparkles, type LucideIcon } from "lucide-react";
+import { Building2, Briefcase, GraduationCap, Layers, type LucideIcon } from "lucide-react";
 import { JourneyContext } from "../sections/AboutSection";
 
 const JOURNEY_ICONS: Record<string, LucideIcon> = {
   j1: Layers,
-  j2: Sparkles,
+  j2: Building2,
+  j3: Briefcase,
+  j4: GraduationCap,
 };
 
 export function JourneyTimeline() {

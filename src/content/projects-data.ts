@@ -7,30 +7,33 @@ const nx = [
 ];
 
 /**
- * Source-aligned to stakeholder brief. No fabricated metrics.
- * [Manual] = fill when verified for publishing.
+ * Case-study copy is aligned to local resume materials and shipped repositories.
+ * No fabricated metrics, user counts, or performance numbers.
  */
 export const projects: Project[] = [
   {
     id: "trainium",
     slug: "trainium",
     title: "Trainium",
-    projectType: "Storefront + admin product",
+    projectType: "E-commerce platform (storefront + admin)",
     summary:
-      "Large storefront and admin product: multilingual UX, role-aware flows, account areas, checkout, and notifications.",
+      "End-to-end commerce product: App Router–based customer UX, role-based admin, multilingual routing, auth, catalog-to-checkout flows, and real-time updates.",
     whyItMatters:
-      "Flagship proof of real product scope—reusable UI, filters, product detail, admin workflows, and integration-heavy behavior beyond brochure sites.",
+      "Flagship work at full product depth—data and roles behind the UI, not a marketing shell.",
     description:
-      "Non-trivial commerce product spanning customer-facing storefront and operational admin. Work emphasized keeping the UI coherent across locale routing, session-aware areas, payments/checkout surfaces, and real-time notification patterns—i.e. product architecture and flow integrity, not isolated UI slicing.",
+      "A production-aimed monorepo-style delivery: public storefront, staff/admin areas, and customer account flows tied together with consistent navigation and state. Emphasis is on how catalog, cart, checkout, and operations stay coherent as surfaces multiply—integration work (payments, providers, real-time channels, i18n) as part of the product, not an afterthought.",
     technologies: [
       ...nx,
-      { name: "Tailwind", icon: "/icons/tailwind.svg" },
+      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
+      { name: "PostgreSQL", icon: "/icons/mysql.svg" },
+      { name: "Prisma", icon: "/icons/web.svg" },
+      { name: "Node.js", icon: "/icons/nodejs.svg" },
       { name: "Docker", icon: "/icons/docker.svg" },
       { name: "Nginx", icon: "/icons/nginx.svg" },
     ],
     liveLink: "https://trainium.shop/en",
     githubLink: "https://github.com/azizbekdevuz/trainium",
-    codeSnippet: `// Representative: locale- and session-aware surface
+    codeSnippet: `// Locale- and session-aware product surface (illustrative)
 export default async function ProductPage({ params }: { params: { locale: string; slug: string } }) {
   const session = await getSession();
   const product = await fetchProduct(params.slug, params.locale);
@@ -42,35 +45,44 @@ export default async function ProductPage({ params }: { params: { locale: string
     status: "live",
     order: 1,
     roleTracks: ["fullstack", "frontend"],
-    proofTags: ["Storefront + Admin", "Multilingual UX", "Checkout & notifications", "Product architecture"],
-    role: "Full-stack / product engineering, Founder",
-    timeline: "[Manual: dates]",
-    teamContext: "[Manual if shareable]",
+    proofTags: [
+      "Storefront + admin",
+      "Multilingual product",
+      "Payments & notifications",
+      "Deployment-ready layout",
+    ],
+    role: "Founder, full-stack / product implementation",
+    timeline: "2025–present",
+    teamContext: "Independent delivery",
     problem:
-      "Deliver a sizeable, shippable product with clear separation between storefront, admin, and account flows while keeping UX consistent across locales and roles.",
+      "Ship a shippable commerce system where storefront, admin, and account areas stay aligned as features and locales accumulate.",
     outcome:
-      "Production-minded release with coherent navigation, role-appropriate surfaces, and integration across payments, notifications, and multilingual routing.",
+      "A coherent customer and operations experience with real checkout and notification behavior—not a static mock.",
     owned:
-      "Frontend architecture and product flows across storefront and admin; integration with auth/session, checkout-related UI, and notification experiences. [Manual: narrow to your lane if needed]",
+      "Product implementation across web surfaces: routing and UI, business flows, integration points for auth, payments, and real-time features, and keeping cross-cutting concerns (locales, roles) consistent.",
     architectureNotes:
-      "Next.js / React / TypeScript product structure; emphasis on route-level concerns, reusable UI, and predictable data flow into business actions.",
-    challenges: "Keeping complexity navigable for users while multiple subsystems evolved in parallel.",
-    metrics: undefined,
+      "Next.js (App Router) and TypeScript on the web tier; Prisma/PostgreSQL for persistence; services and sockets in support of real-time and operational behavior; deployment-oriented project layout (including Docker) where the repo is structured for operations.",
+    challenges: "Balancing feature growth with maintainable boundaries between customer, staff, and system integration code paths.",
   },
   {
     id: "rumi-ai",
     slug: "rumi-ai",
     title: "Rumi AI",
-    projectType: "Multilingual LLM companion product",
+    projectType: "Multilingual AI companion (research product)",
     summary:
-      "English, Persian (RTL), and Korean surfaces with streaming responses, retrieval-aware behavior, and BFF-style backend integration.",
+      "LLM-powered companion with English, Korean, and Persian (RTL) UI, streaming chat, and Python backend integrated through BFF-style routes and shared contracts.",
     whyItMatters:
-      "Strong proof of multilingual UX (including RTL), streaming UI state, and tightening seams between Next.js routes and Python services—making separate parts feel like one product.",
+      "Shows how frontend delivery, auth/session, and a separate FastAPI service are glued into one product experience.",
     description:
-      "LLM-backed companion with emphasis on integration: frontend delivery and product behavior across locales, BFF-style alignment with Python backends, auth/session cleanup, API contract discipline, and reliability-focused fixes—not generic chat chrome.",
-    technologies: [...nx, { name: "Tailwind", icon: "/icons/tailwind.svg" }],
+      "A retrieval-oriented, citation-aware chat product where the hard part is not the chat box—it is end-to-end behavior across locales (including RTL), streaming responses, and stable handoffs between the Next.js app and a FastAPI/SQLAlchemy backend with migrations. Work focuses on product-shaped reliability, not a thin demo of an API key.",
+    technologies: [
+      ...nx,
+      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
+      { name: "FastAPI", icon: "/icons/python.svg" },
+      { name: "PostgreSQL", icon: "/icons/mysql.svg" },
+    ],
     githubLink: "https://github.com/azizbekdevuz/rumi-ai",
-    codeSnippet: `// Streaming + locale-aware client boundary
+    codeSnippet: `// Client boundary: streaming + locale/RTL
 "use client";
 export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
   const { messages, pending } = useStreamingThread(locale);
@@ -82,33 +94,38 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
     status: "live",
     order: 2,
     roleTracks: ["frontend", "ai", "fullstack"],
-    proofTags: ["Multilingual UX", "RTL", "Streaming UI", "BFF integration", "Reliability"],
-    role: "Frontend & integration-focused product engineering",
-    timeline: "[Manual: dates]",
-    teamContext: "[Manual if shareable]",
+    proofTags: ["Multilingual + RTL", "SSE / streaming", "BFF integration", "Auth & sessions", "RAG-oriented flows"],
+    role: "Frontend and integration on Sejong research lab product",
+    timeline: "2025–present",
+    teamContext: "Sejong University research lab; integration-heavy delivery",
     problem:
-      "Ship a credible multilingual product where model output is one layer among auth, streaming, retrieval, and stable API contracts.",
+      "Make multilingual (including RTL) chat feel like one product when the interesting logic spans web, API, and model-backed behavior.",
     outcome:
-      "Coherent UX across EN / FA (RTL) / KO with readable streaming behavior and improved alignment between web app and backend services.",
+      "A navigable, locale-aware experience with honest streaming and error states, aligned to backend behavior rather than a disconnected UI.",
     owned:
-      "Frontend routes and components, streaming UX, multilingual/RTL layout, BFF-facing integration and contract alignment, auth/session hardening. [Manual: adjust]",
+      "UI routes and client experience, BFF-style alignment with the Python service, contract and session stability fixes, and RTL/layout correctness alongside Korean and English.",
     architectureNotes:
-      "Separation between presentation and service boundaries; explicit handling of RTL, stream lifecycle, and error states.",
-    challenges: "RTL typography and layout, partial failures during streams, and keeping latency perceptible but honest.",
-    metrics: undefined,
+      "Next.js app routes as the product shell; FastAPI and PostgreSQL behind explicit API boundaries; streaming where the UX demands incremental output.",
+    challenges: "Stream lifecycle, partial failures, and API mismatches that only show up under real product usage—not in isolated components.",
   },
   {
     id: "fishlinic",
     slug: "fishlinic",
     title: "Fishlinic",
-    projectType: "Real-time monitoring dashboard",
+    projectType: "Real-time aquaculture operations dashboard",
     summary:
-      "Telemetry-forward dashboard: charts, summary metrics, and live signals with AI-enriched interpretation surfaced in the UI.",
+      "Telemetry and control-oriented dashboard: live signals, charts, and operator-facing views with AI-enriched analysis in the loop.",
     whyItMatters:
-      "Best single proof of data-heavy interface work—clarity under changing data, not just chart decoration.",
+      "Proof of data-heavy, real-time UI and integration with services and hardware-related bridges—not only charting.",
     description:
-      "Dashboard product for operational insight: real-time or high-churn telemetry, chart-based summaries, and flows oriented toward understanding and action. AI-enriched states sit alongside integration-heavy product behavior.",
-    technologies: [...nx, { name: "Tailwind", icon: "/icons/tailwind.svg" }],
+      "Smart-aquaculture monitoring: sensor and bridge data feeds a TypeScript/Next.js dashboard with live visualizations, controls (including feeder/camera–related operator flows in product scope), and AI-assisted analysis path on the data side. The work is in making changing telemetry legible, trustworthy in the UI, and tied to what operators need to decide.",
+    technologies: [
+      ...nx,
+      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
+      { name: "Node.js", icon: "/icons/nodejs.svg" },
+      { name: "Python", icon: "/icons/python.svg" },
+      { name: "PostgreSQL", icon: "/icons/mysql.svg" },
+    ],
     liveLink: "https://fishlinic.vercel.app/",
     githubLink: "https://github.com/azizbekdevuz/fishlinic",
     codeSnippet: `export default function DashboardPage() {
@@ -126,69 +143,35 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
     status: "live",
     order: 3,
     roleTracks: ["frontend", "fullstack", "ai"],
-    proofTags: ["Dashboard UI", "Real-time signals", "Telemetry", "Data interpretation", "AI-enriched UI"],
-    role: "Frontend / product UI on data-heavy surfaces",
-    timeline: "[Manual: dates]",
-    teamContext: "[Manual if shareable]",
-    problem: "Make operational signal legible quickly as data updates and enrichment layers evolve.",
+    proofTags: ["Real-time dashboard", "Telemetry", "Service integration", "AI-assisted insight"],
+    role: "Full-stack and product UI (capstone team context)",
+    timeline: "2025",
+    teamContext: "Sejong capstone; People's Choice recognition (competition context)",
+    problem: "Turn noisy operational telemetry and controls into a dependable operator-facing product.",
     outcome:
-      "Dashboard surfaces tuned for hierarchy, scanability, and stable behavior when underlying feeds move.",
+      "A deployed dashboard with live elements suitable for real demos and capstone review—not a hand-drawn wireframe.",
     owned:
-      "Dashboard UX, charting and summary layouts, integration with data/AI-backed states. [Manual: adjust]",
-    architectureNotes: "Next.js app structure with attention to update frequency and UI stability.",
-    challenges: "Balancing density with clarity; avoiding misleading aggregates during partial updates.",
-    metrics: undefined,
-  },
-  {
-    id: "patchpilot",
-    slug: "patchpilot",
-    title: "PatchPilot",
-    projectType: "AI workflow / bug-analysis product",
-    summary:
-      "Multi-step workflow from bug context through structured analysis, specs, execution feedback, and patch suggestions—not a thin chat wrapper.",
-    whyItMatters:
-      "Demonstrates workflow orchestration, structured outputs, and verification-minded engineering productivity tooling.",
-    description:
-      "Product shaped around analysis, test/spec artifacts, execution results, and patch proposals. Emphasis on structured pipelines and evaluation loops rather than unconstrained generation.",
-    technologies: [...nx],
-    liveLink: "https://patchpilot-frontend-beta.vercel.app",
-    githubLink: "https://github.com/Prithwis-2023/patchpilot",
-    codeSnippet: `type Stage = "intake" | "analyze" | "spec" | "execute" | "patch";
-export function WorkflowRunner({ bugId }: { bugId: string }) {
-  const { stage, artifacts } = useWorkflow(bugId);
-  return <StageView stage={stage} artifacts={artifacts} />;
-}`,
-    mockupImage: "",
-    featured: true,
-    featuredTier: "primary",
-    status: "live",
-    order: 4,
-    roleTracks: ["ai", "fullstack", "frontend"],
-    proofTags: ["AI workflow", "Structured outputs", "Verification loop", "Engineering productivity"],
-    role: "Product engineering on workflow UI & pipeline surfaces",
-    timeline: "[Manual: dates]",
-    teamContext: "Upstream repository under Prithwis-2023; confirm contribution narrative in interviews.",
-    problem: "Turn messy bug context into a trustworthy, staged workflow engineers can follow.",
-    outcome:
-      "A guided multi-step experience with structured artifacts suitable for review—not only free-form text.",
-    owned:
-      "Engineering on workflow-oriented UI and product behavior. [Manual: add PR links / scope for public CV]",
-    architectureNotes: "Stage-based UX with explicit handoffs between analysis, verification, and patch proposal.",
-    challenges: "Keeping trust high when automation touches executable steps.",
-    metrics: undefined,
+      "Web product implementation, real-time and summary views, and integration with backend and analysis-related services in the system architecture.",
+    architectureNotes: "Evented/real-time patterns on the client; service boundaries to bridge hardware-adjacent and AI services.",
+    challenges: "Keeping aggregates honest while feeds update, and not overwhelming operators with undifferentiated charts.",
   },
   {
     id: "gitguardian",
     slug: "gitguardian",
     title: "GitGuard Agent",
-    projectType: "Recovery / diagnosis workflow",
+    projectType: "Git recovery (CLI + web, verification-oriented)",
     summary:
-      "High-trust recovery-oriented flow: diagnosis, planning, and verification rather than unconstrained generation.",
+      "Snapshot-based diagnosis, staged recovery plans, and explicit verification on follow-up state—safety- and review-first, not ad-hoc git suggestions.",
     whyItMatters:
-      "Secondary proof of structured reasoning and reliability-sensitive workflow design—useful for agentic tooling narratives.",
+      "A memorable developer-tool narrative: structure, undos, and check steps where mistakes are expensive.",
     description:
-      "Workflow system emphasizing trustworthy behavior in recovery scenarios: structured diagnosis, planning steps, and verification. Designed around clarity and reversibility where it matters.",
-    technologies: [...nx, { name: "Tailwind", icon: "/icons/tailwind.svg" }],
+      "Cross-platform tool combining CLI snapshot capture with a web experience for classifying common git failure modes (e.g. merge/rebase detours, detached states) and presenting reversible plans. The product intent is to keep humans in control with explicit gating and verification, matching how recovery work is actually done.",
+    technologies: [
+      ...nx,
+      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
+      { name: "Python", icon: "/icons/python.svg" },
+      { name: "Prisma", icon: "/icons/web.svg" },
+    ],
     liveLink: "https://gitguardian.online",
     githubLink: "https://github.com/azizbekdevuz/gitguardian",
     codeSnippet: `export function RecoveryPlan({ incidentId }: { incidentId: string }) {
@@ -197,33 +180,39 @@ export function WorkflowRunner({ bugId }: { bugId: string }) {
 }`,
     mockupImage: "",
     featured: true,
-    featuredTier: "secondary",
+    featuredTier: "primary",
     status: "live",
-    order: 5,
-    roleTracks: ["ai", "fullstack"],
-    proofTags: ["Recovery workflow", "Verification", "High-trust UX", "Agentic systems"],
-    role: "Product / workflow engineering",
-    timeline: "[Manual: dates]",
-    teamContext: "[Manual if shareable]",
-    problem: "Make recovery guidance dependable enough to act on.",
-    outcome: "Structured stages with explicit verification hooks in the UX.",
-    owned: "[Manual: your scope]",
-    architectureNotes: "Workflow-first modeling with emphasis on checks, not open-ended output.",
-    challenges: "Preventing overconfident automation in sensitive paths.",
-    metrics: undefined,
+    order: 4,
+    roleTracks: ["ai", "fullstack", "frontend"],
+    proofTags: ["Recovery workflow", "Verification", "Dev tooling", "Snapshot discipline"],
+    role: "End-to-end product implementation (Seoul Bowl / Scoop AI top prize, Dec 2025)",
+    timeline: "2025",
+    teamContext: "Hackathon delivery",
+    problem: "Give developers recoverable, explainable next steps when repositories enter scary states.",
+    outcome:
+      "Shipped CLI + web workflow with staged plans and a verification mental model, recognized in competition context.",
+    owned:
+      "Product implementation across the CLI and web surfaces and the overall recovery narrative (diagnosis, plan, check).",
+    architectureNotes: "Intentional separation of snapshot capture, classification, plan generation, and follow-up verification.",
+    challenges: "Sound UX where overconfidence would be dangerous; keeping automation bounded by explicit user steps.",
   },
   {
     id: "proofboard",
     slug: "proofboard",
     title: "ProofBoard",
-    projectType: "Trust / verification product (World ID–adjacent)",
+    projectType: "World ID–gated Q&A (verification-heavy)",
     summary:
-      "Human-verified Q&A context—useful signal for trust-sensitive flows without dominating the homepage narrative.",
+      "Human-verified identity gate for Q&A: wallet auth, unique-human checks, and careful server-side write discipline on top of a Next.js/Prisma stack.",
     whyItMatters:
-      "Differentiated exposure to verification-heavy product constraints; secondary to flagship commerce and AI workflow work.",
+      "A compact case study in trust constraints—identity, atomic writes, and abuse-resistant flows—not generic CRUD.",
     description:
-      "Experimentation in trust-sensitive product patterns including World ID–related verification flows. Position as supporting breadth, not primary flagship.",
-    technologies: [...nx],
+      "A Next.js/TypeScript product that couples World App wallet sign-in and World ID verification to category, question, answer, and social actions. Work centers on the security-sensitive glue: proof capture, server-side validation, and avoiding replay-style abuse, while still presenting a normal product UI.",
+    technologies: [
+      ...nx,
+      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
+      { name: "PostgreSQL", icon: "/icons/mysql.svg" },
+      { name: "Prisma", icon: "/icons/web.svg" },
+    ],
     liveLink: "https://proofboard.vercel.app",
     githubLink: "https://github.com/azizbekdevuz/proofboard",
     codeSnippet: `export default function VerifyFlow() {
@@ -233,29 +222,78 @@ export function WorkflowRunner({ bugId }: { bugId: string }) {
     featured: true,
     featuredTier: "secondary",
     status: "live",
-    order: 6,
+    order: 5,
     roleTracks: ["frontend", "fullstack"],
-    proofTags: ["Verification flow", "Trust-sensitive UX", "World ID"],
-    role: "[Manual: role label]",
-    timeline: "[Manual: dates]",
-    teamContext: "[Manual if shareable]",
-    problem: "Explore verifiable identity constraints in a product-shaped UI.",
-    outcome: "Shipped exploratory flows suitable for selective reviewer context.",
-    owned: "[Manual: scope]",
-    architectureNotes: "[Manual]",
-    challenges: "Trust UX without hype; clear failure paths.",
-    metrics: undefined,
+    proofTags: ["World ID", "Auth + trust UX", "Transactional writes", "Prisma/Postgres"],
+    role: "Full-stack implementation",
+    timeline: "2025",
+    teamContext: "Solo / small shipped experiment",
+    problem: "Model product flows where identity and integrity constraints are as important as the social graph.",
+    outcome:
+      "A deployed, reviewable build that demonstrates end-to-end verification handoffs (live demo may require the World App).",
+    owned:
+      "Web application, verification and write path behavior, and schema-backed features behind the Q&A product.",
+    architectureNotes: "BFF and server routes as the place where proofs are validated; Prisma/PostgreSQL for durable state and relationships.",
+    challenges: "Clear failure and retry paths when third-party identity or wallet steps fail.",
+  },
+  {
+    id: "patchpilot",
+    slug: "patchpilot",
+    title: "PatchPilot",
+    projectType: "AI bug-analysis pipeline (Next.js + FastAPI)",
+    summary:
+      "Staged pipeline from rich bug context through analysis, test artifacts, execution feedback, and patch-style suggestions—with tool use (e.g. Playwright) in the loop.",
+    whyItMatters:
+      "Shows workflow-shaped AI: structured handoffs, not a single unbounded answer.",
+    description:
+      "A multi-service product (public org repo) that pairs a Next.js client with a FastAPI/Gemini-backed backend to move from recordings and context into spec-like outputs and test execution. I treat it as evidence of working on stepwise, reviewable automation—not claiming sole authorship of the whole upstream tree in this portfolio.",
+    technologies: [
+      ...nx,
+      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
+      { name: "FastAPI", icon: "/icons/python.svg" },
+    ],
+    liveLink: "https://patchpilot-frontend-beta.vercel.app",
+    githubLink: "https://github.com/Prithwis-2023/patchpilot",
+    codeSnippet: `type Stage = "intake" | "analyze" | "spec" | "execute" | "patch";
+export function WorkflowRunner({ bugId }: { bugId: string }) {
+  const { stage, artifacts } = useWorkflow(bugId);
+  return <StageView stage={stage} artifacts={artifacts} />;
+}`,
+    mockupImage: "",
+    featured: true,
+    featuredTier: "secondary",
+    status: "live",
+    order: 6,
+    roleTracks: ["ai", "fullstack", "frontend"],
+    proofTags: ["Tool-using AI", "Playwright", "Staged pipeline", "FastAPI + web client"],
+    role: "Contributing engineering on the web client and product-shaped workflow (confirm scope in interviews)",
+    timeline: "2025",
+    teamContext: "Open-source org repository (Prithwis-2023); contribution scope is interview-specific",
+    problem: "Channel messy bug context into something engineers can act on, with checks between steps.",
+    outcome:
+      "A demo-backed pipeline UI aligned to execution-oriented backend stages (verify live availability).",
+    owned:
+      "Product-side engineering as reflected in the shipped Next.js app and public repository history; exact merge scope is for discussion.",
+    architectureNotes: "Explicit pipeline stages; automation bounded by test and execution feedback where configured.",
+    challenges: "Trust and transparency when the system touches reproduction and test execution.",
   },
   {
     id: "dr-niaraki",
     slug: "dr-niaraki-website",
     title: "Dr. Niaraki",
-    projectType: "Academic / professional site",
-    summary: "Full ownership from build to deployment—clarity and maintainability over novelty.",
-    whyItMatters: "Supporting proof of disciplined delivery for research stakeholders.",
+    projectType: "Content-backed academic and admin site",
+    summary:
+      "Next.js/Prisma site where public pages read published content from the database; protected flows support drafts, publish/restore, and a DOCX-based CV import/review path.",
+    whyItMatters:
+      "Evidence of editorial systems and long-term maintainability, not a one-off static professor page.",
     description:
-      "Professional academic web presence with emphasis on information hierarchy, calm typography, and sustainable content structure.",
-    technologies: [...nx],
+      "A production site for a research profile: validated content entry, Zod-shaped boundaries, and admin/editor tooling so updates stay safe and repeatable. The implementation prioritizes a stable information architecture, controlled publishing, and defensible data handling over decorative novelty.",
+    technologies: [
+      ...nx,
+      { name: "Tailwind CSS", icon: "/icons/tailwind.svg" },
+      { name: "Prisma", icon: "/icons/web.svg" },
+      { name: "PostgreSQL", icon: "/icons/mysql.svg" },
+    ],
     liveLink: "https://www.abolghasemniaraki.com",
     githubLink: "https://github.com/azizbekdevuz/dr-niaraki-website",
     codeSnippet: `export const metadata = { title: "Research & profile" };
@@ -263,49 +301,54 @@ export default function Page() {
   return <ProfileLayout />;
 }`,
     mockupImage: "",
-    featured: false,
+    featured: true,
+    featuredTier: "secondary",
     status: "live",
-    order: 40,
-    roleTracks: ["frontend"],
-    proofTags: ["Content architecture", "Professional delivery"],
-    role: "Solo build & deploy",
-    owned: "Implementation, IA, deployment",
-    problem: "Present research credentials without clutter.",
-    outcome: "Stable, maintainable site for long-term updates.",
-    architectureNotes: "Static-first Next.js patterns where appropriate.",
-    metrics: undefined,
+    order: 7,
+    roleTracks: ["frontend", "fullstack"],
+    proofTags: ["Editorial workflow", "CMS-style content", "Validation", "Solo build & deploy"],
+    role: "Solo: implementation, information architecture, deployment",
+    timeline: "2024–present",
+    teamContext: "Client: academic profile (single stakeholder)",
+    problem: "Keep a research-facing site accurate and easy to update without turning edits into ad-hoc HTML pushes.",
+    outcome:
+      "A live, database-backed site with an honest separation between public content and protected editing flows.",
+    owned:
+      "Build and deployment, content model, admin paths, and import/review steps around CV material where implemented in-repo.",
+    architectureNotes: "Prisma/PostgreSQL; Zod validation at boundaries; server actions/routes for trusted mutations.",
+    challenges: "Balancing simple public reading with safe authoring and recovery from content mistakes.",
   },
   {
     id: "nestar",
     slug: "nestar",
     title: "Nestar",
-    projectType: "NestJS + GraphQL API",
-    summary: "Modular backend with GraphQL, auth, MongoDB—breadth for backend-heavy reviewers.",
-    whyItMatters: "Shows structured server-side architecture beyond UI-only narratives.",
+    projectType: "NestJS + GraphQL API (learning / breadth sample)",
+    summary:
+      "Modular Node.js service: GraphQL API, auth, and MongoDB persistence—useful as structured backend sample code.",
+    whyItMatters: "Background depth when reviewers look past the Next.js entry points.",
     description:
-      "Backend-oriented codebase: NestJS modules, GraphQL schema, authentication, MongoDB/Mongoose, JWT. Use when reviewers care about API and service structure.",
+      "A NestJS project organized as modules with GraphQL and JWT-flavored access patterns and MongoDB via Mongoose. It is a concise slice of how I model APIs and persistence when the task is not primarily a single-page app.",
     technologies: [
       { name: "Node.js", icon: "/icons/nodejs.svg" },
-      { name: "NestJS", icon: "/icons/nestjs.svg" },
+      { name: "NestJS", icon: "/icons/web.svg" },
+      { name: "GraphQL", icon: "/icons/api.svg" },
       { name: "MongoDB", icon: "/icons/mongodb.svg" },
-      { name: "GraphQL", icon: "/icons/graphql.svg" },
-      { name: "JWT", icon: "/icons/jwt.svg" },
-      { name: "Mongoose", icon: "/icons/mongoose.svg" },
+      { name: "TypeScript", icon: "/icons/typescript.svg" },
     ],
     githubLink: "https://github.com/azizbekdevuz/nestar",
-    codeSnippet: `@Module({ imports: [GraphQLModule.forRoot({ autoSchemaFile: true }), MongooseModule.forRoot(process.env.MONGO_URI)] })
+    codeSnippet: `// Illustrative: Nest module graph
+@Module({ imports: [GraphQLModule.forRoot({ autoSchemaFile: true }), MongooseModule.forRoot(process.env.MONGO_URI!)] })
 export class AppModule {}`,
     mockupImage: "",
     featured: false,
     status: "live",
     order: 50,
     roleTracks: ["fullstack"],
-    proofTags: ["NestJS", "GraphQL", "Auth", "MongoDB"],
-    role: "[Manual: ownership scope]",
-    owned: "[Manual: modules / features owned]",
-    problem: "Structured API layer with auth and persistence.",
-    outcome: "Modular service foundation suitable for extension.",
-    architectureNotes: "NestJS module boundaries, GraphQL schema evolution.",
-    metrics: undefined,
+    proofTags: ["NestJS", "GraphQL", "MongoDB"],
+    role: "Solo author (reference implementation)",
+    owned: "Project structure, schema, and auth-style patterns as in repository.",
+    problem: "Provide a clear GraphQL and persistence baseline for extension.",
+    outcome: "A working modular server foundation suitable to fork or teach from.",
+    architectureNotes: "GraphQL module layout; Mongoose models; auth guards as patterns.",
   },
 ];

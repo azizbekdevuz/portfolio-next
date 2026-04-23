@@ -258,7 +258,7 @@ export function DesktopInProgressSection({ embedded = false }: { embedded?: bool
                     <motion.div
                       className="h-2.5 rounded-full bg-primary"
                       initial={{ width: 0 }}
-                      animate={{ width: "65%" }}
+                      animate={{ width: "100%" }}
                       transition={{ duration: 1.5, delay: 0.5 }}
                     />
                   </div>

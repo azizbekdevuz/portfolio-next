@@ -2,15 +2,15 @@ import type { Messages } from "./en";
 
 export const messages = {
   meta: {
-    title: "Azizbek Arzikulov — mahsulot / full-stack muhandis",
+    title: "Azizbek Arzikulov — full-stack product muhandis",
     description:
-      "Next.js asosida integratsiya, ko‘p tilli mahsulotlar, real vaqt va ma’lumotga boy UI, AI ish jarayoni tizimlari. Dalil-birinchi portfolio.",
-    ogTitle: "Azizbek Arzikulov — full-stack muhandis",
+      "Seul, full-stack product muhandis: Next.js, TypeScript, PostgreSQL/Prisma, FastAPI, ko‘p tilli va real vaqt UI, e-commerce, identifikatsiya, AI pipeline. Jonli havolalar bilan case study.",
+    ogTitle: "Azizbek Arzikulov — full-stack product muhandis",
     ogDescription:
-      "Next.js, TypeScript, React. Asosiy loyihalarni tez ko‘rib, texnik chuqurlikka o‘tish.",
-    twitterTitle: "Azizbek Arzikulov — full-stack muhandis",
+      "Trainium, Rumi AI, Fishlinic, GitGuard Agent, ProofBoard va boshqalar — integratsiyaga yo‘naltirilgan, produksiyaga yaqin yetkazish.",
+    twitterTitle: "Azizbek Arzikulov — full-stack product muhandis",
     twitterDescription:
-      "Next.js, TypeScript, React. Taniqli case studylar va dalil-birinchi tartib.",
+      "Next.js, TypeScript, real vaqt va ko‘p tilli UI, FastAPI, Prisma, ishonch oqimlari — dalil-birinchi portfolio.",
   },
   nav: {
     sections: {
@@ -248,19 +248,22 @@ export const messages = {
     headline: "Ish qayerda bo‘lgan",
     items: {
       independent: {
-        title: "Full-stack / mahsulot muhandisi, asoschilik",
-        detail: "Vitrina, admin, ko‘p tilli va AIga yaqin mahsulotlar — integratsiyadan chiqarishgacha.",
+        title: "Mustaqil — mahsulot va platforma muhandisi",
+        detail:
+          "2025 yan ~ hozirga · Trainium, Fishlinic, GitGuard Agent, ProofBoard va tegishli ish — uchini-uchiga yetkazish va deploy.",
       },
       sejong: {
-        title: "Sejong University — tadqiqot laboratoriyasi",
-        detail: "Laboratoriya texnik yordami. [Qo‘lda: lavozim / sanalar]",
+        title: "Sejong University — tadqiqot lab. amaliyotchi",
+        detail:
+          "2025 okt ~ hozirga · Rumi AI: frontend, ko‘p tilli/RTL, oqim, BFF va sessiyani tekislash, tadqiqot backendi bilan integratsiya.",
       },
       ebit: {
-        title: "EBIT — AI trener",
-        detail: "Modelga yo‘naltirilgan mahsulot xatti-harakati va sifat — umumiy yorliqlash emas. [Qo‘lda: doira]",
+        title: "EBIT Co., Ltd. — AI trener (shartnoma)",
+        detail:
+          "2025 dek ~ hozirga · repozitoriy asosidagi vazifalar, debug, verifier orqali to‘g‘rilik, modellarga texnik fikr.",
       },
     },
-    ossNote: "Interior Designer AI — upstream OSS. [Qo‘lda: PR havolasi]",
+    ossNote: "Qo‘shimcha repozitoriyalar GitHub’da; har repoda doira farq qiladi.",
   },
   proofPanel: {
     tabs: {
@@ -286,7 +289,7 @@ export const messages = {
   },
   credibilityStrip: {
     liveProducts: "Jonli mahsulotlar",
-    openSource: "Ochiq kod · ",
+    openSource: "Repozitoriylar · ",
   },
   testimonialsModal: {
     closeBackdrop: "Tavsiyalarni yopish",
@@ -335,7 +338,7 @@ export const messages = {
         title: "Dasturiy injinerlik",
         description:
           "React/Next.js UI, API va ma’lumot, deploy va mahsulot cheklovlari ostida iteratsiya — uchu-qirchiq veb yetkazish.",
-        experience: "3.5+ yil",
+        experience: "Davom etmoqda (mahsulot+lab+shartnoma)",
         workspaceTitle: "Asosiy toolchain",
         workspaceEnvironment: "Produksiyaga yo‘naltirilgan muhit",
       },
@@ -343,7 +346,7 @@ export const messages = {
         title: "Dizayn va mijozga yetkazish",
         description:
           "Figma va Adobe vositalari, brend aktivlari, muddat va doira bo‘yicha aniq muloqot — silliq UI va mijoz bilan ishlash.",
-        experience: "3.5+ yil",
+        experience: "Davom etmoqda (tanlangan loyihalar)",
         workspaceTitle: "Dizayn vositalari",
         workspaceEnvironment: "Vizual yetkazish qismi bo‘lganda",
       },
@@ -351,7 +354,7 @@ export const messages = {
         title: "Rejalashtirish va boshqaruv",
         description:
           "Reja, miyya shturmi, diagramma, jamoa muhokamasi, biznes tadqiqot va boshqalar.",
-        experience: "3.5+ yil",
+        experience: "Davom etmoqda (jamoada)",
         workspaceTitle: "Reja va boshqaruv vositalari",
         workspaceEnvironment: "Reja va boshqaruv kerak bo‘lganda",
       },
@@ -365,7 +368,7 @@ export const messages = {
     tabForm: "Xabar",
     tabSocials: "Ijtimoiy",
     tabAbout: "Men haqimda",
-    profileSubtitle: "Mahsulot / full-stack muhandis",
+    profileSubtitle: "Full-stack product muhandis",
     namePlaceholder: "Ismingiz",
     emailPlaceholder: "Email",
     messagePlaceholder: "Xabaringiz",
@@ -380,7 +383,7 @@ export const messages = {
       languagesCard: "Tillar",
       aboutCard: "Haqida",
       aboutBio:
-        "React, Next.js, TypeScript — mahsulat fikrlash: toza UI, mustahkam integratsiya, saqlanadigan yetkazish.",
+        "Next.js, TypeScript va uchu-qirchiq yetkazish: izchil UI, ochiqlangan integratsiya, saqlanadigan mahsulot kodi.",
       locationCard: "Joylashuv",
       qrAlt: "Portfolio QR kodi",
     },
@@ -419,8 +422,8 @@ export const messages = {
       columnInProgressItems: ["Stack jilolash", "Tavsiyalar", "Blog", "Aloqa oqimlari"] as const,
       columnPlannedItems: ["Adaptiv sozlash", "Unumdorlik byudjeti", "Accessibility"] as const,
       columnNearItems: ["Case studylar", "Loyiha chuqurligi", "Interaktiv demolar"] as const,
-      progressLabel: "Portfolio tayyorligi",
-      progressValue: "65% tayyor",
+      progressLabel: "Sayt holati",
+      progressValue: "Faol yuritilmoqda",
       stayTuned: "Tez orada",
     },
   },

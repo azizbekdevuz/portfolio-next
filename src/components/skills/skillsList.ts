@@ -12,7 +12,7 @@ interface SkillNode {
   };
 }
 
-/** Primary positioning: engineering. Secondary node is short context only—no separate SMM/tutoring emphasis. */
+/** Primary positioning: engineering. Secondary nodes: supporting delivery context. */
 export const skillNodes: SkillNode[] = [
   {
     id: "engineering",
@@ -24,15 +24,24 @@ export const skillNodes: SkillNode[] = [
       "Next.js",
       "TypeScript",
       "Node.js",
+      "Python",
+      "PostgreSQL",
+      "Prisma",
       "Tailwind CSS",
       "Framer Motion",
-      "MongoDB",
       "Docker",
-      "AWS",
       "Vercel",
     ],
-    experience: "3.5+ years",
-    projects: ["ZDesigner AI", "Professor Website", "Portfolio"],
+    experience: "Ongoing (product + research lab + contract)",
+    projects: [
+      "Trainium",
+      "Rumi AI",
+      "Fishlinic",
+      "GitGuard Agent",
+      "ProofBoard",
+      "PatchPilot",
+      "This portfolio (portfolio-next)",
+    ],
     workspace: {
       title: "Core toolchain",
       tools: [
@@ -53,8 +62,8 @@ export const skillNodes: SkillNode[] = [
     description:
       "Supporting skills for polished UI and client-facing work—Figma and Adobe tools, brand assets, and clear communication on timelines and scope.",
     tools: ["Figma", "Photoshop", "Illustrator", "Brand & marketing assets", "Client communication"],
-    experience: "3.5+ years",
-    projects: ["POZITIV Denta (branding & collateral)"],
+    experience: "Ongoing (select client work)",
+    projects: ["Client-facing sites (see Testimonials)"],
     workspace: {
       title: "Design tools",
       tools: [
@@ -75,10 +84,10 @@ export const skillNodes: SkillNode[] = [
       "Team discussions",
       "Business research",
       "Brainstorming",
-      "Project Documentation",
+      "Project documentation",
     ],
-    experience: "3.5+ years",
-    projects: ["ZDesigner AI", "Professor Website", "Portfolio"],
+    experience: "Ongoing (cross-functional)",
+    projects: ["Fishlinic (capstone)", "Multi-surface product (Trainium, Rumi)"],
     workspace: {
       title: "Planning & management tools",
       tools: [],

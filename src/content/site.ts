@@ -1,39 +1,36 @@
 /**
- * Positioning and identity. Project facts live in `projects-data.ts` (source-aligned to brief).
+ * Positioning and identity. Project facts live in `projects-data.ts`.
  */
 export const siteProfile = {
   name: "Azizbek Arzikulov",
-  /** One serious line — not “web developer” */
-  headlineRole: "Product / full-stack engineer",
-  /** Above-the-fold only — max two short sentences (cockpit hero). */
+  headlineRole: "Full-stack product engineer",
   heroSummaryLines: [
-    "Frontend-heavy product engineer: UI, data flow, auth, and reliability as one delivery surface.",
-    "Shipped multilingual, real-time, and integration-heavy products—not brochure sites.",
+    "Product engineer who ships Next.js apps where UI, APIs, auth, and real-time behavior are one delivery surface—not a handoff dump.",
+    "Work spans multilingual and RTL products, data-heavy dashboards, e-commerce, identity-sensitive flows, and AI pipelines tied to real backends.",
   ],
   headlineFocus:
-    "Frontend-heavy delivery with strong integration instincts—where UI, data flow, auth, and reliability meet.",
+    "Integration-first delivery: BFF-style boundaries, session and contract discipline, and production-minded releases on TypeScript, Node, Python, and PostgreSQL family stacks.",
   positioningParagraph:
-    "Strongest in the messy middle: multilingual and real-time product surfaces, BFF-style integration, and keeping separately built services feeling like one coherent product. Production-minded execution without inflated titles.",
+    "I am strongest when separate services have to read as one product—locales, streaming, sockets, payment and identity flows, and maintainable full-stack code. Titles are secondary to shipped systems you can run and reason about.",
   location: "Seoul, South Korea",
-  availability: "Selective roles — full-time or substantial contract",
+  availability: "Selective full-time or substantial contract (subject to work authorization for the role and location)",
   email: "azizbek.dev.uz@gmail.com",
   resumeUrl: null as string | null,
   links: {
     github: "https://github.com/azizbekdevuz",
-    linkedin: "https://linkedin.com/in/azizbek-arzikulov",
+    linkedin: "https://www.linkedin.com/in/azizbek-arzikulov",
     telegram: "https://t.me/+Abz6kYFkTX9hNzFi",
     linktree: "https://linktr.ee/azizbekuz",
   },
-  /** Above-the-fold proof chips — align with flagship work */
   heroProofTags: [
-    "Integration-heavy delivery",
-    "Multilingual & RTL",
-    "Real-time & data-heavy UI",
-    "AI workflow systems",
-    "Production execution",
+    "E-commerce + admin",
+    "Multilingual + RTL",
+    "Real-time & telemetry UIs",
+    "World ID / trust flows",
+    "AI + FastAPI workflows",
   ],
-  /** Flagship names for hero chips (must match featured projects) */
-  flagshipProjects: ["Trainium", "Rumi AI", "Fishlinic", "PatchPilot"],
+  /** Hero/credibility ordering; must match `Project.title` values */
+  flagshipProjects: ["Trainium", "Rumi AI", "Fishlinic", "GitGuard Agent"],
 } as const;
 
 export type SiteProfile = typeof siteProfile;

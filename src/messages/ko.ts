@@ -2,15 +2,15 @@ import type { Messages } from "./en";
 
 export const messages = {
   meta: {
-    title: "Azizbek Arzikulov — 프로덕트 / 풀스택 엔지니어",
+    title: "Azizbek Arzikulov — 풀스택 프로덕트 엔지니어",
     description:
-      "Next.js 기반 통합·다국어·실시간·데이터 집약 UI·AI 워크플로 제품 전달. 증거 중심 포트폴리오.",
-    ogTitle: "Azizbek Arzikulov — 풀스택 엔지니어",
+      "서울 기반 풀스택 프로덕트 엔지니어 — Next.js, TypeScript, PostgreSQL/Prisma, FastAPI, 다국어·실시간 UI, 이커머스, 신원 검증, AI 파이프라인. 실제 링크가 있는 사례 중심.",
+    ogTitle: "Azizbek Arzikulov — 풀스택 프로덕트 엔지니어",
     ogDescription:
-      "Next.js, TypeScript, React. 핵심 사례를 빠르게 보고, 기술 탐색으로 이어지는 포트폴리오.",
-    twitterTitle: "Azizbek Arzikulov — 풀스택 엔지니어",
+      "Trainium, Rumi AI, Fishlinic, GitGuard Agent, ProofBoard 등 출시·통합 중심 사례.",
+    twitterTitle: "Azizbek Arzikulov — 풀스택 프로덕트 엔지니어",
     twitterDescription:
-      "Next.js, TypeScript, React. 대표 사례와 증거 우선 레이아웃.",
+      "Next.js, TypeScript, 다국어·실시간 UI, FastAPI, Prisma, 신뢰 흐름 — 증거 중심 포트폴리오.",
   },
   nav: {
     sections: {
@@ -230,19 +230,22 @@ export const messages = {
     headline: "일이 이뤄진 곳",
     items: {
       independent: {
-        title: "풀스택 / 프로덕트 엔지니어, 창업",
-        detail: "스토어프론트, 어드민, 다국어, AI 인접 제품 — 통합부터 출시까지.",
+        title: "독립 — 프로덕트·플랫폼 엔지니어",
+        detail:
+          "2025년 1월~현재 · Trainium, Fishlinic, GitGuard Agent, ProofBoard 등 — 엔드투엔드 제품 구현과 배포.",
       },
       sejong: {
-        title: "세종대학교 — 연구실",
-        detail: "연구실 엔지니어링 지원. [수동: 직함·기간]",
+        title: "세종대학교 — 연구실 인턴",
+        detail:
+          "2025년 10월~현재 · Rumi AI: 프론트, 다국어·RTL, 스트리밍, BFF·세션 정합, 연구 백엔드 통합.",
       },
       ebit: {
-        title: "EBIT — AI 트레이너",
-        detail: "모델 대면 제품 동작과 품질 — 단순 라벨링이 아님. [수동: 범위]",
+        title: "EBIT — AI 트레이너(계약)",
+        detail:
+          "2025년 12월~현재 · 저장소 기반 과제, 디버깅, 검증자 기반 정합, 모델 학습용 기술 피드백.",
       },
     },
-    ossNote: "Interior Designer AI — 업스트림 OSS. [수동: PR 링크]",
+    ossNote: "추가 저장소와 작은 시스템은 GitHub에 있으며, 레포마다 범위가 다릅니다.",
   },
   proofPanel: {
     tabs: {
@@ -268,7 +271,7 @@ export const messages = {
   },
   credibilityStrip: {
     liveProducts: "라이브 제품",
-    openSource: "오픈소스 · ",
+    openSource: "저장소 · ",
   },
   testimonialsModal: {
     closeBackdrop: "추천사 닫기",
@@ -317,7 +320,7 @@ export const messages = {
         title: "소프트웨어 엔지니어링",
         description:
           "타입 기반 React/Next.js UI, API·데이터 접근, 배포, 제품 제약 하의 반복까지 엔드투엔드 웹 전달.",
-        experience: "3.5년+",
+        experience: "진행 중(제품·연구실·계약)",
         workspaceTitle: "핵심 툴체인",
         workspaceEnvironment: "프로덕션 지향 환경",
       },
@@ -325,7 +328,7 @@ export const messages = {
         title: "디자인 & 클라이언트 전달",
         description:
           "Figma·Adobe, 브랜드 자산, 일정·범위 커뮤니케이션 등 세련된 UI와 대면 작업을 위한 보조 역량.",
-        experience: "3.5년+",
+        experience: "진행 중(선택 프로젝트)",
         workspaceTitle: "디자인 도구",
         workspaceEnvironment: "비주얼이 전달 범위에 포함될 때",
       },
@@ -333,7 +336,7 @@ export const messages = {
         title: "기획 & 관리",
         description:
           "기획, 브레인스토밍, 플로차트, 팀 논의, 비즈니스 리서치 등.",
-        experience: "3.5년+",
+        experience: "진행 중(협업)",
         workspaceTitle: "기획·관리 도구",
         workspaceEnvironment: "기획과 관리가 필요할 때",
       },
@@ -347,7 +350,7 @@ export const messages = {
     tabForm: "메시지",
     tabSocials: "연결",
     tabAbout: "소개",
-    profileSubtitle: "프로덕트 / 풀스택 엔지니어",
+    profileSubtitle: "풀스택 프로덕트 엔지니어",
     namePlaceholder: "이름",
     emailPlaceholder: "이메일",
     messagePlaceholder: "메시지",
@@ -362,7 +365,7 @@ export const messages = {
       languagesCard: "언어",
       aboutCard: "소개",
       aboutBio:
-        "React·Next.js·TypeScript 중심의 프로덕트 지향 엔지니어 — 깔끔한 UI, 견고한 통합, 유지보수 가능한 전달.",
+        "Next.js·TypeScript·풀스택 전달 — 일관된 UI, 정직한 통합, 유지보수 가능한 제품 코드.",
       locationCard: "위치",
       qrAlt: "포트폴리오 QR 코드",
     },
@@ -401,8 +404,8 @@ export const messages = {
       columnInProgressItems: ["스택 다듬기", "추천사", "블로그", "연락 흐름"] as const,
       columnPlannedItems: ["반응형 튜닝", "성능 예산", "접근성 점검"] as const,
       columnNearItems: ["사례 연구", "프로젝트 심층", "인터랙티브 데모"] as const,
-      progressLabel: "포트폴리오 완성도",
-      progressValue: "65% 완료",
+      progressLabel: "사이트 상태",
+      progressValue: "지속 유지·개선",
       stayTuned: "곧 더",
     },
   },
