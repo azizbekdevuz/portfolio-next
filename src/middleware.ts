@@ -43,7 +43,8 @@ export function middleware(request: NextRequest) {
   const cookieLocale = cookieRaw && isLocale(cookieRaw) ? cookieRaw : null;
 
   if (pathname === "/") {
-    const target: Locale = cookieLocale ?? negotiateLocale(request.headers.get("accept-language"));
+    const target: Locale =
+      cookieLocale ?? negotiateLocale(request.headers.get("accept-language"));
     const url = request.nextUrl.clone();
     url.pathname = `/${target}`;
     return NextResponse.redirect(url);
@@ -59,7 +60,9 @@ export function middleware(request: NextRequest) {
   const segments = pathname.split("/").filter(Boolean);
   if (segments.length === 1 && !isLocale(segments[0])) {
     const target: Locale =
-      cookieLocale ?? negotiateLocale(request.headers.get("accept-language")) ?? defaultLocale;
+      cookieLocale ??
+      negotiateLocale(request.headers.get("accept-language")) ??
+      defaultLocale;
     return NextResponse.redirect(new URL(`/${target}`, request.url));
   }
 
@@ -70,5 +73,8 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)", "/_next/static/:path*"],
+  matcher: [
+    "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
+    "/_next/static/:path*",
+  ],
 };

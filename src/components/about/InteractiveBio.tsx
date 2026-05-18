@@ -15,7 +15,8 @@ export function InteractiveBio() {
   const bioSections = useContext(BioContext);
   const [selectedId, setSelectedId] = useState("");
   const ids = bioSections.map((s) => s.id);
-  const activeId = selectedId && ids.includes(selectedId) ? selectedId : (ids[0] ?? "");
+  const activeId =
+    selectedId && ids.includes(selectedId) ? selectedId : (ids[0] ?? "");
   const active = bioSections.find((s) => s.id === activeId);
 
   if (bioSections.length === 0) {
@@ -46,7 +47,11 @@ export function InteractiveBio() {
               whileTap={{ scale: 0.99 }}
             >
               <div className="flex items-center gap-3">
-                <Icon className="h-5 w-5 shrink-0 text-accent" strokeWidth={1.75} aria-hidden />
+                <Icon
+                  className="h-5 w-5 shrink-0 text-accent"
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
                 <span className="font-medium text-fg">{section.title}</span>
               </div>
             </motion.button>
@@ -72,8 +77,12 @@ export function InteractiveBio() {
                 );
               })()}
               <div>
-                <h3 className="text-lg font-semibold text-fg">{active.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{active.content}</p>
+                <h3 className="text-lg font-semibold text-fg">
+                  {active.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  {active.content}
+                </p>
               </div>
             </div>
           </motion.div>

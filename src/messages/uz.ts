@@ -119,37 +119,65 @@ export const messages = {
       label: "Frontend / mahsulot UI",
       blurb:
         "Ko‘p tilli sathlar, oqimli UX, dashboardlar — bir martalik sahifalar emas, mahsulat UI.",
-      emphasisTags: ["Ko‘p tilli va RTL", "Oqimli / optimistik UX", "Dashboard interfeysi"] as const,
+      emphasisTags: [
+        "Ko‘p tilli va RTL",
+        "Oqimli / optimistik UX",
+        "Dashboard interfeysi",
+      ] as const,
     },
     fullstack: {
       label: "Full-stack / tizimlar",
-      blurb: "Vitrina + admin, autentifikatsiya, to‘lov, bildirishnomalar — BFF chegaralari va chiqarish intizomi.",
-      emphasisTags: ["Auth va to‘lov chegaralari", "BFF integratsiyasi", "Chiqarish intizomi"] as const,
+      blurb:
+        "Vitrina + admin, autentifikatsiya, to‘lov, bildirishnomalar — BFF chegaralari va chiqarish intizomi.",
+      emphasisTags: [
+        "Auth va to‘lov chegaralari",
+        "BFF integratsiyasi",
+        "Chiqarish intizomi",
+      ] as const,
     },
     ai: {
       label: "AI / ish jarayoni mahsulotlari",
-      blurb: "Pipeline va tekshiruvga yo‘naltirilgan oqimlar — yupqa chat o‘rab qog‘ozi emas.",
-      emphasisTags: ["Ish jarayoni pipeline", "Tekshiruvga yo‘naltirilgan UX", "Yupqa chat emas"] as const,
+      blurb:
+        "Pipeline va tekshiruvga yo‘naltirilgan oqimlar — yupqa chat o‘rab qog‘ozi emas.",
+      emphasisTags: [
+        "Ish jarayoni pipeline",
+        "Tekshiruvga yo‘naltirilgan UX",
+        "Yupqa chat emas",
+      ] as const,
     },
   },
-  downloads: {    triggerResume: "Rezyume",
+  downloads: {
+    triggerResume: "Rezyume",
     triggerPortfolio: "Portfolio",
     triggerGroupLabel: "PDF yuklab olish",
     triggerResumeAria: "Rezyume PDF tanlash oynasini ochish",
     triggerPortfolioAria: "Portfolio PDF tanlash oynasini ochish",
-    pickerSubtitle: "Avval fokus, keyin tilni tanlang. Fayl kontent jadvalida bo‘lsa yuklab olinadi.",
+    pickerSubtitle:
+      "Avval fokus, keyin tilni tanlang. Fayl kontent jadvalida bo‘lsa yuklab olinadi.",
     closeOverlay: "Yopish",
-    closeOverlayBackdrop: "Yuklab olish oynasini yopish",    stepFocus: "Yo‘nalish",
+    closeOverlayBackdrop: "Yuklab olish oynasini yopish",
+    stepFocus: "Yo‘nalish",
     stepLanguage: "Til",
     categoryResume: "Rezyume (PDF)",
     categoryPortfolio: "Portfolio (PDF)",
     download: "Yuklab olish",
-    unavailableTitle: "Fayl hali serverda yo‘q",    pdfPending: "Ushbu kombinatsiya uchun content/downloads.ts dagi downloadGrid da href qo‘shing.",
+    unavailableTitle: "Fayl hali serverda yo‘q",
+    pdfPending:
+      "Ushbu kombinatsiya uchun content/downloads.ts dagi downloadGrid da href qo‘shing.",
     localeName: { en: "Ingliz tili", ko: "Koreys tili", uz: "O‘zbek tili" },
     lens: {
-      fullstack: { resume: "Full-stack rezyume", portfolio: "Full-stack portfolio (PDF)" },
-      frontend: { resume: "Frontend rezyume", portfolio: "Frontend portfolio (PDF)" },
-      backend: { resume: "Backend rezyume", portfolio: "Backend portfolio (PDF)" },
+      fullstack: {
+        resume: "Full-stack rezyume",
+        portfolio: "Full-stack portfolio (PDF)",
+      },
+      frontend: {
+        resume: "Frontend rezyume",
+        portfolio: "Frontend portfolio (PDF)",
+      },
+      backend: {
+        resume: "Backend rezyume",
+        portfolio: "Backend portfolio (PDF)",
+      },
     },
   },
   deepDiveIDE: {
@@ -221,8 +249,7 @@ export const messages = {
       en: {
         name: "Ingliz tili",
         levelLabel: "Erkin (texnik va akademik)",
-        context:
-          "Erkin",
+        context: "Erkin",
       },
       ko: {
         name: "Koreys tili",
@@ -241,7 +268,8 @@ export const messages = {
       },
     },
   },
-  experience: {    items: {
+  experience: {
+    items: {
       independent: {
         title: "Mustaqil — mahsulot va platforma muhandisi",
         detail:
@@ -258,7 +286,8 @@ export const messages = {
           "2025 dek ~ 2026 apr · repozitoriy asosidagi vazifalar, debug, verifier orqali to‘g‘rilik, modellarga texnik fikr.",
       },
     },
-    ossNote: "Qo‘shimcha repozitoriyalar GitHub’da; har repoda doira farq qiladi.",
+    ossNote:
+      "Qo‘shimcha repozitoriyalar GitHub’da; har repoda doira farq qiladi.",
   },
   proofPanel: {
     tabs: {
@@ -269,7 +298,8 @@ export const messages = {
     },
     tablistAria: "Dalil tafsilotlari",
     noProofTitle: "Bu linzada dalil yo‘q",
-    noProofHint: "Ko‘ruvchi yo‘nalishini almashtiring yoki boshqa flagmanni tanlang.",
+    noProofHint:
+      "Ko‘ruvchi yo‘nalishini almashtiring yoki boshqa flagmanni tanlang.",
     whyItMatters: "Nima uchun muhim",
     secondarySignal: "Qo‘shimcha signal",
     ownershipFallback: "Bu yozuv uchun mas’uliyat doirasi keltirilmagan.",
@@ -299,7 +329,8 @@ export const messages = {
   projectsSection: {
     optionalDepth: "Qo‘shimcha chuqurlik",
     title: "Texnik tadqiqot",
-    subtitle: "Kokpit yetmasa — kod, oldindan ko‘rish va to‘liq loyiha ro‘yxati.",
+    subtitle:
+      "Kokpit yetmasa — kod, oldindan ko‘rish va to‘liq loyiha ro‘yxati.",
     loadingTitle: "Loyihalar",
     noProjects: "Loyihalar topilmadi",
   },
@@ -323,7 +354,8 @@ export const messages = {
     tabAbout: "Haqida",
     tabTools: "Vositalar",
     tabProjects: "Loyihalar",
-    workspaceHint: "Ikonlar va muhit tafsilotlari uchun Vositalar varag‘ini oching.",
+    workspaceHint:
+      "Ikonlar va muhit tafsilotlari uchun Vositalar varag‘ini oching.",
     toolsTabFooter: "Ushbu yo‘nalish uchun asosiy vositalar.",
     projectsCardBlurb: "Ushbu ko‘nikmani aks ettiruvchi namuna ishlar.",
     toolsMore: "yana {count} ta",
@@ -370,8 +402,10 @@ export const messages = {
     sending: "Yuborilmoqda…",
     success: "Xabar yuborildi!",
     errorSend: "Yuborish muvaffaqiyatsiz. Keyinroq qayta urinib ko‘ring.",
-    errorConfigDev: "EmailJS sozlamasi yo‘q. Muhit o‘zgaruvchilarini tekshiring.",
-    errorConfigUser: "Pochta xizmati sozlanmagan. Administratorga murojaat qiling.",
+    errorConfigDev:
+      "EmailJS sozlamasi yo‘q. Muhit o‘zgaruvchilarini tekshiring.",
+    errorConfigUser:
+      "Pochta xizmati sozlanmagan. Administratorga murojaat qiling.",
     mobile: {
       directContact: "To‘g‘ridan-to‘g‘ri aloqa",
       languagesCard: "Tillar",
@@ -390,7 +424,8 @@ export const messages = {
     stages: [
       {
         title: "Kontent aniqligi",
-        description: "Tasdiqlangan manbalar bilan case study, havolalar va metrikalarni qotirish.",
+        description:
+          "Tasdiqlangan manbalar bilan case study, havolalar va metrikalarni qotirish.",
         status: "Jarayonda",
       },
       {
@@ -400,7 +435,8 @@ export const messages = {
       },
       {
         title: "Unumdorlik byudjeti",
-        description: "Hero va skim qismlarini yengil tutish; ikkilamchi animatsiyani kechiktirish.",
+        description:
+          "Hero va skim qismlarini yengil tutish; ikkilamchi animatsiyani kechiktirish.",
         status: "Rejalashtirilgan",
       },
     ],
@@ -413,9 +449,22 @@ export const messages = {
       columnInProgressTitle: "Jarayonda",
       columnPlannedTitle: "Rejadagi yaxshilanishlar",
       columnNearTitle: "Yaqin kelajak",
-      columnInProgressItems: ["Stack jilolash", "Tavsiyalar", "Blog", "Aloqa oqimlari"] as const,
-      columnPlannedItems: ["Adaptiv sozlash", "Unumdorlik byudjeti", "Accessibility"] as const,
-      columnNearItems: ["Case studylar", "Loyiha chuqurligi", "Interaktiv demolar"] as const,
+      columnInProgressItems: [
+        "Stack jilolash",
+        "Tavsiyalar",
+        "Blog",
+        "Aloqa oqimlari",
+      ] as const,
+      columnPlannedItems: [
+        "Adaptiv sozlash",
+        "Unumdorlik byudjeti",
+        "Accessibility",
+      ] as const,
+      columnNearItems: [
+        "Case studylar",
+        "Loyiha chuqurligi",
+        "Interaktiv demolar",
+      ] as const,
       progressLabel: "Sayt holati",
       progressValue: "Faol yuritilmoqda",
       stayTuned: "Tez orada",

@@ -6,14 +6,24 @@ import { proofWorkspaceModes } from "@/lib/proof-workspace";
 const SHELL_KEY = "portfolio:localeSwitch:shell";
 const PROOF_KEY = "portfolio:localeSwitch:proof";
 
-const SHELL_SET = new Set<HomeShellView>(["cockpit", "projects", "about", "skills", "contact", "in-progress"]);
+const SHELL_SET = new Set<HomeShellView>([
+  "cockpit",
+  "projects",
+  "about",
+  "skills",
+  "contact",
+  "in-progress",
+]);
 
 function isShell(v: unknown): v is HomeShellView {
   return typeof v === "string" && SHELL_SET.has(v as HomeShellView);
 }
 
 function isWorkspaceMode(v: unknown): v is ProofWorkspaceMode {
-  return typeof v === "string" && (proofWorkspaceModes as readonly string[]).includes(v);
+  return (
+    typeof v === "string" &&
+    (proofWorkspaceModes as readonly string[]).includes(v)
+  );
 }
 
 export type ProofBrowsePersisted = {
@@ -27,7 +37,10 @@ export const DEEP_DIVE_SLUG_MIRROR_KEY = "portfolio:localeSwitch:deepDiveSlug";
 export const PENDING_DEEP_DIVE_SLUG_KEY = "portfolio:pendingDeepDiveSlug";
 
 /** Call immediately before `router.push` to a new locale. */
-export function stashStateBeforeLocaleSwitch(args: { shell: HomeShellView; proof: ProofBrowsePersisted }): void {
+export function stashStateBeforeLocaleSwitch(args: {
+  shell: HomeShellView;
+  proof: ProofBrowsePersisted;
+}): void {
   try {
     let deepDiveSlug: string | null = null;
     try {
@@ -35,7 +48,10 @@ export function stashStateBeforeLocaleSwitch(args: { shell: HomeShellView; proof
     } catch {
       /* ignore */
     }
-    sessionStorage.setItem(PROOF_KEY, JSON.stringify({ ...args.proof, deepDiveSlug }));
+    sessionStorage.setItem(
+      PROOF_KEY,
+      JSON.stringify({ ...args.proof, deepDiveSlug }),
+    );
     if (args.shell !== "cockpit") sessionStorage.setItem(SHELL_KEY, args.shell);
     else sessionStorage.removeItem(SHELL_KEY);
   } catch {
@@ -64,7 +80,8 @@ export function consumeProofBrowseAfterLocaleSwitch(): Partial<ProofBrowsePersis
     const o = JSON.parse(raw) as Record<string, unknown>;
     const out: Partial<ProofBrowsePersisted> = {};
     if (isProofTrackFilter(o.track)) out.track = o.track;
-    if (o.selectedSlug === null || typeof o.selectedSlug === "string") out.selectedSlug = o.selectedSlug;
+    if (o.selectedSlug === null || typeof o.selectedSlug === "string")
+      out.selectedSlug = o.selectedSlug;
     if (isWorkspaceMode(o.workspaceMode)) out.workspaceMode = o.workspaceMode;
     if (typeof o.deepDiveSlug === "string" && o.deepDiveSlug.length > 0) {
       try {

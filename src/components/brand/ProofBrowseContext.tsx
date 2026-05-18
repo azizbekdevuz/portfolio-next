@@ -31,14 +31,17 @@ export function ProofBrowseProvider({ children }: { children: ReactNode }) {
   const [track, setTrack] = useState<ProofTrackFilter>("all");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [testimonialsOpen, setTestimonialsOpen] = useState(false);
-  const [workspaceMode, setWorkspaceMode] = useState<ProofWorkspaceMode>("project");
+  const [workspaceMode, setWorkspaceMode] =
+    useState<ProofWorkspaceMode>("project");
 
   useLayoutEffect(() => {
     const restored = consumeProofBrowseAfterLocaleSwitch();
     if (!restored) return;
     if (restored.track != null) setTrack(restored.track);
-    if (restored.selectedSlug !== undefined) setSelectedSlug(restored.selectedSlug);
-    if (restored.workspaceMode != null) setWorkspaceMode(restored.workspaceMode);
+    if (restored.selectedSlug !== undefined)
+      setSelectedSlug(restored.selectedSlug);
+    if (restored.workspaceMode != null)
+      setWorkspaceMode(restored.workspaceMode);
   }, []);
 
   const value = useMemo(
@@ -54,7 +57,11 @@ export function ProofBrowseProvider({ children }: { children: ReactNode }) {
     }),
     [track, selectedSlug, testimonialsOpen, workspaceMode],
   );
-  return <ProofBrowseContext.Provider value={value}>{children}</ProofBrowseContext.Provider>;
+  return (
+    <ProofBrowseContext.Provider value={value}>
+      {children}
+    </ProofBrowseContext.Provider>
+  );
 }
 
 export function useProofBrowse() {

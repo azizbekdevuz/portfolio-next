@@ -10,7 +10,11 @@ export type DownloadCategory = "resume" | "portfolio";
 export type DownloadLens = "fullstack" | "frontend" | "backend";
 
 const DOWNLOAD_CATEGORIES: DownloadCategory[] = ["resume", "portfolio"];
-export const DOWNLOAD_LENSES: DownloadLens[] = ["fullstack", "frontend", "backend"];
+export const DOWNLOAD_LENSES: DownloadLens[] = [
+  "fullstack",
+  "frontend",
+  "backend",
+];
 
 function defaultFilename(
   category: DownloadCategory,
@@ -19,7 +23,11 @@ function defaultFilename(
 ): string {
   const kind = category === "resume" ? "Resume" : "Portfolio";
   const lensPart =
-    lens === "fullstack" ? "FullStack" : lens === "frontend" ? "Frontend" : "Backend";
+    lens === "fullstack"
+      ? "FullStack"
+      : lens === "frontend"
+        ? "Frontend"
+        : "Backend";
   return `Azizbek-${kind}-${lensPart}-${locale}.pdf`;
 }
 
@@ -40,7 +48,7 @@ function makeGrid(): Record<
       for (const locale of locales) {
         out[category][lens][locale] = {
           filename: defaultFilename(category, lens, locale),
-          href:`/downloads/${defaultFilename(category, lens, locale)}`
+          href: `/downloads/${defaultFilename(category, lens, locale)}`,
         };
       }
     }
@@ -62,7 +70,8 @@ export function getDownloadCell(
   if (
     cell &&
     typeof cell.filename === "string" &&
-    (cell.href === null || (typeof cell.href === "string" && cell.href.length > 0))
+    (cell.href === null ||
+      (typeof cell.href === "string" && cell.href.length > 0))
   ) {
     return cell;
   }

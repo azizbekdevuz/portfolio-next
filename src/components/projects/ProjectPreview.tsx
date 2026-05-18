@@ -9,7 +9,10 @@ import { useI18n } from "@/components/i18n/I18nProvider";
 const EMBED_CACHE_PREFIX = "live-embed:";
 const EMBED_CACHE_TTL_MS = 60 * 60 * 1000;
 
-function readEmbedCache(url: string, origin: string): boolean | null | undefined {
+function readEmbedCache(
+  url: string,
+  origin: string,
+): boolean | null | undefined {
   if (typeof sessionStorage === "undefined") return undefined;
   try {
     const raw = sessionStorage.getItem(EMBED_CACHE_PREFIX + url + "|" + origin);
@@ -52,46 +55,56 @@ export default function ProjectPreview({
   const [checkDone, setCheckDone] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  const runEmbedCheck = useCallback(async (url: string) => {
-    if (forceExternalOnly) {
-      setEmbedAllowed(false);
-      setCheckDone(true);
-      setIsLoading(false);
-      return;
-    }
-
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
-    const cached = readEmbedCache(url, origin);
-    if (cached !== undefined) {
-      setEmbedAllowed(cached === true ? true : cached === false ? false : null);
-      setCheckDone(true);
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const res = await fetch(
-        `/api/live-embed-check?url=${encodeURIComponent(url)}&origin=${encodeURIComponent(origin)}`,
-      );
-      if (!res.ok) {
-        setEmbedAllowed(null);
-        writeEmbedCache(url, origin, null);
+  const runEmbedCheck = useCallback(
+    async (url: string) => {
+      if (forceExternalOnly) {
+        setEmbedAllowed(false);
         setCheckDone(true);
         setIsLoading(false);
         return;
       }
-      const data = (await res.json()) as { embeddable?: boolean | null };
-      const next =
-        data.embeddable === true ? true : data.embeddable === false ? false : null;
-      setEmbedAllowed(next);
-      writeEmbedCache(url, origin, next);
-    } catch {
-      setEmbedAllowed(null);
-    } finally {
-      setCheckDone(true);
-      setIsLoading(false);
-    }
-  }, [forceExternalOnly]);
+
+      const origin =
+        typeof window !== "undefined" ? window.location.origin : "";
+      const cached = readEmbedCache(url, origin);
+      if (cached !== undefined) {
+        setEmbedAllowed(
+          cached === true ? true : cached === false ? false : null,
+        );
+        setCheckDone(true);
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          `/api/live-embed-check?url=${encodeURIComponent(url)}&origin=${encodeURIComponent(origin)}`,
+        );
+        if (!res.ok) {
+          setEmbedAllowed(null);
+          writeEmbedCache(url, origin, null);
+          setCheckDone(true);
+          setIsLoading(false);
+          return;
+        }
+        const data = (await res.json()) as { embeddable?: boolean | null };
+        const next =
+          data.embeddable === true
+            ? true
+            : data.embeddable === false
+              ? false
+              : null;
+        setEmbedAllowed(next);
+        writeEmbedCache(url, origin, next);
+      } catch {
+        setEmbedAllowed(null);
+      } finally {
+        setCheckDone(true);
+        setIsLoading(false);
+      }
+    },
+    [forceExternalOnly],
+  );
 
   useEffect(() => {
     setIsMounted(true);
@@ -125,7 +138,10 @@ export default function ProjectPreview({
           className="absolute inset-[10%] rounded-md border border-border/70 bg-page/50 dark:bg-card-muted/25"
           aria-hidden
         />
-        <div className="absolute bottom-3 left-3 right-3 h-2 rounded bg-card-muted/60 dark:bg-card-muted/50" aria-hidden />
+        <div
+          className="absolute bottom-3 left-3 right-3 h-2 rounded bg-card-muted/60 dark:bg-card-muted/50"
+          aria-hidden
+        />
       </div>
     );
   }
@@ -197,8 +213,12 @@ export default function ProjectPreview({
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-semibold text-fg">{pv.blockedTitle}</p>
-                <p className="mt-2 text-xs leading-relaxed text-muted">{pv.blockedBody}</p>
+                <p className="text-sm font-semibold text-fg">
+                  {pv.blockedTitle}
+                </p>
+                <p className="mt-2 text-xs leading-relaxed text-muted">
+                  {pv.blockedBody}
+                </p>
               </div>
               <a
                 href={openHref}

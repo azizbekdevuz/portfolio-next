@@ -10,7 +10,11 @@ export function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ko" }, { locale: "uz" }];
 }
 
-export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 

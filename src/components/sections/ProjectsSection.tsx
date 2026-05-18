@@ -19,13 +19,16 @@ interface ProjectsSectionProps {
   embedded?: boolean;
 }
 
-export function ProjectsSection({ projects, embedded = false }: ProjectsSectionProps) {
+export function ProjectsSection({
+  projects,
+  embedded = false,
+}: ProjectsSectionProps) {
   const { messages } = useI18n();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const containerRef = useRef<HTMLElement>(null);
   const [hasMounted, setHasMounted] = useState(false);
   const { isMobile } = useDeviceDetection();
-  
+
   useEffect(() => {
     setHasMounted(true);
 
@@ -49,16 +52,21 @@ export function ProjectsSection({ projects, embedded = false }: ProjectsSectionP
       const pending = sessionStorage.getItem(PENDING_DEEP_DIVE_SLUG_KEY);
       if (!pending) return;
       sessionStorage.removeItem(PENDING_DEEP_DIVE_SLUG_KEY);
-      const match = projects.find((p) => p.slug === pending && p.status !== "archived");
+      const match = projects.find(
+        (p) => p.slug === pending && p.status !== "archived",
+      );
       if (match) setSelectedProject(match);
     } catch {
       /* ignore */
     }
   }, [embedded, projects]);
-  
+
   if (!hasMounted) {
     return (
-      <section id="projects" className={`relative py-12 ${embedded ? "min-h-0" : "min-h-screen"}`}>
+      <section
+        id="projects"
+        className={`relative py-12 ${embedded ? "min-h-0" : "min-h-screen"}`}
+      >
         <ProjectsIdeSkeleton embedded={embedded} />
       </section>
     );
@@ -70,11 +78,13 @@ export function ProjectsSection({ projects, embedded = false }: ProjectsSectionP
         id="projects"
         className={`relative flex items-center justify-center py-12 ${embedded ? "min-h-0" : "min-h-screen"}`}
       >
-        <div className="text-lg text-red-500">{messages.projectsSection.noProjects}</div>
+        <div className="text-lg text-red-500">
+          {messages.projectsSection.noProjects}
+        </div>
       </section>
     );
   }
-  
+
   return (
     <motion.section
       ref={containerRef}
@@ -87,9 +97,7 @@ export function ProjectsSection({ projects, embedded = false }: ProjectsSectionP
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(20,157,221,0.05),transparent)]" />
-        <div
-          className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)] opacity-60 dark:opacity-50"
-        />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)] opacity-60 dark:opacity-50" />
       </div>
 
       {/* Section Title for desktop only */}

@@ -26,7 +26,10 @@ export const LanguageSection: React.FC = () => {
         <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-subtle">
           {lm.kicker}
         </p>
-        <h3 id="language-section-title" className="mt-2 text-2xl font-bold tracking-tight text-fg">
+        <h3
+          id="language-section-title"
+          className="mt-2 text-2xl font-bold tracking-tight text-fg"
+        >
           {lm.title}
         </h3>
         <p className="mt-2 max-w-md text-sm text-muted">{lm.subtitle}</p>
@@ -44,10 +47,19 @@ export const LanguageSection: React.FC = () => {
             transition={{ delay: index * 0.05 }}
           >
             <div className="mb-4 flex items-start gap-3">
-              <LanguageFlagIcon code={lang.code} label={lang.name} size={40} className="mt-0.5" />
+              <LanguageFlagIcon
+                code={lang.code}
+                label={lang.name}
+                size={40}
+                className="mt-0.5"
+              />
               <div className="min-w-0">
-                <h4 className="text-base font-semibold leading-tight text-fg">{lang.name}</h4>
-                <p className="mt-1 text-sm font-medium text-primary/90">{lang.level}</p>
+                <h4 className="text-base font-semibold leading-tight text-fg">
+                  {lang.name}
+                </h4>
+                <p className="mt-1 text-sm font-medium text-primary/90">
+                  {lang.level}
+                </p>
               </div>
             </div>
             <p className="text-sm leading-relaxed text-muted">{lang.blurb}</p>

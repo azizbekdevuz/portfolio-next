@@ -2,7 +2,10 @@
 
 import React, { useEffect, useCallback, memo, useState } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
-import { CUSTOM_CURSOR_EVENT, type CustomCursorEventDetail } from "@/lib/custom-cursor";
+import {
+  CUSTOM_CURSOR_EVENT,
+  type CustomCursorEventDetail,
+} from "@/lib/custom-cursor";
 
 const SPRING_CONFIG = { damping: 25, stiffness: 400, mass: 0.1 } as const;
 const RING_SPRING = { ...SPRING_CONFIG, damping: 35 } as const;

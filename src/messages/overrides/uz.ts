@@ -12,7 +12,8 @@ export const uzOverrides: LocalizedOverrides = {
     positioningParagraph:
       "Alohida servislar bitta mahsulotdek ishlashi kerak bo‘lgan joyda kuchliman. Stack ro‘yxatidan ko‘ra, ishlaydigan tizim muhim.",
     location: "Janubiy Koreya, Seul",
-    availability: "Tanlangan rollar — to‘liq stavka yoki yirik shartnoma (ishga qabul va ruxsat qoidalariga muvofiq)",
+    availability:
+      "Tanlangan rollar — to‘liq stavka yoki yirik shartnoma (ishga qabul va ruxsat qoidalariga muvofiq)",
     heroProofTags: [
       "E-commerce + admin",
       "Ko‘p tilli + RTL",
@@ -79,8 +80,10 @@ export const uzOverrides: LocalizedOverrides = {
   },
   projectsBySlug: {
     trainium: {
-      summary: "E-commerce, admin, rollar, to‘lov va bildirishnomalar bitta mahsulot sifatida.",
-      whyItMatters: "Bitta landing emas, operatsion va mijoz oqimlari birga aylanadigan kenglik.",
+      summary:
+        "E-commerce, admin, rollar, to‘lov va bildirishnomalar bitta mahsulot sifatida.",
+      whyItMatters:
+        "Bitta landing emas, operatsion va mijoz oqimlari birga aylanadigan kenglik.",
       description:
         "Ochiq vitrina, xodim/admin va mijoz hisoblari bitta navigatsiya va holat modelida bog‘langan kommersiya. Katalog, savat, to‘lov va operatsion yuzalar ko‘paysa ham izchil bo‘lishi; autentifikatsiya, to‘lov, provayder, real-time va i18n integratsiyasi “keyin qo‘shiladigan qatlam” emas, mahsulotning qismi sifatida o‘ylangan.",
       problem:
@@ -89,8 +92,10 @@ export const uzOverrides: LocalizedOverrides = {
         "Statik maket emas — haqiqiy to‘lov va bildirishnoma oqimlari qayerdadir ishlatadigan, izchil foydalanuvchi/operatsion tajriba yo‘nalishi.",
     },
     "rumi-ai": {
-      summary: "EN/KO/FA (RTL), oqim, FastAPI/DB bilan BFF va sessiyani birlashtirish.",
-      whyItMatters: "Chat pardasi ortidagi integratsiya va ishonchlilik — asosiy sarlavha.",
+      summary:
+        "EN/KO/FA (RTL), oqim, FastAPI/DB bilan BFF va sessiyani birlashtirish.",
+      whyItMatters:
+        "Chat pardasi ortidagi integratsiya va ishonchlilik — asosiy sarlavha.",
       description:
         "Iqtibos/RAG oqimida asosiy qiyinchilik kiritish maydoni emas, balki barcha lokal (RTL shart) bo‘yicha yagona tajriba, oqimli javoblar va Next.js ↔ FastAPI/SQLAlchemy o‘rtasida barqaror qo‘lda uzatish. API-kalit demosi emas, real ishlatiladigan ishonch, xato va sessiya oqimlari muhim.",
       problem:
@@ -99,7 +104,8 @@ export const uzOverrides: LocalizedOverrides = {
         "Uzilmaydigan oqim, ochiqlangan xato/loading, backend bilan kelishgan navigatsiya va sessiya tajribasi.",
     },
     fishlinic: {
-      summary: "Akvakultura/telemetriyaga yaqin, real vaqt va nazorat oqimlari bilan dashboard.",
+      summary:
+        "Akvakultura/telemetriyaga yaqin, real vaqt va nazorat oqimlari bilan dashboard.",
       whyItMatters: "Ma’lumot tez o‘zgarganda ham tushunarli operator UI.",
       description:
         "TypeScript/Next.js dashboard telemetriyani real vaqtda ko‘rsatadi; feeder/kamera kabi sohadagi operatsion oqimlar mahsulot doirasida. Tez o‘zgaradigan signallarni o‘qiladigan ko‘rinish, boshqaruv va ma’lumot tomonda AI tahlil yo‘llari bilan bog‘lash ishning markazida.",
@@ -109,24 +115,32 @@ export const uzOverrides: LocalizedOverrides = {
         "Ko‘rsatkichlar o‘zgarayotgan muhitda nima bo‘layotganini tushunish, real vaqt va nazorat/tahlil aylanmasiga yaqin tajriba.",
     },
     patchpilot: {
-      summary: "Xato kontekstini qadamlarga bo‘lib, test va patchga ulash (ochiq org repozitoriy).",
-      whyItMatters: "Yagona generatsiyadan emas, bosqich va tekshiruvli avtomatlashtirishga yaqin yondashuv.",
+      summary:
+        "Xato kontekstini qadamlarga bo‘lib, test va patchga ulash (ochiq org repozitoriy).",
+      whyItMatters:
+        "Yagona generatsiyadan emas, bosqich va tekshiruvli avtomatlashtirishga yaqin yondashuv.",
     },
     gitguardian: {
-      summary: "Git tiklash uchun CLI+veb, snapshot, reja va keyingi snapshot bilan tekshiruv.",
-      whyItMatters: "Haddan xavfli amallar uchun ‘bosqich + tekshiruv’ muhitida ishonch.",
+      summary:
+        "Git tiklash uchun CLI+veb, snapshot, reja va keyingi snapshot bilan tekshiruv.",
+      whyItMatters:
+        "Haddan xavfli amallar uchun ‘bosqich + tekshiruv’ muhitida ishonch.",
     },
     proofboard: {
-      summary: "World ID va hamyon bilan, inson-ishtirokli Q&A (server tomoni tekshiruv va yozish intizomi).",
-      whyItMatters: "Identifikatsiya va replay kabi cheklovlarda API va skema dizayni.",
+      summary:
+        "World ID va hamyon bilan, inson-ishtirokli Q&A (server tomoni tekshiruv va yozish intizomi).",
+      whyItMatters:
+        "Identifikatsiya va replay kabi cheklovlarda API va skema dizayni.",
     },
     "dr-niaraki-website": {
-      summary: "DB va nashr/loyihalash oqimlari — tadqiqot profili; DOCX import va tahrir yo‘llari.",
+      summary:
+        "DB va nashr/loyihalash oqimlari — tadqiqot profili; DOCX import va tahrir yo‘llari.",
       whyItMatters: "Bir martalik emas, uzoq muddatli tarkib tizimi.",
     },
     nestar: {
       summary: "NestJS + GraphQL + Mongo + JWT — qisqa backend namunasi.",
-      whyItMatters: "Faqat frontdan keyin bo‘lgan modullar qanday yig‘ilganini ko‘rsatish.",
+      whyItMatters:
+        "Faqat frontdan keyin bo‘lgan modullar qanday yig‘ilganini ko‘rsatish.",
     },
   },
 };

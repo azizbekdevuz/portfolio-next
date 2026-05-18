@@ -3,7 +3,11 @@
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { CockpitStageSkeleton } from "@/components/skeletons/CockpitStageSkeleton";
 import { ProjectsIdeSkeleton } from "@/components/skeletons/ProjectsIdeSkeleton";
-import { SkeletonRegion, skBlock, skLineStrong } from "@/components/skeletons/skeleton-primitives";
+import {
+  SkeletonRegion,
+  skBlock,
+  skLineStrong,
+} from "@/components/skeletons/skeleton-primitives";
 
 function OptionalDepthHeading({ embedded }: { embedded?: boolean }) {
   if (embedded) return null;
@@ -58,7 +62,10 @@ export function SkillsSkeleton({ embedded = false }: { embedded?: boolean }) {
       <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.5fr_2.5fr]">
         <div className="space-y-3">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className={`w-full rounded-lg border border-border p-5 ${skBlock}`}>
+            <div
+              key={i}
+              className={`w-full rounded-lg border border-border p-5 ${skBlock}`}
+            >
               <div className="mb-3 flex items-center gap-4">
                 <div className={`h-12 w-12 rounded-full ${skLineStrong}`} />
                 <div className="min-w-0 flex-1">
@@ -76,11 +83,16 @@ export function SkillsSkeleton({ embedded = false }: { embedded?: boolean }) {
           ))}
         </div>
 
-        <div className={`min-h-[420px] rounded-lg border border-border p-6 md:min-h-[500px] md:p-8 ${skBlock}`}>
+        <div
+          className={`min-h-[420px] rounded-lg border border-border p-6 md:min-h-[500px] md:p-8 ${skBlock}`}
+        >
           <div className={`mb-6 h-8 w-48 ${skLineStrong}`} />
           <div className="mb-8 grid grid-cols-3 gap-3 md:grid-cols-5 md:gap-4">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className={`rounded-lg border border-border p-3 ${skBlock}`}>
+              <div
+                key={i}
+                className={`rounded-lg border border-border p-3 ${skBlock}`}
+              >
                 <div className={`mx-auto mb-2 h-10 w-10 ${skLineStrong}`} />
                 <div className={`mx-auto h-4 w-full ${skBlock}`} />
               </div>
@@ -91,7 +103,10 @@ export function SkillsSkeleton({ embedded = false }: { embedded?: boolean }) {
               <div className={`mb-3 h-6 w-36 ${skLineStrong}`} />
               <div className="flex flex-wrap gap-2">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className={`h-8 w-28 rounded-lg bg-primary/12`} />
+                  <div
+                    key={i}
+                    className={`h-8 w-28 rounded-lg bg-primary/12`}
+                  />
                 ))}
               </div>
             </div>
@@ -110,7 +125,11 @@ export function SkillsSkeleton({ embedded = false }: { embedded?: boolean }) {
   );
 }
 
-export function InProgressSkeleton({ embedded = false }: { embedded?: boolean }) {
+export function InProgressSkeleton({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}) {
   const { messages } = useI18n();
   const label = messages.shell.pageLoading;
 
@@ -122,7 +141,9 @@ export function InProgressSkeleton({ embedded = false }: { embedded?: boolean })
       {!embedded ? (
         <div className="mb-12 flex flex-col items-center md:mb-16">
           <div className="flex flex-col items-center">
-            <div className={`mb-5 flex h-12 w-72 max-w-full items-center justify-center rounded-md ${skLineStrong}`} />
+            <div
+              className={`mb-5 flex h-12 w-72 max-w-full items-center justify-center rounded-md ${skLineStrong}`}
+            />
             <div className={`h-2 w-64 max-w-full rounded-full ${skBlock}`} />
             <div className="mt-3 flex items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-accent/50" />
@@ -133,14 +154,20 @@ export function InProgressSkeleton({ embedded = false }: { embedded?: boolean })
       ) : null}
 
       <div className="relative mx-auto max-w-6xl">
-        <div className={`rounded-lg border border-border p-6 backdrop-blur-sm md:p-8 ${skBlock}`}>
+        <div
+          className={`rounded-lg border border-border p-6 backdrop-blur-sm md:p-8 ${skBlock}`}
+        >
           <div className="text-center">
             <div className="mb-5 flex justify-center">
-              <div className={`flex h-24 w-24 items-center justify-center rounded-full bg-primary/12`}>
+              <div
+                className={`flex h-24 w-24 items-center justify-center rounded-full bg-primary/12`}
+              >
                 <div className={`h-12 w-12 rounded-md ${skBlock}`} />
               </div>
             </div>
-            <div className={`mx-auto mb-4 h-8 w-64 max-w-full ${skLineStrong}`} />
+            <div
+              className={`mx-auto mb-4 h-8 w-64 max-w-full ${skLineStrong}`}
+            />
             <div className="mx-auto mb-6 max-w-2xl space-y-2">
               <div className={`h-4 w-full ${skBlock}`} />
               <div className={`h-4 w-full ${skBlock}`} />
@@ -149,12 +176,22 @@ export function InProgressSkeleton({ embedded = false }: { embedded?: boolean })
 
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className={`rounded-lg border border-border p-5 ${skBlock}`}>
-                  <div className={`mx-auto mb-4 h-12 w-12 rounded-full ${skLineStrong}`} />
-                  <div className={`mx-auto mb-2 h-6 w-32 rounded-md bg-primary/15`} />
+                <div
+                  key={i}
+                  className={`rounded-lg border border-border p-5 ${skBlock}`}
+                >
+                  <div
+                    className={`mx-auto mb-4 h-12 w-12 rounded-full ${skLineStrong}`}
+                  />
+                  <div
+                    className={`mx-auto mb-2 h-6 w-32 rounded-md bg-primary/15`}
+                  />
                   <div className={`mb-4 h-12 w-full ${skBlock}`} />
                   <div className={`h-2.5 w-full rounded-full ${skBlock}`}>
-                    <div className="h-2.5 rounded-full bg-accent/35" style={{ width: `${30 + i * 15}%` }} />
+                    <div
+                      className="h-2.5 rounded-full bg-accent/35"
+                      style={{ width: `${30 + i * 15}%` }}
+                    />
                   </div>
                 </div>
               ))}
@@ -162,7 +199,10 @@ export function InProgressSkeleton({ embedded = false }: { embedded?: boolean })
 
             <div className="mt-6 grid grid-cols-3 gap-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className={`rounded-lg border border-border p-4 ${skBlock}`}>
+                <div
+                  key={i}
+                  className={`rounded-lg border border-border p-4 ${skBlock}`}
+                >
                   <div className={`mb-2 h-8 w-full rounded-md bg-primary/15`} />
                   <div className={`h-4 w-full ${skBlock}`} />
                 </div>
@@ -170,7 +210,9 @@ export function InProgressSkeleton({ embedded = false }: { embedded?: boolean })
             </div>
 
             <div className="mt-6 flex justify-center">
-              <div className={`h-10 w-48 rounded-full border border-accent/25 bg-primary/8`} />
+              <div
+                className={`h-10 w-48 rounded-full border border-accent/25 bg-primary/8`}
+              />
             </div>
           </div>
         </div>
@@ -192,7 +234,9 @@ export function ContactSkeleton({ embedded = false }: { embedded?: boolean }) {
 
       <div className="mx-auto grid max-w-6xl items-start gap-10 lg:grid-cols-2 lg:gap-12">
         <div className="relative">
-          <div className={`overflow-hidden rounded-lg border border-border p-8 backdrop-blur-sm ${skBlock}`}>
+          <div
+            className={`overflow-hidden rounded-lg border border-border p-8 backdrop-blur-sm ${skBlock}`}
+          >
             <div className="relative z-10 space-y-4">
               <div className={`h-8 w-48 ${skLineStrong}`} />
               <div className={`h-5 w-40 ${skBlock}`} />
@@ -218,7 +262,9 @@ export function ContactSkeleton({ embedded = false }: { embedded?: boolean }) {
         </div>
       </div>
 
-      <div className={`mx-auto max-w-6xl rounded-lg border border-border ${embedded ? "mt-8" : "mt-16"}`}>
+      <div
+        className={`mx-auto max-w-6xl rounded-lg border border-border ${embedded ? "mt-8" : "mt-16"}`}
+      >
         <div className="flex items-center justify-between border-b border-border bg-card-muted/50 px-4 py-2">
           <div className="flex gap-2">
             <div className="h-3 w-3 rounded-full bg-[#ff5f57]/60" />
@@ -234,8 +280,13 @@ export function ContactSkeleton({ embedded = false }: { embedded?: boolean }) {
         </div>
         <div className="grid grid-cols-2 gap-3 bg-card-muted/25 p-4 md:grid-cols-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className={`rounded-lg border border-border p-4 ${skBlock}`}>
-              <div className={`mx-auto mb-2 h-10 w-10 rounded-full ${skLineStrong}`} />
+            <div
+              key={i}
+              className={`rounded-lg border border-border p-4 ${skBlock}`}
+            >
+              <div
+                className={`mx-auto mb-2 h-10 w-10 rounded-full ${skLineStrong}`}
+              />
               <div className={`mx-auto mb-1 h-5 w-16 ${skBlock}`} />
               <div className={`mx-auto h-4 w-24 ${skBlock}`} />
             </div>
@@ -255,7 +306,10 @@ export function ContactSkeleton({ embedded = false }: { embedded?: boolean }) {
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className={`rounded-lg border border-border p-6 ${skBlock}`}>
+              <div
+                key={i}
+                className={`rounded-lg border border-border p-6 ${skBlock}`}
+              >
                 <div className="mb-4 flex items-center gap-3">
                   <div className={`h-10 w-10 rounded-sm ${skLineStrong}`} />
                   <div className="min-w-0 flex-1">
@@ -268,13 +322,21 @@ export function ContactSkeleton({ embedded = false }: { embedded?: boolean }) {
                     <div className={`h-4 w-24 ${skBlock}`} />
                     <div className={`h-4 w-10 ${skBlock}`} />
                   </div>
-                  <div className={`h-2 overflow-hidden rounded-full ${skBlock}`}>
-                    <div className="h-full rounded-full bg-accent/40" style={{ width: `${50 + i * 10}%` }} />
+                  <div
+                    className={`h-2 overflow-hidden rounded-full ${skBlock}`}
+                  >
+                    <div
+                      className="h-full rounded-full bg-accent/40"
+                      style={{ width: `${50 + i * 10}%` }}
+                    />
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-1">
                   {[1, 2, 3].map((j) => (
-                    <div key={j} className={`h-6 w-16 rounded-full bg-primary/12`} />
+                    <div
+                      key={j}
+                      className={`h-6 w-16 rounded-full bg-primary/12`}
+                    />
                   ))}
                 </div>
               </div>
@@ -297,10 +359,14 @@ export function AboutSkeleton({ embedded = false }: { embedded?: boolean }) {
     >
       <OptionalDepthHeading embedded={embedded} />
 
-      <div className={`mx-auto mb-12 max-w-6xl rounded-lg border border-border p-6 md:mb-16 ${skBlock}`}>
+      <div
+        className={`mx-auto mb-12 max-w-6xl rounded-lg border border-border p-6 md:mb-16 ${skBlock}`}
+      >
         <div className="flex flex-col gap-8 md:flex-row">
           <div className="md:w-1/3">
-            <div className={`mb-4 aspect-square w-full rounded-2xl ${skLineStrong}`} />
+            <div
+              className={`mb-4 aspect-square w-full rounded-2xl ${skLineStrong}`}
+            />
             <div className="space-y-2">
               <div className={`h-5 w-full ${skBlock}`} />
               <div className={`h-5 w-4/5 ${skBlock}`} />
@@ -339,7 +405,10 @@ export function AboutSkeleton({ embedded = false }: { embedded?: boolean }) {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {[1, 2, 3].map((j) => (
-                    <div key={j} className={`rounded-full px-3 py-1.5 ${skBlock}`}>
+                    <div
+                      key={j}
+                      className={`rounded-full px-3 py-1.5 ${skBlock}`}
+                    >
                       <div className={`h-4 w-16 ${skBlock}`} />
                     </div>
                   ))}
@@ -354,7 +423,10 @@ export function AboutSkeleton({ embedded = false }: { embedded?: boolean }) {
         <div className={`mx-auto mb-8 h-8 w-56 ${skLineStrong}`} />
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-            <div key={i} className={`flex flex-col items-center rounded-lg border border-border p-4 ${skBlock}`}>
+            <div
+              key={i}
+              className={`flex flex-col items-center rounded-lg border border-border p-4 ${skBlock}`}
+            >
               <div className={`mb-3 h-16 w-16 ${skLineStrong}`} />
               <div className={`mb-2 h-5 w-24 ${skBlock}`} />
               <div className={`mb-2 h-4 w-full ${skBlock}`} />
@@ -368,8 +440,13 @@ export function AboutSkeleton({ embedded = false }: { embedded?: boolean }) {
         <div className={`mx-auto mb-8 h-8 w-64 ${skLineStrong}`} />
         <div className="grid gap-5 md:grid-cols-3 md:gap-6">
           {[1, 2, 3].map((i) => (
-            <div key={i} className={`rounded-lg border border-border p-6 ${skBlock}`}>
-              <div className={`mx-auto mb-4 h-16 w-16 rounded-full bg-primary/15`} />
+            <div
+              key={i}
+              className={`rounded-lg border border-border p-6 ${skBlock}`}
+            >
+              <div
+                className={`mx-auto mb-4 h-16 w-16 rounded-full bg-primary/15`}
+              />
               <div className={`mx-auto mb-3 h-6 w-36 ${skBlock}`} />
               <div className="mb-3 space-y-2">
                 {[1, 2, 3].map((j) => (
@@ -385,7 +462,9 @@ export function AboutSkeleton({ embedded = false }: { embedded?: boolean }) {
   );
 
   if (embedded) {
-    return <div className="min-h-0 min-w-0 border-t border-border py-4">{inner}</div>;
+    return (
+      <div className="min-h-0 min-w-0 border-t border-border py-4">{inner}</div>
+    );
   }
 
   return inner;

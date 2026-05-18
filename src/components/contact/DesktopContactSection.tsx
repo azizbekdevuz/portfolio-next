@@ -81,7 +81,11 @@ const ContactCard: React.FC = () => {
   );
 };
 
-export function DesktopContactSection({ embedded = false }: { embedded?: boolean }) {
+export function DesktopContactSection({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}) {
   const { messages } = useI18n();
   const [formData, setFormData] = useState<FormData>({
     from_name: "",
@@ -155,7 +159,9 @@ export function DesktopContactSection({ embedded = false }: { embedded?: boolean
       // Error handling with better logging
       console.error("EmailJS error:", err);
       setError(
-        err instanceof Error ? `${messages.contact.errorSend} (${err.message})` : messages.contact.errorSend,
+        err instanceof Error
+          ? `${messages.contact.errorSend} (${err.message})`
+          : messages.contact.errorSend,
       );
 
       // Clean up temp field if it exists
@@ -187,9 +193,15 @@ export function DesktopContactSection({ embedded = false }: { embedded?: boolean
             viewport={{ once: true }}
           >
             <div className="mb-4 flex items-center gap-3 font-mono">
-              <span className="text-primary/50">{messages.aboutSection.classKeyword}</span>
-              <h2 className="text-4xl font-bold text-fg">{messages.contact.matrixTitle}</h2>
-              <span className="text-primary/50">{messages.aboutSection.extendsKeyword}</span>
+              <span className="text-primary/50">
+                {messages.aboutSection.classKeyword}
+              </span>
+              <h2 className="text-4xl font-bold text-fg">
+                {messages.contact.matrixTitle}
+              </h2>
+              <span className="text-primary/50">
+                {messages.aboutSection.extendsKeyword}
+              </span>
               <span className="text-fg">{messages.contact.connection}</span>
             </div>
           </motion.div>

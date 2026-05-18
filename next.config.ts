@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
     // Cache images for a longer time
     minimumCacheTTL: 31536000, // 1 year
     // Format optimization for modern browsers
-    formats: ['image/webp', 'image/avif'],
+    formats: ["image/webp", "image/avif"],
   },
   // Don't generate source maps in production for better performance
   productionBrowserSourceMaps: false,
@@ -19,10 +19,10 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizeCss: true, // Enable CSS optimization
     optimizePackageImports: [
-      'framer-motion',
-      'lucide-react',
-      'react-icons',
-      'react-circle-flags',
+      "framer-motion",
+      "lucide-react",
+      "react-icons",
+      "react-circle-flags",
     ],
   },
   // Enable compression

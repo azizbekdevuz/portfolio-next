@@ -38,7 +38,10 @@ function readStoredPreference(): ThemePreference | null {
   return null;
 }
 
-function computeResolved(pref: ThemePreference | null, sysDark: boolean): ResolvedTheme {
+function computeResolved(
+  pref: ThemePreference | null,
+  sysDark: boolean,
+): ResolvedTheme {
   if (pref === "light") return "light";
   if (pref === "dark") return "dark";
   return sysDark ? "dark" : "light";
@@ -108,10 +111,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       useSystemTheme,
       setThemeMode,
     }),
-    [preference, resolved, themeMounted, toggleTheme, useSystemTheme, setThemeMode],
+    [
+      preference,
+      resolved,
+      themeMounted,
+      toggleTheme,
+      useSystemTheme,
+      setThemeMode,
+    ],
   );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  );
 }
 
 export function useTheme() {

@@ -57,7 +57,10 @@ export function ProfileIdentityExpandable({ site }: { site: SiteProfile }) {
 
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-[180] flex items-center justify-center p-4 sm:p-6" role="presentation">
+          <div
+            className="fixed inset-0 z-[180] flex items-center justify-center p-4 sm:p-6"
+            role="presentation"
+          >
             <motion.button
               type="button"
               aria-label={messages.profile.closeProfile}
@@ -97,8 +100,13 @@ export function ProfileIdentityExpandable({ site }: { site: SiteProfile }) {
                 />
               </div>
               <div className="border-t border-border p-5">
-                <p className="font-mono text-[10px] uppercase tracking-widest text-accent">{site.headlineRole}</p>
-                <h2 id="profile-card-name" className="mt-1 text-xl font-bold tracking-tight text-fg">
+                <p className="font-mono text-[10px] uppercase tracking-widest text-accent">
+                  {site.headlineRole}
+                </p>
+                <h2
+                  id="profile-card-name"
+                  className="mt-1 text-xl font-bold tracking-tight text-fg"
+                >
                   {site.name}
                 </h2>
                 <p className="mt-2 text-xs text-muted">

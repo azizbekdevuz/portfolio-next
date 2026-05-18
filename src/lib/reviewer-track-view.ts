@@ -6,7 +6,10 @@ import { getFeaturedProjectsForTrack } from "@/content/home-data";
  * Preferred default flagship (featured) slug when switching into a lens.
  * First slug that appears in the track-filtered featured list wins.
  */
-const DEFAULT_FEATURED_SLUG_ORDER: Record<Exclude<ProofTrackFilter, "all">, readonly string[]> = {
+const DEFAULT_FEATURED_SLUG_ORDER: Record<
+  Exclude<ProofTrackFilter, "all">,
+  readonly string[]
+> = {
   frontend: [
     "rumi-ai",
     "fishlinic",
@@ -43,7 +46,10 @@ const EXPERIENCE_ORDER_BY_TRACK: Record<ProofTrackFilter, readonly string[]> = {
   ai: ["ebit", "independent", "sejong"],
 };
 
-export function getDefaultFeaturedSlugForTrack(projects: Project[], track: ProofTrackFilter): string | null {
+export function getDefaultFeaturedSlugForTrack(
+  projects: Project[],
+  track: ProofTrackFilter,
+): string | null {
   const featured = getFeaturedProjectsForTrack(projects, track);
   if (featured.length === 0) return null;
   if (track === "all") return featured[0].slug;
@@ -55,8 +61,13 @@ export function getDefaultFeaturedSlugForTrack(projects: Project[], track: Proof
   return featured[0].slug;
 }
 
-export function sortExperienceItemsByTrack<T extends { id: string }>(items: T[], track: ProofTrackFilter): T[] {
+export function sortExperienceItemsByTrack<T extends { id: string }>(
+  items: T[],
+  track: ProofTrackFilter,
+): T[] {
   const order = EXPERIENCE_ORDER_BY_TRACK[track];
   const rank = new Map(order.map((id, i) => [id, i]));
-  return [...items].sort((a, b) => (rank.get(a.id) ?? 99) - (rank.get(b.id) ?? 99));
+  return [...items].sort(
+    (a, b) => (rank.get(a.id) ?? 99) - (rank.get(b.id) ?? 99),
+  );
 }

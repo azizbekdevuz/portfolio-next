@@ -5,7 +5,12 @@ import type { Achievement } from "@/models/Achievement";
 import type { Project } from "@/models/Project";
 import type { ProofTrackFilter } from "@/lib/proof-track";
 import { siteProfile, type SiteProfile } from "./site";
-import { achievements, bioSections, journeyData, techStack } from "./about-data";
+import {
+  achievements,
+  bioSections,
+  journeyData,
+  techStack,
+} from "./about-data";
 import { projects as rawProjects } from "./projects-data";
 
 export type HomeData = {
@@ -51,7 +56,10 @@ function getFeaturedProjects(projects: Project[]): Project[] {
     });
 }
 
-export function getFeaturedProjectsForTrack(projects: Project[], track: ProofTrackFilter): Project[] {
+export function getFeaturedProjectsForTrack(
+  projects: Project[],
+  track: ProofTrackFilter,
+): Project[] {
   const list = getFeaturedProjects(projects);
   if (track === "all") return list;
   const filtered = list.filter((p) => p.roleTracks?.includes(track));

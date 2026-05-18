@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import { Pencil, Keyboard, Zap } from "lucide-react";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
-export function MobileInProgressSection({ embedded = false }: { embedded?: boolean }) {
+export function MobileInProgressSection({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}) {
   const { messages } = useI18n();
   const icons = [
     <Pencil key="p" className="h-8 w-8" />,
@@ -30,12 +34,16 @@ export function MobileInProgressSection({ embedded = false }: { embedded?: boole
             <span className="text-primary">]</span>
           </h2>
           <div className="mx-auto mt-2 h-1 w-16 rounded-full bg-primary" />
-          <p className="mt-3 font-mono text-xs text-muted">{messages.inProgress.subtitle}</p>
+          <p className="mt-3 font-mono text-xs text-muted">
+            {messages.inProgress.subtitle}
+          </p>
         </motion.div>
       )}
 
       <div className="mx-auto max-w-lg space-y-4">
-        <p className="text-center text-sm text-muted">{messages.inProgress.mobilePitch}</p>
+        <p className="text-center text-sm text-muted">
+          {messages.inProgress.mobilePitch}
+        </p>
         {messages.inProgress.stages.map((item, index) => (
           <motion.div
             key={`${item.title}-${index}`}

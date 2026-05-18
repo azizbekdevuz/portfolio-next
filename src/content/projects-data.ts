@@ -64,7 +64,8 @@ export default async function ProductPage({ params }: { params: { locale: string
       "Product implementation across web surfaces: routing and UI, business flows, integration points for auth, payments, and real-time features, and keeping cross-cutting concerns (locales, roles) consistent.",
     architectureNotes:
       "Next.js (App Router) and TypeScript on the web tier; Prisma/PostgreSQL for persistence; services and sockets in support of real-time and operational behavior; deployment-oriented project layout (including Docker) where the repo is structured for operations.",
-    challenges: "Balancing feature growth with maintainable boundaries between customer, staff, and system integration code paths.",
+    challenges:
+      "Balancing feature growth with maintainable boundaries between customer, staff, and system integration code paths.",
   },
   {
     id: "rumi-ai",
@@ -99,7 +100,13 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
     status: "live",
     order: 2,
     roleTracks: ["frontend", "ai", "fullstack"],
-    proofTags: ["Multilingual + RTL", "SSE / streaming", "BFF integration", "Auth & sessions", "RAG-oriented flows"],
+    proofTags: [
+      "Multilingual + RTL",
+      "SSE / streaming",
+      "BFF integration",
+      "Auth & sessions",
+      "RAG-oriented flows",
+    ],
     role: "Frontend and integration on Sejong research lab product",
     timeline: "2025–present",
     teamContext: "Sejong University research lab; integration-heavy delivery",
@@ -111,7 +118,8 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
       "UI routes and client experience, BFF-style alignment with the Python service, contract and session stability fixes, and RTL/layout correctness alongside Korean and English.",
     architectureNotes:
       "Next.js app routes as the product shell; FastAPI and PostgreSQL behind explicit API boundaries; streaming where the UX demands incremental output.",
-    challenges: "Stream lifecycle, partial failures, and API mismatches that only show up under real product usage—not in isolated components.",
+    challenges:
+      "Stream lifecycle, partial failures, and API mismatches that only show up under real product usage—not in isolated components.",
   },
   {
     id: "fishlinic",
@@ -149,17 +157,26 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
     status: "live",
     order: 3,
     roleTracks: ["frontend", "fullstack", "ai"],
-    proofTags: ["Real-time dashboard", "Telemetry", "Service integration", "AI-assisted insight"],
+    proofTags: [
+      "Real-time dashboard",
+      "Telemetry",
+      "Service integration",
+      "AI-assisted insight",
+    ],
     role: "Full-stack and product UI (capstone team context)",
     timeline: "2025",
-    teamContext: "Sejong capstone; People's Choice recognition (competition context)",
-    problem: "Turn noisy operational telemetry and controls into a dependable operator-facing product.",
+    teamContext:
+      "Sejong capstone; People's Choice recognition (competition context)",
+    problem:
+      "Turn noisy operational telemetry and controls into a dependable operator-facing product.",
     outcome:
       "A deployed dashboard with live elements suitable for real demos and capstone review—not a hand-drawn wireframe.",
     owned:
       "Web product implementation, real-time and summary views, and integration with backend and analysis-related services in the system architecture.",
-    architectureNotes: "Evented/real-time patterns on the client; service boundaries to bridge hardware-adjacent and AI services.",
-    challenges: "Keeping aggregates honest while feeds update, and not overwhelming operators with undifferentiated charts.",
+    architectureNotes:
+      "Evented/real-time patterns on the client; service boundaries to bridge hardware-adjacent and AI services.",
+    challenges:
+      "Keeping aggregates honest while feeds update, and not overwhelming operators with undifferentiated charts.",
   },
   {
     id: "gitguardian",
@@ -192,17 +209,25 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
     status: "live",
     order: 4,
     roleTracks: ["ai", "fullstack", "frontend"],
-    proofTags: ["Recovery workflow", "Verification", "Dev tooling", "Snapshot discipline"],
+    proofTags: [
+      "Recovery workflow",
+      "Verification",
+      "Dev tooling",
+      "Snapshot discipline",
+    ],
     role: "End-to-end product implementation (Seoul Bowl / Scoop AI top prize, Dec 2025)",
     timeline: "2025",
     teamContext: "Hackathon delivery",
-    problem: "Give developers recoverable, explainable next steps when repositories enter scary states.",
+    problem:
+      "Give developers recoverable, explainable next steps when repositories enter scary states.",
     outcome:
       "Shipped CLI + web workflow with staged plans and a verification mental model, recognized in competition context.",
     owned:
       "Product implementation across the CLI and web surfaces and the overall recovery narrative (diagnosis, plan, check).",
-    architectureNotes: "Intentional separation of snapshot capture, classification, plan generation, and follow-up verification.",
-    challenges: "Sound UX where overconfidence would be dangerous; keeping automation bounded by explicit user steps.",
+    architectureNotes:
+      "Intentional separation of snapshot capture, classification, plan generation, and follow-up verification.",
+    challenges:
+      "Sound UX where overconfidence would be dangerous; keeping automation bounded by explicit user steps.",
   },
   {
     id: "proofboard",
@@ -231,17 +256,25 @@ export function ChatPanel({ locale }: { locale: "en" | "fa" | "ko" }) {
     status: "live",
     order: 5,
     roleTracks: ["frontend", "fullstack"],
-    proofTags: ["World ID", "Auth + trust UX", "Transactional writes", "Prisma/Postgres"],
+    proofTags: [
+      "World ID",
+      "Auth + trust UX",
+      "Transactional writes",
+      "Prisma/Postgres",
+    ],
     role: "Full-stack implementation",
     timeline: "2025",
     teamContext: "Solo / small shipped experiment",
-    problem: "Model product flows where identity and integrity constraints are as important as the social graph.",
+    problem:
+      "Model product flows where identity and integrity constraints are as important as the social graph.",
     outcome:
       "A deployed, reviewable build that demonstrates end-to-end verification handoffs (live demo may require the World App).",
     owned:
       "Web application, verification and write path behavior, and schema-backed features behind the Q&A product.",
-    architectureNotes: "BFF and server routes as the place where proofs are validated; Prisma/PostgreSQL for durable state and relationships.",
-    challenges: "Clear failure and retry paths when third-party identity or wallet steps fail.",
+    architectureNotes:
+      "BFF and server routes as the place where proofs are validated; Prisma/PostgreSQL for durable state and relationships.",
+    challenges:
+      "Clear failure and retry paths when third-party identity or wallet steps fail.",
   },
   {
     id: "patchpilot",
@@ -274,17 +307,26 @@ export function WorkflowRunner({ bugId }: { bugId: string }) {
     status: "live",
     order: 6,
     roleTracks: ["ai", "fullstack", "frontend"],
-    proofTags: ["Tool-using AI", "Playwright", "Staged pipeline", "FastAPI + web client"],
+    proofTags: [
+      "Tool-using AI",
+      "Playwright",
+      "Staged pipeline",
+      "FastAPI + web client",
+    ],
     role: "Contributing engineering on the web client and product-shaped workflow (confirm scope in interviews)",
     timeline: "2025",
-    teamContext: "Open-source org repository (Prithwis-2023); contribution scope is interview-specific",
-    problem: "Channel messy bug context into something engineers can act on, with checks between steps.",
+    teamContext:
+      "Open-source org repository (Prithwis-2023); contribution scope is interview-specific",
+    problem:
+      "Channel messy bug context into something engineers can act on, with checks between steps.",
     outcome:
       "A demo-backed pipeline UI aligned to execution-oriented backend stages (verify live availability).",
     owned:
       "Product-side engineering as reflected in the shipped Next.js app and public repository history; exact merge scope is for discussion.",
-    architectureNotes: "Explicit pipeline stages; automation bounded by test and execution feedback where configured.",
-    challenges: "Trust and transparency when the system touches reproduction and test execution.",
+    architectureNotes:
+      "Explicit pipeline stages; automation bounded by test and execution feedback where configured.",
+    challenges:
+      "Trust and transparency when the system touches reproduction and test execution.",
   },
   {
     id: "dr-niaraki",
@@ -315,17 +357,25 @@ export default function Page() {
     status: "live",
     order: 7,
     roleTracks: ["frontend", "fullstack"],
-    proofTags: ["Editorial workflow", "CMS-style content", "Validation", "Solo build & deploy"],
+    proofTags: [
+      "Editorial workflow",
+      "CMS-style content",
+      "Validation",
+      "Solo build & deploy",
+    ],
     role: "Solo: implementation, information architecture, deployment",
     timeline: "2024–present",
     teamContext: "Client: academic profile (single stakeholder)",
-    problem: "Keep a research-facing site accurate and easy to update without turning edits into ad-hoc HTML pushes.",
+    problem:
+      "Keep a research-facing site accurate and easy to update without turning edits into ad-hoc HTML pushes.",
     outcome:
       "A live, database-backed site with an honest separation between public content and protected editing flows.",
     owned:
       "Build and deployment, content model, admin paths, and import/review steps around CV material where implemented in-repo.",
-    architectureNotes: "Prisma/PostgreSQL; Zod validation at boundaries; server actions/routes for trusted mutations.",
-    challenges: "Balancing simple public reading with safe authoring and recovery from content mistakes.",
+    architectureNotes:
+      "Prisma/PostgreSQL; Zod validation at boundaries; server actions/routes for trusted mutations.",
+    challenges:
+      "Balancing simple public reading with safe authoring and recovery from content mistakes.",
   },
   {
     id: "nestar",
@@ -334,7 +384,8 @@ export default function Page() {
     projectType: "NestJS + GraphQL API (learning / breadth sample)",
     summary:
       "Modular Node.js service: GraphQL API, auth, and MongoDB persistence—useful as structured backend sample code.",
-    whyItMatters: "Background depth when reviewers look past the Next.js entry points.",
+    whyItMatters:
+      "Background depth when reviewers look past the Next.js entry points.",
     description:
       "A NestJS project organized as modules with GraphQL and JWT-flavored access patterns and MongoDB via Mongoose. It is a concise slice of how I model APIs and persistence when the task is not primarily a single-page app.",
     technologies: [
@@ -357,9 +408,12 @@ export class AppModule {}`,
     roleTracks: ["fullstack"],
     proofTags: ["NestJS", "GraphQL", "MongoDB"],
     role: "Solo author (reference implementation)",
-    owned: "Project structure, schema, and auth-style patterns as in repository.",
+    owned:
+      "Project structure, schema, and auth-style patterns as in repository.",
     problem: "Provide a clear GraphQL and persistence baseline for extension.",
-    outcome: "A working modular server foundation suitable to fork or teach from.",
-    architectureNotes: "GraphQL module layout; Mongoose models; auth guards as patterns.",
+    outcome:
+      "A working modular server foundation suitable to fork or teach from.",
+    architectureNotes:
+      "GraphQL module layout; Mongoose models; auth guards as patterns.",
   },
 ];

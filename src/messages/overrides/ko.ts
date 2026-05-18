@@ -12,7 +12,8 @@ export const koOverrides: LocalizedOverrides = {
     positioningParagraph:
       "따로 만든 서비스가 하나의 제품처럼 보이게 만드는 데 강합니다. 러닝하는 스택 쇼보다, 실행·검토 가능한 시스템을 우선합니다.",
     location: "대한민국 서울",
-    availability: "선별 지원 — 정규직 또는 상당 규모 계약(역할·지역·취업 규정에 따름)",
+    availability:
+      "선별 지원 — 정규직 또는 상당 규모 계약(역할·지역·취업 규정에 따름)",
     heroProofTags: [
       "이커머스 + 어드민",
       "다국어 + RTL",
@@ -79,8 +80,10 @@ export const koOverrides: LocalizedOverrides = {
   },
   projectsBySlug: {
     trainium: {
-      summary: "이커머스(고객 + 어드민)와 다국어, 역할, 결제, 알림이 연결된 풀스택 상품.",
-      whyItMatters: "한 페이지가 아닌, 운영·고객 흐름이 함께 돌아가는 제품 범위의 증거.",
+      summary:
+        "이커머스(고객 + 어드민)와 다국어, 역할, 결제, 알림이 연결된 풀스택 상품.",
+      whyItMatters:
+        "한 페이지가 아닌, 운영·고객 흐름이 함께 돌아가는 제품 범위의 증거.",
       description:
         "공개 스토어프론트, 스태프/관리, 고객 계정 흐름을 일관된 내비게이션·상태로 묶는 커머스 구현이 중심입니다. 표면이 늘어나도 카탈로그·장바구니·결제·운영이 한 모델로 읽히도록 했고, 인증·결제·프로바이더·실시간·i18n 연동을 ‘나중에 붙이는 작업’이 아니라 제품의 일부로 취급합니다.",
       problem:
@@ -89,8 +92,10 @@ export const koOverrides: LocalizedOverrides = {
         "정적 목업이 아니라, 실제 체크아웃·알림이 동작하는 일관된 고객/운영 경험에 가까운 형태의 제품을 지향한 결과.",
     },
     "rumi-ai": {
-      summary: "EN/KO/FA(RTL)와 스트리밍, FastAPI·DB와의 BFF 정합, 세션/계약을 한 제품으로 묶은 사례.",
-      whyItMatters: "채팅 UI 뒤에 실제로 붙는 통합·신뢰성 문제를 정면으로 다룬 사례.",
+      summary:
+        "EN/KO/FA(RTL)와 스트리밍, FastAPI·DB와의 BFF 정합, 세션/계약을 한 제품으로 묶은 사례.",
+      whyItMatters:
+        "채팅 UI 뒤에 실제로 붙는 통합·신뢰성 문제를 정면으로 다룬 사례.",
       description:
         "RAG/인용을 전제로 한 대화 제품에서 어려운 점은 입력창이 아니라 로케일(필수 RTL) 전반의 일관성, 스트리밍 응답, Next.js ↔ FastAPI/SQLAlchemy 사이의 안정적 핸드오프에 있습니다. API 키 데모가 아닌, 실제 사용을 전제로 한 신뢰·오류·세션 흐름에 집중했습니다.",
       problem:
@@ -99,8 +104,10 @@ export const koOverrides: LocalizedOverrides = {
         "끊기지 않는 스트리밍, 솔직한 오류/로딩 상태, 백엔드와 정합을 맞춘 네비게이션·세션 쪽 경험.",
     },
     fishlinic: {
-      summary: "양식/수질·텔레메트리에 가까운 실시간·요약·제어 흐름이 섞인 대시보드 제품.",
-      whyItMatters: "센서·서비스·UI가 같이 변할 때도 읽을 수 있는 대시보드/운영 흐름.",
+      summary:
+        "양식/수질·텔레메트리에 가까운 실시간·요약·제어 흐름이 섞인 대시보드 제품.",
+      whyItMatters:
+        "센서·서비스·UI가 같이 변할 때도 읽을 수 있는 대시보드/운영 흐름.",
       description:
         "TypeScript/Next.js 대시보드에 센서·브리지 데이터를 실시간으로 시각화하고, 사양(피더·카메라 등)에 맞는 운영자 흐름을 제품 범위 안에 둡니다. 변화가 잦은 텔레메트리를 읽기 쉬운 뷰·조작·분석(데이터 쪽 AI 가공 경로)에 연결하는 쪽이 작업의 중심입니다.",
       problem:
@@ -109,20 +116,27 @@ export const koOverrides: LocalizedOverrides = {
         "지표가 바뀌는 상황에서도 ‘무슨 일이 벌어지는지’를 읽을 수 있게 꾸민 실시간·제어·분석 루프에 가깝다.",
     },
     patchpilot: {
-      summary: "버그 맥락을 다단계로 분해하고 테스트·실행·패치로 이어지는 AI 워크플로(공개 org 저장소).",
-      whyItMatters: "한 번의 응답이 아니라 단계·검증이 있는 자동화에 가까운 제품 UI.",
+      summary:
+        "버그 맥락을 다단계로 분해하고 테스트·실행·패치로 이어지는 AI 워크플로(공개 org 저장소).",
+      whyItMatters:
+        "한 번의 응답이 아니라 단계·검증이 있는 자동화에 가까운 제품 UI.",
     },
     gitguardian: {
       summary: "스냅샷·분류·복구 계획·검증 루프로 묶는 Git 복구용 CLI+웹.",
-      whyItMatters: "자동화가 위험할 수 있는 도메인에서 ‘단계+검증’으로 신뢰를 쌓는 사례.",
+      whyItMatters:
+        "자동화가 위험할 수 있는 도메인에서 ‘단계+검증’으로 신뢰를 쌓는 사례.",
     },
     proofboard: {
-      summary: "World ID·지갑과 연동된, 사람만 참여하는 Q&A(서버 측 검증·쓰기 규율).",
-      whyItMatters: "신원·리플레이·원자적 쓰기 같은 제약이 있는 제품에서의 API·DB 설계.",
+      summary:
+        "World ID·지갑과 연동된, 사람만 참여하는 Q&A(서버 측 검증·쓰기 규율).",
+      whyItMatters:
+        "신원·리플레이·원자적 쓰기 같은 제약이 있는 제품에서의 API·DB 설계.",
     },
     "dr-niaraki-website": {
-      summary: "DB에서 공개·초안·게시/복원을 다루는 연구자 프로필( DOCX/편집 흐름 포함).",
-      whyItMatters: "한 번 쓰는 랜딩이 아니라 운영·콘텐츠 시스템이 있는 사이트.",
+      summary:
+        "DB에서 공개·초안·게시/복원을 다루는 연구자 프로필( DOCX/편집 흐름 포함).",
+      whyItMatters:
+        "한 번 쓰는 랜딩이 아니라 운영·콘텐츠 시스템이 있는 사이트.",
     },
     nestar: {
       summary: "NestJS + GraphQL + MongoDB + JWT — 백엔드 구조 샘플.",

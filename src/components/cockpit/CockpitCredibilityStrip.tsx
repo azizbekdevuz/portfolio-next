@@ -24,7 +24,9 @@ export function CockpitCredibilityStrip({
 
   const liveProducts = useMemo(() => {
     const flagshipTitles = new Set(site.flagshipProjects as readonly string[]);
-    let filtered = projects.filter((p) => p.status !== "archived" && p.liveLink);
+    let filtered = projects.filter(
+      (p) => p.status !== "archived" && p.liveLink,
+    );
     if (track !== "all") {
       const inTrack = filtered.filter((p) => p.roleTracks?.includes(track));
       const rest = filtered.filter((p) => !p.roleTracks?.includes(track));
@@ -57,7 +59,11 @@ export function CockpitCredibilityStrip({
                   className="inline-flex items-center gap-1 text-xs font-semibold text-accent underline-offset-2 hover:underline"
                 >
                   {p.title}
-                  <ExternalLink className="h-3 w-3 opacity-70" strokeWidth={2} aria-hidden />
+                  <ExternalLink
+                    className="h-3 w-3 opacity-70"
+                    strokeWidth={2}
+                    aria-hidden
+                  />
                 </a>
               </li>
             ))}
@@ -72,7 +78,9 @@ export function CockpitCredibilityStrip({
             : ""
         }`}
       >
-        <span className="font-semibold text-subtle">{messages.credibilityStrip.openSource}</span>
+        <span className="font-semibold text-subtle">
+          {messages.credibilityStrip.openSource}
+        </span>
         {messages.experience.ossNote}
       </p>
     </div>

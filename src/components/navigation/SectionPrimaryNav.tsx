@@ -2,10 +2,21 @@
 
 import { memo, useCallback } from "react";
 import type { LucideIcon } from "lucide-react";
-import { BookUser, Cpu, FolderKanban, Mail, Sparkles, Signpost } from "lucide-react";
+import {
+  BookUser,
+  Cpu,
+  FolderKanban,
+  Mail,
+  Sparkles,
+  Signpost,
+} from "lucide-react";
 import { MAIN_SECTION_IDS, type MainSectionId } from "@/lib/nav-sections";
 import { useI18n } from "@/components/i18n/I18nProvider";
-import { navSectionToShell, useHomeShell, type HomeShellView } from "@/components/shell/HomeShellContext";
+import {
+  navSectionToShell,
+  useHomeShell,
+  type HomeShellView,
+} from "@/components/shell/HomeShellContext";
 
 const SECTION_ICONS: Record<MainSectionId, LucideIcon> = {
   hero: Sparkles,
@@ -91,7 +102,13 @@ export const SectionPrimaryNav = memo(function SectionPrimaryNav({
                   strokeWidth={2}
                   aria-hidden
                 />
-                <span className={isPanel ? "max-w-[7.5rem] truncate sm:max-w-[10rem]" : ""}>{label}</span>
+                <span
+                  className={
+                    isPanel ? "max-w-[7.5rem] truncate sm:max-w-[10rem]" : ""
+                  }
+                >
+                  {label}
+                </span>
               </button>
             </li>
           );

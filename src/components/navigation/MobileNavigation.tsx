@@ -16,7 +16,9 @@ export function MobileNavigation() {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="fixed right-6 top-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card/90 shadow-sm backdrop-blur-md"
-        aria-label={isOpen ? messages.mobileNav.closeMenu : messages.mobileNav.openMenu}
+        aria-label={
+          isOpen ? messages.mobileNav.closeMenu : messages.mobileNav.openMenu
+        }
       >
         <motion.div
           className="flex h-6 w-6 flex-col items-center justify-center gap-1.5"
@@ -56,7 +58,10 @@ export function MobileNavigation() {
             transition={{ type: "spring", damping: 25 }}
           >
             <div className="flex w-full max-w-sm flex-col items-stretch gap-6 px-6">
-              <SectionPrimaryNav layout="mobileDrawer" onAfterNavigate={() => setIsOpen(false)} />
+              <SectionPrimaryNav
+                layout="mobileDrawer"
+                onAfterNavigate={() => setIsOpen(false)}
+              />
               <div className="border-t border-border/60 pt-6">
                 <LanguageSwitcherInline />
               </div>

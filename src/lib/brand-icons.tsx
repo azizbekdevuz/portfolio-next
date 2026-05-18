@@ -36,16 +36,24 @@ import {
   SiWebauthn,
   SiOllama,
   SiSqlalchemy,
-  SiArduino, 
-  SiMaterialdesign, 
+  SiArduino,
+  SiMaterialdesign,
   SiSocketdotio,
-  SiJsonwebtokens, 
+  SiJsonwebtokens,
   SiZod,
   SiOpencv,
   SiApollographql,
   SiMui,
 } from "react-icons/si";
-import { TbApi, TbDatabase, TbServer, TbTable, TbTools, TbUser,TbAutomation } from "react-icons/tb";
+import {
+  TbApi,
+  TbDatabase,
+  TbServer,
+  TbTable,
+  TbTools,
+  TbUser,
+  TbAutomation,
+} from "react-icons/tb";
 import { MdOutlineLayers, MdSettingsRemote } from "react-icons/md";
 import { AiOutlinePartition, AiOutlineRobot } from "react-icons/ai";
 import { HiTerminal } from "react-icons/hi";
@@ -104,9 +112,9 @@ const BRAND_ICONS = {
   turborepo: SiTurborepo,
   socketio: SiSocketdotio,
   nextauth: SiWebauthn,
-  jwt: SiJsonwebtokens ,
+  jwt: SiJsonwebtokens,
   llm: SiOllama,
-  rag: AiOutlineRobot ,
+  rag: AiOutlineRobot,
   sqlalchemy: SiSqlalchemy,
   arduino: SiArduino,
   iot: MdSettingsRemote,
@@ -129,7 +137,8 @@ export type BrandIconId = keyof typeof BRAND_ICONS;
  * Tuned for this portfolio’s light page + deep navy dark UI.
  */
 const BRAND_TONE: Record<BrandIconId, string> = {
-  react: "text-[#61DAFB] drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(97,218,251,0.28)]",
+  react:
+    "text-[#61DAFB] drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(97,218,251,0.28)]",
   nextjs: "text-slate-900 dark:text-white",
   typescript: "text-[#3178C6] dark:text-[#6BA3E6]",
   tailwindcss: "text-[#06B6D4] dark:text-[#22D3EE]",
@@ -242,4 +251,3 @@ export function BrandIcon({
     />
   );
 }
-

@@ -54,8 +54,15 @@ export function TestimonialsModal() {
       >
         <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3 md:px-5">
           <div className="flex items-center gap-2">
-            <MessageSquareQuote className="h-5 w-5 text-accent" strokeWidth={1.75} aria-hidden />
-            <h2 id="testimonials-heading" className="text-base font-semibold text-fg">
+            <MessageSquareQuote
+              className="h-5 w-5 text-accent"
+              strokeWidth={1.75}
+              aria-hidden
+            />
+            <h2
+              id="testimonials-heading"
+              className="text-base font-semibold text-fg"
+            >
               {messages.testimonialsModal.heading}
             </h2>
           </div>

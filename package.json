@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "tsc": "npx tsc --noEmit",
-    "format": "prettier --write ."
+    "format": "npx prettier --write ."
   },
   "engines": {
     "node": "20.x"

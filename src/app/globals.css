@@ -377,7 +377,8 @@
   /* Cyberpunk accents */
   .cyber-glow {
     @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    box-shadow: 0 0 20px color-mix(in srgb, var(--color-accent) 22%, transparent);
+    box-shadow: 0 0 20px
+      color-mix(in srgb, var(--color-accent) 22%, transparent);
   }
 
   .book-container:hover .cyber-glow {

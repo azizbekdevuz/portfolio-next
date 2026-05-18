@@ -1,13 +1,22 @@
 "use client";
 
 import { useI18n } from "@/components/i18n/I18nProvider";
-import { SkeletonRegion, skBlock, skLine, skLineStrong } from "@/components/skeletons/skeleton-primitives";
+import {
+  SkeletonRegion,
+  skBlock,
+  skLine,
+  skLineStrong,
+} from "@/components/skeletons/skeleton-primitives";
 
 /**
  * Layout-faithful placeholder for the VS Code–style projects IDE (desktop + embedded).
  * Matches `DesktopProjectsSection` chrome: title bar, explorer rail, tab strip, editor body.
  */
-export function ProjectsIdeSkeleton({ embedded = false }: { embedded?: boolean }) {
+export function ProjectsIdeSkeleton({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}) {
   const { messages } = useI18n();
   const label = messages.shell.pageLoading;
 
@@ -57,7 +66,10 @@ export function ProjectsIdeSkeleton({ embedded = false }: { embedded?: boolean }
         >
           <div className="flex shrink-0 items-center gap-1 overflow-x-auto border-b border-border bg-card-muted/80 px-1 py-1">
             {[1, 2, 3].map((i) => (
-              <div key={i} className={`h-9 min-w-[7rem] shrink-0 rounded-md ${skBlock}`} />
+              <div
+                key={i}
+                className={`h-9 min-w-[7rem] shrink-0 rounded-md ${skBlock}`}
+              />
             ))}
           </div>
           <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-2 lg:gap-6">

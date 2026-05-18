@@ -16,7 +16,9 @@ const FETCH_TIMEOUT_MS = 10_000;
  */
 type SafePublicUrl = URL & { readonly __brand: "PublicHttp" };
 
-function assertPublicHttpUrl(url: URL): { ok: true } | { ok: false; message: string } {
+function assertPublicHttpUrl(
+  url: URL,
+): { ok: true } | { ok: false; message: string } {
   const protocol = url.protocol.toLowerCase();
   if (protocol !== "http:" && protocol !== "https:") {
     return { ok: false, message: "unsupported_protocol" };
@@ -36,15 +38,19 @@ function assertPublicHttpUrl(url: URL): { ok: true } | { ok: false; message: str
   const ipv4 = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/.exec(host);
   if (ipv4) {
     const [a, b] = [Number(ipv4[1]), Number(ipv4[2])];
-    if (a === 10 || a === 127 || a === 0) return { ok: false, message: "blocked_host" };
+    if (a === 10 || a === 127 || a === 0)
+      return { ok: false, message: "blocked_host" };
     if (a === 169 && b === 254) return { ok: false, message: "blocked_host" };
     if (a === 192 && b === 168) return { ok: false, message: "blocked_host" };
-    if (a === 172 && b >= 16 && b <= 31) return { ok: false, message: "blocked_host" };
-    if (a === 100 && b >= 64 && b <= 127) return { ok: false, message: "blocked_host" };
+    if (a === 172 && b >= 16 && b <= 31)
+      return { ok: false, message: "blocked_host" };
+    if (a === 100 && b >= 64 && b <= 127)
+      return { ok: false, message: "blocked_host" };
   }
 
   if (host.includes(":")) {
-    if (host === "::1" || host.startsWith("[::1")) return { ok: false, message: "blocked_host" };
+    if (host === "::1" || host.startsWith("[::1"))
+      return { ok: false, message: "blocked_host" };
     const h = host.startsWith("[") ? host.slice(1) : host;
     if (h.startsWith("fe80:") || h.startsWith("fc") || h.startsWith("fd")) {
       return { ok: false, message: "blocked_host" };
@@ -54,7 +60,9 @@ function assertPublicHttpUrl(url: URL): { ok: true } | { ok: false; message: str
   return { ok: true };
 }
 
-function toSafePublicUrl(u: URL): { ok: true; url: SafePublicUrl } | { ok: false; message: string } {
+function toSafePublicUrl(
+  u: URL,
+): { ok: true; url: SafePublicUrl } | { ok: false; message: string } {
   const g = assertPublicHttpUrl(u);
   if (!g.ok) return g;
   return { ok: true, url: u as SafePublicUrl };
@@ -99,7 +107,9 @@ function tryNextFromRedirectResponse(
  * Fetches a response to inspect framing headers, without following redirects the platform would
  * otherwise follow without re-validating each URL (SSRF / internal bypass on redirect chains).
  */
-async function fetchResponseForHeaders(start: SafePublicUrl): Promise<Response | null> {
+async function fetchResponseForHeaders(
+  start: SafePublicUrl,
+): Promise<Response | null> {
   const controller = new AbortController();
   const t = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
@@ -119,7 +129,10 @@ async function fetchResponseForHeaders(start: SafePublicUrl): Promise<Response |
         return null;
       }
 
-      let res = await safeFetch("HEAD", current, { signal, headers: baseHeaders });
+      let res = await safeFetch("HEAD", current, {
+        signal,
+        headers: baseHeaders,
+      });
       if (isRedirectStatus(res.status)) {
         const next = tryNextFromRedirectResponse(res, current);
         if (!next) return null;
@@ -166,7 +179,10 @@ export async function GET(request: NextRequest) {
   try {
     parsed = new URL(rawUrl.trim());
   } catch {
-    return NextResponse.json({ embeddable: null, reason: "invalid_url" }, { status: 400 });
+    return NextResponse.json(
+      { embeddable: null, reason: "invalid_url" },
+      { status: 400 },
+    );
   }
 
   const safe = toSafePublicUrl(parsed);
@@ -203,7 +219,10 @@ export async function GET(request: NextRequest) {
 
   const cspResult = cspFrameAncestorsAllowsEmbedding(csp, finalUrl, origin);
   if (cspResult === false) {
-    return NextResponse.json({ embeddable: false, reason: "csp_frame_ancestors" });
+    return NextResponse.json({
+      embeddable: false,
+      reason: "csp_frame_ancestors",
+    });
   }
   if (cspResult === null) {
     return NextResponse.json({ embeddable: null, reason: "csp_ambiguous" });

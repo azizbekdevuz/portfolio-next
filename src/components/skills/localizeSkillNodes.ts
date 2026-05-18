@@ -10,7 +10,8 @@ export function localizeSkillNodes(
   skillsMessages: Messages["skills"],
 ): SkillNode[] {
   return nodes.map((node) => {
-    const loc = skillsMessages.nodes[node.id as keyof typeof skillsMessages.nodes];
+    const loc =
+      skillsMessages.nodes[node.id as keyof typeof skillsMessages.nodes];
     if (!loc) return node;
     return {
       ...node,

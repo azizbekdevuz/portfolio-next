@@ -55,7 +55,8 @@ function directiveAllowsEmbedder(
         continue;
       }
       try {
-        if (new URL(raw).origin === new URL(embedderOrigin).origin) matched = true;
+        if (new URL(raw).origin === new URL(embedderOrigin).origin)
+          matched = true;
       } catch {
         /* ignore */
       }

@@ -1,6 +1,10 @@
 "use client";
 
-import { BrandIcon, type BrandIconId, type BrandIconVisualTone } from "@/lib/brand-icons";
+import {
+  BrandIcon,
+  type BrandIconId,
+  type BrandIconVisualTone,
+} from "@/lib/brand-icons";
 
 export type TechIconTileSize = "xs" | "sm" | "md" | "lg";
 export type TechIconChipSurface = "default" | "emphasis";

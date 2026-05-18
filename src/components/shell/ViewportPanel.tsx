@@ -62,14 +62,20 @@ export function ViewportPanel({
             onClick={goCockpit}
             className={`inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-xl border border-border-strong bg-card px-3 py-2 text-sm font-semibold text-fg shadow-sm transition-colors hover:border-accent hover:text-accent ${FOCUS_RING}`}
           >
-            <ArrowLeft className="h-4 w-4 shrink-0" strokeWidth={2} aria-hidden />
+            <ArrowLeft
+              className="h-4 w-4 shrink-0"
+              strokeWidth={2}
+              aria-hidden
+            />
             {s.backToProof}
           </button>
           <div className="min-w-0 flex-1">
             <p className="truncate font-mono text-[10px] font-semibold uppercase tracking-widest text-fg/70 dark:text-fg/75">
               {s.optionalDepth}
             </p>
-            <p className="truncate text-sm font-bold text-fg md:text-base">{title}</p>
+            <p className="truncate text-sm font-bold text-fg md:text-base">
+              {title}
+            </p>
           </div>
         </div>
         <div className="min-w-0 rounded-xl border border-border/70 bg-card-muted/40 p-2 md:p-2.5">

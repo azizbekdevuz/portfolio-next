@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { TechIconTile } from "@/components/ui/TechIconTile";
-import { ExternalLink, FolderGit2, Layers, ListChecks, Sparkles } from "lucide-react";
+import {
+  ExternalLink,
+  FolderGit2,
+  Layers,
+  ListChecks,
+  Sparkles,
+} from "lucide-react";
 import type { Project } from "@/models/Project";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { useHomeShell } from "@/components/shell/HomeShellContext";
@@ -20,10 +26,26 @@ export function ProofPanel({
   const { messages } = useI18n();
   const { setShell } = useHomeShell();
   const tabs = [
-    { id: "summary" as const, label: messages.proofPanel.tabs.summary, Icon: Sparkles },
-    { id: "owned" as const, label: messages.proofPanel.tabs.owned, Icon: ListChecks },
-    { id: "stack" as const, label: messages.proofPanel.tabs.stack, Icon: Layers },
-    { id: "links" as const, label: messages.proofPanel.tabs.links, Icon: ExternalLink },
+    {
+      id: "summary" as const,
+      label: messages.proofPanel.tabs.summary,
+      Icon: Sparkles,
+    },
+    {
+      id: "owned" as const,
+      label: messages.proofPanel.tabs.owned,
+      Icon: ListChecks,
+    },
+    {
+      id: "stack" as const,
+      label: messages.proofPanel.tabs.stack,
+      Icon: Layers,
+    },
+    {
+      id: "links" as const,
+      label: messages.proofPanel.tabs.links,
+      Icon: ExternalLink,
+    },
   ];
   type TabId = (typeof tabs)[number]["id"];
   const [tab, setTab] = useState<TabId>("summary");
@@ -38,8 +60,12 @@ export function ProofPanel({
         className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card-muted/40 p-8 text-center md:min-h-[320px]"
         role="status"
       >
-        <p className="text-sm font-medium text-fg">{messages.proofPanel.noProofTitle}</p>
-        <p className="mt-2 max-w-xs text-xs text-muted">{messages.proofPanel.noProofHint}</p>
+        <p className="text-sm font-medium text-fg">
+          {messages.proofPanel.noProofTitle}
+        </p>
+        <p className="mt-2 max-w-xs text-xs text-muted">
+          {messages.proofPanel.noProofHint}
+        </p>
       </div>
     );
   }
@@ -50,10 +76,16 @@ export function ProofPanel({
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div>
             {project.projectType && (
-              <p className="font-mono text-[10px] uppercase tracking-widest text-accent">{project.projectType}</p>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-accent">
+                {project.projectType}
+              </p>
             )}
-            <h2 className="text-lg font-semibold tracking-tight text-fg md:text-xl">{project.title}</h2>
-            <p className="mt-1 text-sm font-medium leading-snug text-muted">{project.summary}</p>
+            <h2 className="text-lg font-semibold tracking-tight text-fg md:text-xl">
+              {project.title}
+            </h2>
+            <p className="mt-1 text-sm font-medium leading-snug text-muted">
+              {project.summary}
+            </p>
             {lensBlurb ? (
               <p className="mt-2 border-l-2 border-accent/40 pl-2.5 text-xs font-medium leading-snug text-accent">
                 {lensBlurb}
@@ -88,7 +120,11 @@ export function ProofPanel({
                 : "cursor-pointer text-muted hover:bg-card-muted/80 hover:text-fg"
             }`}
           >
-            <Icon className="h-3.5 w-3.5 shrink-0 opacity-80 md:h-4 md:w-4" strokeWidth={1.75} aria-hidden />
+            <Icon
+              className="h-3.5 w-3.5 shrink-0 opacity-80 md:h-4 md:w-4"
+              strokeWidth={1.75}
+              aria-hidden
+            />
             <span className="hidden sm:inline">{label}</span>
           </button>
         ))}
@@ -96,9 +132,15 @@ export function ProofPanel({
 
       <div className="min-h-[200px] flex-1 p-4 md:min-h-[220px] md:p-5">
         {tab === "summary" && (
-          <div id="proof-panel-summary" role="tabpanel" aria-labelledby="proof-tab-summary" className="space-y-4">
+          <div
+            id="proof-panel-summary"
+            role="tabpanel"
+            aria-labelledby="proof-tab-summary"
+            className="space-y-4"
+          >
             {(() => {
-              const impactLine = project.outcome ?? project.metrics ?? project.whyItMatters;
+              const impactLine =
+                project.outcome ?? project.metrics ?? project.whyItMatters;
               const showGlance = project.problem || project.owned || impactLine;
               if (!showGlance) return null;
               return (
@@ -112,7 +154,9 @@ export function ProofPanel({
                         <dt className="text-[10px] font-semibold uppercase tracking-wide text-muted">
                           {messages.proofPanel.scanProblem}
                         </dt>
-                        <dd className="mt-0.5 leading-snug text-fg">{project.problem}</dd>
+                        <dd className="mt-0.5 leading-snug text-fg">
+                          {project.problem}
+                        </dd>
                       </div>
                     ) : null}
                     {project.owned ? (
@@ -120,7 +164,9 @@ export function ProofPanel({
                         <dt className="text-[10px] font-semibold uppercase tracking-wide text-muted">
                           {messages.proofPanel.scanShipped}
                         </dt>
-                        <dd className="mt-0.5 leading-snug text-fg">{project.owned}</dd>
+                        <dd className="mt-0.5 leading-snug text-fg">
+                          {project.owned}
+                        </dd>
                       </div>
                     ) : null}
                     {impactLine ? (
@@ -128,7 +174,9 @@ export function ProofPanel({
                         <dt className="text-[10px] font-semibold uppercase tracking-wide text-muted">
                           {messages.proofPanel.scanImpact}
                         </dt>
-                        <dd className="mt-0.5 leading-snug text-fg">{impactLine}</dd>
+                        <dd className="mt-0.5 leading-snug text-fg">
+                          {impactLine}
+                        </dd>
                       </div>
                     ) : null}
                   </dl>
@@ -143,7 +191,9 @@ export function ProofPanel({
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-fg/80">
                   {messages.proofPanel.whyItMatters}
                 </p>
-                <p className="mt-1 text-sm leading-relaxed text-muted">{project.whyItMatters}</p>
+                <p className="mt-1 text-sm leading-relaxed text-muted">
+                  {project.whyItMatters}
+                </p>
               </div>
             ) : null}
             <div className="flex flex-wrap gap-1.5">
@@ -160,17 +210,29 @@ export function ProofPanel({
         )}
 
         {tab === "owned" && (
-          <div id="proof-panel-owned" role="tabpanel" aria-labelledby="proof-tab-owned">
+          <div
+            id="proof-panel-owned"
+            role="tabpanel"
+            aria-labelledby="proof-tab-owned"
+          >
             {project.owned ? (
-              <p className="border-l-2 border-accent/50 pl-3 text-sm leading-relaxed text-muted">{project.owned}</p>
+              <p className="border-l-2 border-accent/50 pl-3 text-sm leading-relaxed text-muted">
+                {project.owned}
+              </p>
             ) : (
-              <p className="text-sm text-muted">{messages.proofPanel.ownershipFallback}</p>
+              <p className="text-sm text-muted">
+                {messages.proofPanel.ownershipFallback}
+              </p>
             )}
           </div>
         )}
 
         {tab === "stack" && (
-          <div id="proof-panel-stack" role="tabpanel" aria-labelledby="proof-tab-stack">
+          <div
+            id="proof-panel-stack"
+            role="tabpanel"
+            aria-labelledby="proof-tab-stack"
+          >
             <ul className="flex flex-wrap gap-2">
               {project.technologies.map((t) => (
                 <li
@@ -186,7 +248,12 @@ export function ProofPanel({
         )}
 
         {tab === "links" && (
-          <div id="proof-panel-links" role="tabpanel" aria-labelledby="proof-tab-links" className="flex flex-col gap-3">
+          <div
+            id="proof-panel-links"
+            role="tabpanel"
+            aria-labelledby="proof-tab-links"
+            className="flex flex-col gap-3"
+          >
             <div className="flex flex-wrap gap-3">
               {project.liveLink && (
                 <a
@@ -195,7 +262,11 @@ export function ProofPanel({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-semibold text-accent underline-offset-4 hover:underline"
                 >
-                  <ExternalLink className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+                  <ExternalLink
+                    className="h-4 w-4"
+                    strokeWidth={1.75}
+                    aria-hidden
+                  />
                   {messages.proofPanel.liveProduct}
                 </a>
               )}
@@ -206,13 +277,19 @@ export function ProofPanel({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-medium text-muted underline-offset-4 hover:text-accent hover:underline"
                 >
-                  <FolderGit2 className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+                  <FolderGit2
+                    className="h-4 w-4"
+                    strokeWidth={1.75}
+                    aria-hidden
+                  />
                   {messages.proofPanel.repository}
                 </a>
               )}
             </div>
             {!project.liveLink && !project.githubLink && (
-              <p className="text-sm text-muted">{messages.proofPanel.noPublicLinks}</p>
+              <p className="text-sm text-muted">
+                {messages.proofPanel.noPublicLinks}
+              </p>
             )}
           </div>
         )}

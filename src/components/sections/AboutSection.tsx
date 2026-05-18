@@ -37,7 +37,7 @@ export function AboutSection({
   const { messages } = useI18n();
   const containerRef = useRef<HTMLElement>(null);
   const { isMobile } = useDeviceDetection();
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
@@ -47,7 +47,11 @@ export function AboutSection({
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
 
   // Less dramatic parallax on mobile
-  const y = useTransform(scrollYProgress, [0, 1], isMobile ? ["10%", "-10%"] : ["20%", "-20%"]);
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1],
+    isMobile ? ["10%", "-10%"] : ["20%", "-20%"],
+  );
 
   const inner = (
     <BioContext.Provider value={bioSections}>
@@ -65,20 +69,36 @@ export function AboutSection({
                   {isMobile ? (
                     <>
                       <div className="mb-3 flex items-center gap-2 font-mono text-sm">
-                        <span className="text-accent/50">{messages.aboutSection.classKeyword}</span>
-                        <h2 className="text-3xl font-bold text-fg">{messages.aboutSection.aboutTitle}</h2>
+                        <span className="text-accent/50">
+                          {messages.aboutSection.classKeyword}
+                        </span>
+                        <h2 className="text-3xl font-bold text-fg">
+                          {messages.aboutSection.aboutTitle}
+                        </h2>
                       </div>
                       <div className="mb-3 flex items-center gap-2 font-mono text-sm">
-                        <span className="text-accent/50">{messages.aboutSection.extendsKeyword}</span>
-                        <span className="text-fg">{messages.aboutSection.storyTitle}</span>
+                        <span className="text-accent/50">
+                          {messages.aboutSection.extendsKeyword}
+                        </span>
+                        <span className="text-fg">
+                          {messages.aboutSection.storyTitle}
+                        </span>
                       </div>
                     </>
                   ) : (
                     <div className="mb-4 flex items-center gap-3 font-mono">
-                      <span className="text-accent/50">{messages.aboutSection.classKeyword}</span>
-                      <h2 className="text-4xl font-bold text-fg">{messages.aboutSection.aboutTitle}</h2>
-                      <span className="text-accent/50">{messages.aboutSection.extendsKeyword}</span>
-                      <span className="text-fg">{messages.aboutSection.storyTitle}</span>
+                      <span className="text-accent/50">
+                        {messages.aboutSection.classKeyword}
+                      </span>
+                      <h2 className="text-4xl font-bold text-fg">
+                        {messages.aboutSection.aboutTitle}
+                      </h2>
+                      <span className="text-accent/50">
+                        {messages.aboutSection.extendsKeyword}
+                      </span>
+                      <span className="text-fg">
+                        {messages.aboutSection.storyTitle}
+                      </span>
                     </div>
                   )}
                   <motion.div
@@ -102,9 +122,7 @@ export function AboutSection({
 
   if (embedded) {
     return (
-      <div className="min-h-0 min-w-0 border-t border-border py-4">
-        {inner}
-      </div>
+      <div className="min-h-0 min-w-0 border-t border-border py-4">{inner}</div>
     );
   }
 

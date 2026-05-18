@@ -63,11 +63,20 @@
   inset: 0;
   opacity: calc(var(--ambient-field-opacity) * 0.52);
   background-image:
-    linear-gradient(to right, var(--ambient-field-line-soft) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--ambient-field-line-soft) 1px, transparent 1px);
+    linear-gradient(
+      to right,
+      var(--ambient-field-line-soft) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      var(--ambient-field-line-soft) 1px,
+      transparent 1px
+    );
   background-size: var(--ambient-grid-step) var(--ambient-grid-step);
   /* Half-step offset lattice (static moiré depth; drift only on primary field) */
-  background-position: calc(var(--ambient-grid-step) * 0.5) calc(var(--ambient-grid-step) * 0.5);
+  background-position: calc(var(--ambient-grid-step) * 0.5)
+    calc(var(--ambient-grid-step) * 0.5);
   mask-image: radial-gradient(
     ellipse 100% 72% at 50% 22%,
     rgb(0 0 0 / 0.45) 0%,
@@ -88,10 +97,14 @@
 
 @keyframes ambient-field-drift {
   from {
-    background-position: 0 0, 0 0;
+    background-position:
+      0 0,
+      0 0;
   }
   to {
-    background-position: 960px 540px, 960px 540px;
+    background-position:
+      960px 540px,
+      960px 540px;
   }
 }
 
@@ -107,8 +120,16 @@
     var(--ambient-scan-line) 72px,
     var(--ambient-scan-line) 73px
   );
-  mask-image: radial-gradient(ellipse 90% 65% at 50% 30%, rgb(0 0 0 / 0.35), transparent 62%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 65% at 50% 30%, rgb(0 0 0 / 0.35), transparent 62%);
+  mask-image: radial-gradient(
+    ellipse 90% 65% at 50% 30%,
+    rgb(0 0 0 / 0.35),
+    transparent 62%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 65% at 50% 30%,
+    rgb(0 0 0 / 0.35),
+    transparent 62%
+  );
 }
 
 .ambient-scan-drift {
@@ -162,9 +183,18 @@
     transparent 1.35px
   );
   background-size: var(--ambient-grid-step) var(--ambient-grid-step);
-  background-position: calc(var(--ambient-grid-step) * 0.5) calc(var(--ambient-grid-step) * 0.5);
-  mask-image: radial-gradient(ellipse 95% 70% at 50% 20%, rgb(0 0 0 / 0.4), transparent 65%);
-  -webkit-mask-image: radial-gradient(ellipse 95% 70% at 50% 20%, rgb(0 0 0 / 0.4), transparent 65%);
+  background-position: calc(var(--ambient-grid-step) * 0.5)
+    calc(var(--ambient-grid-step) * 0.5);
+  mask-image: radial-gradient(
+    ellipse 95% 70% at 50% 20%,
+    rgb(0 0 0 / 0.4),
+    transparent 65%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 95% 70% at 50% 20%,
+    rgb(0 0 0 / 0.4),
+    transparent 65%
+  );
 }
 
 /* Mobile: denser grid, calmer opacities, no long-running motion */

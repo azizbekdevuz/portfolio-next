@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { FileDown, X } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import { locales } from "@/i18n/config";
@@ -64,7 +71,11 @@ export function DocumentDownloadLauncher() {
 
   const canDownload = cell != null && cell.href != null && cell.href.length > 0;
   const title =
-    open === "resume" ? d.categoryResume : open === "portfolio" ? d.categoryPortfolio : "";
+    open === "resume"
+      ? d.categoryResume
+      : open === "portfolio"
+        ? d.categoryPortfolio
+        : "";
 
   return (
     <>
@@ -79,7 +90,11 @@ export function DocumentDownloadLauncher() {
           className="inline-flex items-center gap-1.5 rounded-full border border-border-strong bg-card px-3 py-2 text-xs font-semibold text-fg transition-colors hover:border-accent/40 md:px-4 md:text-sm"
           aria-label={d.triggerResumeAria}
         >
-          <FileDown className="h-3.5 w-3.5 shrink-0 text-muted md:h-4 md:w-4" strokeWidth={1.75} aria-hidden />
+          <FileDown
+            className="h-3.5 w-3.5 shrink-0 text-muted md:h-4 md:w-4"
+            strokeWidth={1.75}
+            aria-hidden
+          />
           {d.triggerResume}
         </button>
         <button
@@ -88,7 +103,11 @@ export function DocumentDownloadLauncher() {
           className="inline-flex items-center gap-1.5 rounded-full border border-border-strong bg-card px-3 py-2 text-xs font-semibold text-fg transition-colors hover:border-accent/40 md:px-4 md:text-sm"
           aria-label={d.triggerPortfolioAria}
         >
-          <FileDown className="h-3.5 w-3.5 shrink-0 text-muted md:h-4 md:w-4" strokeWidth={1.75} aria-hidden />
+          <FileDown
+            className="h-3.5 w-3.5 shrink-0 text-muted md:h-4 md:w-4"
+            strokeWidth={1.75}
+            aria-hidden
+          />
           {d.triggerPortfolio}
         </button>
       </div>
@@ -129,16 +148,25 @@ export function DocumentDownloadLauncher() {
             </div>
 
             <div className="max-h-[min(70dvh,480px)] cursor-auto space-y-4 overflow-y-auto overscroll-contain px-4 py-3 sm:max-h-[min(60dvh,420px)] sm:px-4 sm:py-4">
-              <p className="text-xs leading-snug text-muted">{d.pickerSubtitle}</p>
+              <p className="text-xs leading-snug text-muted">
+                {d.pickerSubtitle}
+              </p>
 
               <fieldset>
                 <legend className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-subtle">
                   {d.stepFocus}
                 </legend>
-                <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label={d.stepFocus}>
+                <div
+                  className="flex flex-wrap gap-1.5"
+                  role="radiogroup"
+                  aria-label={d.stepFocus}
+                >
                   {DOWNLOAD_LENSES.map((k) => {
                     const active = lens === k;
-                    const label = open === "resume" ? d.lens[k].resume : d.lens[k].portfolio;
+                    const label =
+                      open === "resume"
+                        ? d.lens[k].resume
+                        : d.lens[k].portfolio;
                     return (
                       <button
                         key={k}
@@ -163,7 +191,11 @@ export function DocumentDownloadLauncher() {
                 <legend className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-subtle">
                   {d.stepLanguage}
                 </legend>
-                <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label={d.stepLanguage}>
+                <div
+                  className="flex flex-wrap gap-1.5"
+                  role="radiogroup"
+                  aria-label={d.stepLanguage}
+                >
                   {locales.map((loc) => {
                     const active = fileLocale === loc;
                     return (
@@ -195,14 +227,23 @@ export function DocumentDownloadLauncher() {
                   onClick={close}
                   className={`inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-500 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/20 transition-[filter] hover:brightness-110 ${FOCUS_RING}`}
                 >
-                  <FileDown className="h-4 w-4 shrink-0" strokeWidth={2} aria-hidden />
+                  <FileDown
+                    className="h-4 w-4 shrink-0"
+                    strokeWidth={2}
+                    aria-hidden
+                  />
                   {d.download}
                 </a>
               ) : (
                 <div className="rounded-lg border border-dashed border-border bg-page-elevated/50 px-3 py-2.5 text-center dark:border-border-strong/60">
-                  <p className="text-xs font-medium text-fg">{d.unavailableTitle}</p>
+                  <p className="text-xs font-medium text-fg">
+                    {d.unavailableTitle}
+                  </p>
                   <p className="mt-1 text-[10px] leading-relaxed text-muted">
-                    {d.pdfPending} <span className="font-mono text-[10px] text-subtle">{cell.filename}</span>
+                    {d.pdfPending}{" "}
+                    <span className="font-mono text-[10px] text-subtle">
+                      {cell.filename}
+                    </span>
                   </p>
                 </div>
               )}

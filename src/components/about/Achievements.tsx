@@ -7,7 +7,15 @@ import { Award, Trophy } from "lucide-react";
 import { AchievementsContext } from "../sections/AboutSection";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
-function CertificateFrame({ src, alt, caption }: { src: string; alt: string; caption: string }) {
+function CertificateFrame({
+  src,
+  alt,
+  caption,
+}: {
+  src: string;
+  alt: string;
+  caption: string;
+}) {
   return (
     <figure className="group relative mx-auto w-full max-w-lg">
       {/* Ambient glow — theme-aware */}
@@ -91,7 +99,8 @@ export function Achievements() {
   const achievements = useContext(AchievementsContext);
   const [selectedId, setSelectedId] = useState("");
   const ids = achievements.map((a) => a.id);
-  const activeId = selectedId && ids.includes(selectedId) ? selectedId : (ids[0] ?? "");
+  const activeId =
+    selectedId && ids.includes(selectedId) ? selectedId : (ids[0] ?? "");
 
   if (achievements.length === 0) {
     return (
@@ -112,9 +121,19 @@ export function Achievements() {
 
       <div className="relative">
         <div className="mb-2 flex items-center gap-3">
-          <div className="h-px flex-1 max-w-[3rem] bg-gradient-to-r from-transparent to-accent/50" aria-hidden />
-          <Award className="h-5 w-5 text-accent" strokeWidth={1.5} aria-hidden />
-          <div className="h-px flex-1 max-w-[3rem] bg-gradient-to-l from-transparent to-accent/50" aria-hidden />
+          <div
+            className="h-px flex-1 max-w-[3rem] bg-gradient-to-r from-transparent to-accent/50"
+            aria-hidden
+          />
+          <Award
+            className="h-5 w-5 text-accent"
+            strokeWidth={1.5}
+            aria-hidden
+          />
+          <div
+            className="h-px flex-1 max-w-[3rem] bg-gradient-to-l from-transparent to-accent/50"
+            aria-hidden
+          />
         </div>
 
         <motion.div
@@ -127,10 +146,15 @@ export function Achievements() {
             <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent">
               {messages.achievements.recognition}
             </p>
-            <h3 id="achievements-heading" className="mt-1 text-2xl font-bold tracking-tight text-fg md:text-3xl">
+            <h3
+              id="achievements-heading"
+              className="mt-1 text-2xl font-bold tracking-tight text-fg md:text-3xl"
+            >
               {messages.achievements.heading}
             </h3>
-            <p className="mt-1 text-sm text-muted">{messages.achievements.subtitle}</p>
+            <p className="mt-1 text-sm text-muted">
+              {messages.achievements.subtitle}
+            </p>
           </div>
         </motion.div>
 
@@ -149,7 +173,11 @@ export function Achievements() {
                 }`}
                 whileTap={{ scale: 0.98 }}
               >
-                <Trophy className={`h-4 w-4 ${on ? "text-accent" : "text-subtle"}`} strokeWidth={1.75} aria-hidden />
+                <Trophy
+                  className={`h-4 w-4 ${on ? "text-accent" : "text-subtle"}`}
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
                 {category.title}
               </motion.button>
             );
@@ -181,7 +209,9 @@ export function Achievements() {
                     >
                       <div
                         className={`flex flex-col justify-center border-border p-6 md:p-8 dark:border-border-strong/80 ${
-                          item.certificateMedia ? "lg:col-span-7 lg:border-r" : ""
+                          item.certificateMedia
+                            ? "lg:col-span-7 lg:border-r"
+                            : ""
                         }`}
                       >
                         <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -192,9 +222,15 @@ export function Achievements() {
                             {item.year}
                           </span>
                         </div>
-                        <h4 className="text-xl font-bold tracking-tight text-fg md:text-2xl">{item.title}</h4>
-                        <p className="mt-2 text-sm font-medium text-accent/90">{item.subtitle}</p>
-                        <p className="mt-4 text-sm leading-relaxed text-muted md:max-w-prose">{item.description}</p>
+                        <h4 className="text-xl font-bold tracking-tight text-fg md:text-2xl">
+                          {item.title}
+                        </h4>
+                        <p className="mt-2 text-sm font-medium text-accent/90">
+                          {item.subtitle}
+                        </p>
+                        <p className="mt-4 text-sm leading-relaxed text-muted md:max-w-prose">
+                          {item.description}
+                        </p>
                       </div>
 
                       {item.certificateMedia ? (

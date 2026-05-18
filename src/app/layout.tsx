@@ -16,7 +16,11 @@ export const viewport: Viewport = {
   themeColor: "#f0f4f8",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const h = await headers();
   const raw = h.get(LOCALE_HEADER);
   const htmlLang = raw && isLocale(raw) ? raw : defaultLocale;
@@ -28,7 +32,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <meta name="theme-color" content="#f0f4f8" />
         <link rel="preload" href="/assets/img/profile-img.webp" as="image" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="min-h-screen bg-page text-fg">
         <DeviceDetectionProvider>

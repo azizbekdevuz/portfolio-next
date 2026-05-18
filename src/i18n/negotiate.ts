@@ -20,7 +20,9 @@ function primaryLang(tag: string): string {
 /**
  * Parse Accept-Language and pick en | ko | uz, else English.
  */
-export function negotiateLocale(acceptLanguage: string | null | undefined): Locale {
+export function negotiateLocale(
+  acceptLanguage: string | null | undefined,
+): Locale {
   if (!acceptLanguage || !acceptLanguage.trim()) return defaultLocale;
 
   const candidates = acceptLanguage.split(",").map((part) => {

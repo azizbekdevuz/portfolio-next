@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface DeviceContextType {
   isMobile: boolean;
@@ -26,7 +32,7 @@ export function DeviceDetectionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const checkDevice = () => {
       const width = window.innerWidth;
-      
+
       setDeviceData({
         isMobile: width < 768,
         isTablet: width >= 768 && width < 1024,
@@ -41,11 +47,11 @@ export function DeviceDetectionProvider({ children }: { children: ReactNode }) {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(checkDevice, 250);
     };
-    
-    window.addEventListener('resize', handleResize);
+
+    window.addEventListener("resize", handleResize);
     return () => {
       clearTimeout(timeoutId);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 

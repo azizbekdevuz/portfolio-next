@@ -72,9 +72,27 @@ export const messages = {
       ai: "워크플로 렌즈: 파이프라인, 검증 중심 흐름, 출시 제품에 녹아든 AI를 우선합니다.",
     },
     trackHeroTags: {
-      frontend: ["다국어·RTL", "스트리밍·실시간 UI", "데이터 집약 대시보드", "제품 IA·흐름", "클라이언트 신뢰성"] as const,
-      fullstack: ["스토어프론트+어드민 소유", "인증·결제·알림", "BFF·서비스 경계", "세션·데이터 계약", "프로덕션 출시"] as const,
-      ai: ["워크플로 파이프라인", "구조화·검증 출력", "평가·가드레일", "출시 제품 속 AI", "얇은 챗 래퍼 너머"] as const,
+      frontend: [
+        "다국어·RTL",
+        "스트리밍·실시간 UI",
+        "데이터 집약 대시보드",
+        "제품 IA·흐름",
+        "클라이언트 신뢰성",
+      ] as const,
+      fullstack: [
+        "스토어프론트+어드민 소유",
+        "인증·결제·알림",
+        "BFF·서비스 경계",
+        "세션·데이터 계약",
+        "프로덕션 출시",
+      ] as const,
+      ai: [
+        "워크플로 파이프라인",
+        "구조화·검증 출력",
+        "평가·가드레일",
+        "출시 제품 속 AI",
+        "얇은 챗 래퍼 너머",
+      ] as const,
     },
   },
   cockpitWorkspace: {
@@ -101,17 +119,26 @@ export const messages = {
       label: "프론트엔드 / 프로덕트 UI",
       blurb:
         "다국어 화면, 스트리밍 UX, 대시보드 등 ‘제품’ 수준의 UI — 단발성 페이지가 아닙니다.",
-      emphasisTags: ["다국어·RTL", "스트리밍·낙관적 UX", "대시보드 크롬"] as const,
+      emphasisTags: [
+        "다국어·RTL",
+        "스트리밍·낙관적 UX",
+        "대시보드 크롬",
+      ] as const,
     },
     fullstack: {
       label: "풀스택 / 시스템",
-      blurb: "스토어프론트·어드민, 인증, 결제, 알림 — BFF 경계와 출시 규율까지.",
+      blurb:
+        "스토어프론트·어드민, 인증, 결제, 알림 — BFF 경계와 출시 규율까지.",
       emphasisTags: ["인증·결제 경계", "BFF 통합", "출시 규율"] as const,
     },
     ai: {
       label: "AI / 워크플로 제품",
       blurb: "파이프라인과 검증 중심 흐름 — 얇은 챗 래퍼가 아닙니다.",
-      emphasisTags: ["워크플로 파이프라인", "검증 중심 UX", "얇은 챗 UI 아님"] as const,
+      emphasisTags: [
+        "워크플로 파이프라인",
+        "검증 중심 UX",
+        "얇은 챗 UI 아님",
+      ] as const,
     },
   },
   downloads: {
@@ -120,7 +147,8 @@ export const messages = {
     triggerGroupLabel: "PDF 내려받기",
     triggerResumeAria: "이력서 PDF 내려받기 옵션 열기",
     triggerPortfolioAria: "포트폴리오 PDF 내려받기 옵션 열기",
-    pickerSubtitle: "초점을 고른 뒤 언어를 선택하세요. 파일이 콘텐츠에 등록된 경우에만 내려받을 수 있습니다.",
+    pickerSubtitle:
+      "초점을 고른 뒤 언어를 선택하세요. 파일이 콘텐츠에 등록된 경우에만 내려받을 수 있습니다.",
     closeOverlay: "닫기",
     closeOverlayBackdrop: "내려받기 옵션 닫기",
     stepFocus: "초점",
@@ -129,12 +157,22 @@ export const messages = {
     categoryPortfolio: "포트폴리오 (PDF)",
     download: "다운로드",
     unavailableTitle: "아직 서버에 없음",
-    pdfPending: "content/downloads.ts의 downloadGrid에 이 조합의 경로를 추가하세요.",
+    pdfPending:
+      "content/downloads.ts의 downloadGrid에 이 조합의 경로를 추가하세요.",
     localeName: { en: "영어", ko: "한국어", uz: "우즈베크어" },
     lens: {
-      fullstack: { resume: "풀스택 이력서", portfolio: "풀스택 포트폴리오 (PDF)" },
-      frontend: { resume: "프론트엔드 이력서", portfolio: "프론트엔드 포트폴리오 (PDF)" },
-      backend: { resume: "백엔드 이력서", portfolio: "백엔드 포트폴리오 (PDF)" },
+      fullstack: {
+        resume: "풀스택 이력서",
+        portfolio: "풀스택 포트폴리오 (PDF)",
+      },
+      frontend: {
+        resume: "프론트엔드 이력서",
+        portfolio: "프론트엔드 포트폴리오 (PDF)",
+      },
+      backend: {
+        resume: "백엔드 이력서",
+        portfolio: "백엔드 포트폴리오 (PDF)",
+      },
     },
   },
   deepDiveIDE: {
@@ -206,8 +244,7 @@ export const messages = {
       en: {
         name: "영어",
         levelLabel: "유창 (프로덕트·학술)",
-        context:
-          "유창",
+        context: "유창",
       },
       ko: {
         name: "한국어",
@@ -244,7 +281,8 @@ export const messages = {
           "2025년 12월~2026년 4월 · 저장소 기반 과제, 디버깅, 검증자 기반 정합, 모델 학습용 기술 피드백.",
       },
     },
-    ossNote: "추가 저장소와 작은 시스템은 GitHub에 있으며, 레포마다 범위가 다릅니다.",
+    ossNote:
+      "추가 저장소와 작은 시스템은 GitHub에 있으며, 레포마다 범위가 다릅니다.",
   },
   proofPanel: {
     tabs: {
@@ -399,9 +437,18 @@ export const messages = {
       columnInProgressTitle: "진행 중",
       columnPlannedTitle: "계획된 개선",
       columnNearTitle: "가까운 계획",
-      columnInProgressItems: ["스택 다듬기", "추천사", "블로그", "연락 흐름"] as const,
+      columnInProgressItems: [
+        "스택 다듬기",
+        "추천사",
+        "블로그",
+        "연락 흐름",
+      ] as const,
       columnPlannedItems: ["반응형 튜닝", "성능 예산", "접근성 점검"] as const,
-      columnNearItems: ["사례 연구", "프로젝트 심층", "인터랙티브 데모"] as const,
+      columnNearItems: [
+        "사례 연구",
+        "프로젝트 심층",
+        "인터랙티브 데모",
+      ] as const,
       progressLabel: "사이트 상태",
       progressValue: "지속 유지·개선",
       stayTuned: "곧 더",

@@ -39,7 +39,11 @@ function RoadmapStages() {
   );
 }
 
-export function DesktopInProgressSection({ embedded = false }: { embedded?: boolean }) {
+export function DesktopInProgressSection({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}) {
   const { messages } = useI18n();
   const d = messages.inProgress.desktop;
   const detailColumns = [
@@ -178,8 +182,12 @@ export function DesktopInProgressSection({ embedded = false }: { embedded?: bool
                   </motion.div>
                 </div>
 
-                <h3 className="mb-4 text-2xl font-bold text-fg md:text-3xl">{d.nextHeading}</h3>
-                <p className="mx-auto mb-6 max-w-2xl text-muted">{d.nextBody}</p>
+                <h3 className="mb-4 text-2xl font-bold text-fg md:text-3xl">
+                  {d.nextHeading}
+                </h3>
+                <p className="mx-auto mb-6 max-w-2xl text-muted">
+                  {d.nextBody}
+                </p>
 
                 {/* Construction Stages */}
                 <RoadmapStages />
@@ -231,7 +239,9 @@ export function DesktopInProgressSection({ embedded = false }: { embedded?: bool
                               transition={{ delay: index * 0.2 }}
                               className="text-left"
                             >
-                              <h4 className="mb-3 font-bold text-primary">{column.title}</h4>
+                              <h4 className="mb-3 font-bold text-primary">
+                                {column.title}
+                              </h4>
                               <ul className="space-y-2 text-muted">
                                 {column.items.map((item) => (
                                   <li
@@ -253,7 +263,9 @@ export function DesktopInProgressSection({ embedded = false }: { embedded?: bool
 
                 {/* Overall Progress Indicator */}
                 <div className="mt-6">
-                  <div className="mb-2 text-sm text-muted">{d.progressLabel}</div>
+                  <div className="mb-2 text-sm text-muted">
+                    {d.progressLabel}
+                  </div>
                   <div className="h-2.5 w-full rounded-full bg-surface-soft dark:bg-card-muted/60">
                     <motion.div
                       className="h-2.5 rounded-full bg-primary"

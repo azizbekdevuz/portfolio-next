@@ -20,7 +20,12 @@ type Props = {
  * Circle flag marks from `react-circle-flags` (CDN `img` — not `inline`, which fetches
  * and replaces `outerHTML` and can throw after unmount: NoModificationAllowedError).
  */
-export function LanguageFlagIcon({ code, label, className = "", size = 32 }: Props) {
+export function LanguageFlagIcon({
+  code,
+  label,
+  className = "",
+  size = 32,
+}: Props) {
   const languageCode = LANGUAGE_CODES[code] ?? "en";
   return (
     <span className={`inline-flex shrink-0 ${className}`} title={label}>

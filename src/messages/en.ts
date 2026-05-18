@@ -133,13 +133,22 @@ export const messages = {
     },
     fullstack: {
       label: "Full-stack / Systems",
-      blurb: "Storefront + admin, auth, payments, notifications—BFF seams and ship discipline.",
-      emphasisTags: ["Auth & payment seams", "BFF boundaries", "Ship discipline"] as const,
+      blurb:
+        "Storefront + admin, auth, payments, notifications—BFF seams and ship discipline.",
+      emphasisTags: [
+        "Auth & payment seams",
+        "BFF boundaries",
+        "Ship discipline",
+      ] as const,
     },
     ai: {
       label: "AI / Workflow products",
       blurb: "Pipelines and verification-minded flows—not a thin chat wrapper.",
-      emphasisTags: ["Workflow pipelines", "Verification UX", "Not a thin chat UI"] as const,
+      emphasisTags: [
+        "Workflow pipelines",
+        "Verification UX",
+        "Not a thin chat UI",
+      ] as const,
     },
   },
   downloads: {
@@ -148,7 +157,8 @@ export const messages = {
     triggerGroupLabel: "Download PDFs",
     triggerResumeAria: "Open options to download a resume PDF",
     triggerPortfolioAria: "Open options to download a portfolio PDF",
-    pickerSubtitle: "Choose a focus, then a language. Download is available when the file is registered in the content layer.",
+    pickerSubtitle:
+      "Choose a focus, then a language. Download is available when the file is registered in the content layer.",
     closeOverlay: "Close",
     closeOverlayBackdrop: "Close download options",
     stepFocus: "Focus",
@@ -157,12 +167,22 @@ export const messages = {
     categoryPortfolio: "Portfolio (PDF)",
     download: "Download",
     unavailableTitle: "File not on server yet",
-    pdfPending: "Add the public path in content/downloads.ts (downloadGrid) for this combination.",
+    pdfPending:
+      "Add the public path in content/downloads.ts (downloadGrid) for this combination.",
     localeName: { en: "English", ko: "Korean", uz: "Uzbek" },
     lens: {
-      fullstack: { resume: "Full-stack resume", portfolio: "Full-stack portfolio (PDF)" },
-      frontend: { resume: "Frontend resume", portfolio: "Frontend portfolio (PDF)" },
-      backend: { resume: "Backend resume", portfolio: "Backend portfolio (PDF)" },
+      fullstack: {
+        resume: "Full-stack resume",
+        portfolio: "Full-stack portfolio (PDF)",
+      },
+      frontend: {
+        resume: "Frontend resume",
+        portfolio: "Frontend portfolio (PDF)",
+      },
+      backend: {
+        resume: "Backend resume",
+        portfolio: "Backend portfolio (PDF)",
+      },
     },
   },
   deepDiveIDE: {
@@ -234,26 +254,22 @@ export const messages = {
       en: {
         name: "English",
         levelLabel: "Fluent (professional + academic)",
-        context:
-          "Fluency",
+        context: "Fluency",
       },
       ko: {
         name: "Korean",
         levelLabel: "Upper intermediate",
-        context:
-          "Conversational",
+        context: "Conversational",
       },
       uz: {
         name: "Uzbek",
         levelLabel: "Native",
-        context:
-          "Native language",
+        context: "Native language",
       },
       ru: {
         name: "Russian",
         levelLabel: "Conversational to professional",
-        context:
-          "Conversational",
+        context: "Conversational",
       },
     },
   },
@@ -275,7 +291,8 @@ export const messages = {
           "Dec 2025 – Apr 2026 · Repository-based tasks, debugging, verifier-backed correctness, and clear technical feedback for model-training products.",
       },
     },
-    ossNote: "More code and smaller systems are on GitHub; scope varies by repository.",
+    ossNote:
+      "More code and smaller systems are on GitHub; scope varies by repository.",
   },
   proofPanel: {
     tabs: {
@@ -388,8 +405,10 @@ export const messages = {
     sending: "Sending...",
     success: "Message sent successfully!",
     errorSend: "Failed to send message. Please try again later.",
-    errorConfigDev: "Missing EmailJS configuration. Please check your environment variables.",
-    errorConfigUser: "Email service configuration is missing. Please contact the administrator.",
+    errorConfigDev:
+      "Missing EmailJS configuration. Please check your environment variables.",
+    errorConfigUser:
+      "Email service configuration is missing. Please contact the administrator.",
     mobile: {
       directContact: "Direct contact",
       languagesCard: "Languages",
@@ -408,17 +427,20 @@ export const messages = {
     stages: [
       {
         title: "Content accuracy",
-        description: "Tighten case study details, links, and metrics with verified sources.",
+        description:
+          "Tighten case study details, links, and metrics with verified sources.",
         status: "In progress",
       },
       {
         title: "Accessibility pass",
-        description: "Keyboard paths, contrast checks, and reduced motion preferences.",
+        description:
+          "Keyboard paths, contrast checks, and reduced motion preferences.",
         status: "Planned",
       },
       {
         title: "Performance budget",
-        description: "Keep hero and skim sections light; defer non-critical motion.",
+        description:
+          "Keep hero and skim sections light; defer non-critical motion.",
         status: "Planned",
       },
     ],
@@ -431,13 +453,22 @@ export const messages = {
       columnInProgressTitle: "In progress",
       columnPlannedTitle: "Planned enhancements",
       columnNearTitle: "Near future",
-      columnInProgressItems: ["Skills polish", "Testimonials", "Blog", "Contact flows"] as const,
+      columnInProgressItems: [
+        "Skills polish",
+        "Testimonials",
+        "Blog",
+        "Contact flows",
+      ] as const,
       columnPlannedItems: [
         "Responsive tuning",
         "Performance budget",
         "Accessibility pass",
       ] as const,
-      columnNearItems: ["Case studies", "Project deep-dives", "Interactive demos"] as const,
+      columnNearItems: [
+        "Case studies",
+        "Project deep-dives",
+        "Interactive demos",
+      ] as const,
       progressLabel: "Site status",
       progressValue: "Actively maintained",
       stayTuned: "More soon",

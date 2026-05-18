@@ -33,7 +33,14 @@ export const journeyData: JourneyData[] = [
     subtitle: "Founder / full-stack delivery",
     description:
       "End-to-end ownership on shipped products: web apps, integrations, and deployment. Representative work includes Trainium, Rumi-related integration, Fishlinic, GitGuard Agent, and supporting builds such as ProofBoard—each with different constraints, all treated as product delivery.",
-    tech: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Prisma", "Python"],
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Prisma",
+      "Python",
+    ],
   },
   {
     id: "j2",

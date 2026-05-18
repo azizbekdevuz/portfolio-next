@@ -18,7 +18,10 @@ import { useProofBrowse } from "@/components/brand/ProofBrowseContext";
 import { useHomeShell } from "@/components/shell/HomeShellContext";
 import { getFeaturedProjectsForTrack } from "@/content/home-data";
 import { PROOF_TRACK_FILTERS, type ProofTrackFilter } from "@/lib/proof-track";
-import { getDefaultFeaturedSlugForTrack, sortExperienceItemsByTrack } from "@/lib/reviewer-track-view";
+import {
+  getDefaultFeaturedSlugForTrack,
+  sortExperienceItemsByTrack,
+} from "@/lib/reviewer-track-view";
 import type { HomeData } from "@/content/home-data";
 import { experienceSnapshot } from "@/content/experience-snapshot";
 import { useI18n } from "@/components/i18n/I18nProvider";
@@ -64,7 +67,9 @@ export function ProofCockpit({
 
   const flagshipList = useMemo(() => {
     const names = site.flagshipProjects as readonly string[];
-    let list = projects.filter((p) => p.status !== "archived" && names.includes(p.title));
+    let list = projects.filter(
+      (p) => p.status !== "archived" && names.includes(p.title),
+    );
     if (track !== "all") {
       const inLens = list.filter((p) => p.roleTracks?.includes(track));
       if (inLens.length > 0) list = inLens;
@@ -73,7 +78,9 @@ export function ProofCockpit({
   }, [projects, site.flagshipProjects, track]);
 
   const lensBlurb =
-    track === "all" ? undefined : messages.roleTracks[track as keyof typeof messages.roleTracks].blurb;
+    track === "all"
+      ? undefined
+      : messages.roleTracks[track as keyof typeof messages.roleTracks].blurb;
 
   const filteredFeatured = useMemo(
     () => getFeaturedProjectsForTrack(projects, track),
@@ -81,7 +88,8 @@ export function ProofCockpit({
   );
 
   useEffect(() => {
-    const trackChanged = prevTrackRef.current !== null && prevTrackRef.current !== track;
+    const trackChanged =
+      prevTrackRef.current !== null && prevTrackRef.current !== track;
     prevTrackRef.current = track;
     if (trackChanged) setWorkspaceMode("project");
 
@@ -98,9 +106,12 @@ export function ProofCockpit({
 
     setSelectedSlug((prev) => {
       if (prev) {
-        const sel = projects.find((p) => p.slug === prev && p.status !== "archived");
+        const sel = projects.find(
+          (p) => p.slug === prev && p.status !== "archived",
+        );
         const inFilter =
-          sel && (track === "all" || (sel.roleTracks?.includes(track) ?? false));
+          sel &&
+          (track === "all" || (sel.roleTracks?.includes(track) ?? false));
         if (inFilter) return prev;
         return filteredFeatured[0].slug;
       }
@@ -110,13 +121,18 @@ export function ProofCockpit({
 
   const selectedProject = useMemo(() => {
     if (selectedSlug) {
-      const p = projects.find((x) => x.slug === selectedSlug && x.status !== "archived");
+      const p = projects.find(
+        (x) => x.slug === selectedSlug && x.status !== "archived",
+      );
       if (p) return p;
     }
     return filteredFeatured[0] ?? null;
   }, [selectedSlug, projects, filteredFeatured]);
 
-  const trackOptions = useMemo((): { id: ProofTrackFilter; label: string }[] => {
+  const trackOptions = useMemo((): {
+    id: ProofTrackFilter;
+    label: string;
+  }[] => {
     const labelById: Record<ProofTrackFilter, string> = {
       all: messages.cockpit.allProof,
       frontend: messages.roleTracks.frontend.label,
@@ -128,7 +144,10 @@ export function ProofCockpit({
 
   const experienceLines = useMemo(() => {
     const mapped = experienceSnapshot.items.map((item) => {
-      const loc = messages.experience.items[item.id as keyof typeof messages.experience.items];
+      const loc =
+        messages.experience.items[
+          item.id as keyof typeof messages.experience.items
+        ];
       if (!loc) return item;
       return { ...item, title: loc.title, detail: loc.detail };
     });
@@ -167,7 +186,9 @@ export function ProofCockpit({
                   <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent md:text-xs">
                     {site.headlineRole}
                   </p>
-                  <h1 className="mt-1 text-3xl font-bold tracking-tight text-fg md:text-4xl lg:text-5xl">{site.name}</h1>
+                  <h1 className="mt-1 text-3xl font-bold tracking-tight text-fg md:text-4xl lg:text-5xl">
+                    {site.name}
+                  </h1>
                 </div>
               </div>
 
@@ -217,7 +238,9 @@ export function ProofCockpit({
                           strokeWidth={2}
                           aria-hidden
                         />
-                        <span className="max-w-[10rem] truncate sm:max-w-none">{label}</span>
+                        <span className="max-w-[10rem] truncate sm:max-w-none">
+                          {label}
+                        </span>
                       </button>
                     );
                   })}
@@ -269,7 +292,10 @@ export function ProofCockpit({
                 </p>
                 <ul className="mt-2 space-y-2">
                   {experienceLines.map((item) => (
-                    <li key={item.id} className="text-xs leading-snug text-muted md:text-sm">
+                    <li
+                      key={item.id}
+                      className="text-xs leading-snug text-muted md:text-sm"
+                    >
                       <span className="font-medium text-fg">{item.title}</span>
                       <span className="text-subtle"> — </span>
                       {item.detail}
@@ -285,7 +311,11 @@ export function ProofCockpit({
                   onClick={() => setTestimonialsOpen(true)}
                   className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-card px-3 py-2 text-xs font-semibold text-fg transition-colors hover:border-accent/40 md:px-4 md:text-sm"
                 >
-                  <MessageSquareQuote className="h-3.5 w-3.5 text-muted md:h-4 md:w-4" strokeWidth={1.75} aria-hidden />
+                  <MessageSquareQuote
+                    className="h-3.5 w-3.5 text-muted md:h-4 md:w-4"
+                    strokeWidth={1.75}
+                    aria-hidden
+                  />
                   {messages.cockpit.testimonials}
                 </button>
               </div>
@@ -306,7 +336,11 @@ export function ProofCockpit({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-card px-4 py-2 text-xs font-semibold text-fg transition-colors hover:border-accent hover:text-accent md:text-sm"
                 >
-                  <Linkedin className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+                  <Linkedin
+                    className="h-4 w-4"
+                    strokeWidth={1.75}
+                    aria-hidden
+                  />
                   {messages.cockpit.linkedin}
                 </a>
                 <button
@@ -346,7 +380,11 @@ export function ProofCockpit({
                     track={track}
                   />
                 </motion.div>
-                <CockpitCredibilityStrip site={site} projects={projects} track={track} />
+                <CockpitCredibilityStrip
+                  site={site}
+                  projects={projects}
+                  track={track}
+                />
               </div>
             </div>
           </div>

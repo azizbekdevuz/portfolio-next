@@ -22,7 +22,8 @@ export const LOCALIZED_PROJECT_COPY_KEYS = [
   "codeSnippet",
 ] as const satisfies readonly (keyof Project)[];
 
-export type LocalizedProjectCopyKey = (typeof LOCALIZED_PROJECT_COPY_KEYS)[number];
+export type LocalizedProjectCopyKey =
+  (typeof LOCALIZED_PROJECT_COPY_KEYS)[number];
 
 /** String-shaped site fields for locale merges (avoids `as const` literal typing from `SiteProfile`). */
 export type LocalizedSiteOverride = {
@@ -39,7 +40,9 @@ export type LocalizedSiteOverride = {
 export type LocalizedOverrides = {
   site: LocalizedSiteOverride;
   /** Locale-specific project copy. Omitted fields keep base `content/projects-data` strings. */
-  projectsBySlug: Partial<Record<string, Partial<Pick<Project, LocalizedProjectCopyKey>>>>;
+  projectsBySlug: Partial<
+    Record<string, Partial<Pick<Project, LocalizedProjectCopyKey>>>
+  >;
   bio: Record<string, { title: string; content: string }>;
   journey: Record<
     string,

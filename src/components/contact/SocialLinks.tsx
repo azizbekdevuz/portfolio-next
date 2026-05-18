@@ -13,7 +13,8 @@ export const SocialLinks: React.FC = () => {
       <div className="rounded-lg border border-border bg-surface-soft p-6">
         <h3 className="mb-2 text-lg font-semibold text-fg">Connect</h3>
         <p className="mb-6 text-sm text-muted">
-          Direct links—no extra steps. Pick what you need for screening or a conversation.
+          Direct links—no extra steps. Pick what you need for screening or a
+          conversation.
         </p>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {SOCIAL_PLATFORM_LIST.map((link, index) => (
@@ -36,8 +37,12 @@ export const SocialLinks: React.FC = () => {
                   aria-hidden={false}
                 />
               </div>
-              <span className="text-center text-sm font-medium text-fg">{link.name}</span>
-              <span className="mt-1 text-center text-xs text-muted">{link.cardBlurb}</span>
+              <span className="text-center text-sm font-medium text-fg">
+                {link.name}
+              </span>
+              <span className="mt-1 text-center text-xs text-muted">
+                {link.cardBlurb}
+              </span>
             </motion.a>
           ))}
         </div>

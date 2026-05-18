@@ -6,7 +6,11 @@ import { useTheme } from "@/components/providers/ThemeProvider";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { useHomeShell } from "@/components/shell/HomeShellContext";
 
-const segmentDefs: { id: "light" | "dark" | "system"; labelKey: "light" | "dark" | "system"; Icon: typeof Sun }[] = [
+const segmentDefs: {
+  id: "light" | "dark" | "system";
+  labelKey: "light" | "dark" | "system";
+  Icon: typeof Sun;
+}[] = [
   { id: "light", labelKey: "light", Icon: Sun },
   { id: "dark", labelKey: "dark", Icon: Moon },
   { id: "system", labelKey: "system", Icon: Monitor },
@@ -53,10 +57,14 @@ function ThemeToggleDesktop() {
             const active = themeMounted && mode === id;
             const label = messages.theme[labelKey];
             const title =
-              id === "system" ? messages.theme.useSystemMode : id === "light"
-                ? messages.theme.useLightMode
-                : messages.theme.useDarkMode;
-            const inactiveTone = themeMounted ? "text-muted hover:text-fg" : "text-fg/65 hover:text-fg";
+              id === "system"
+                ? messages.theme.useSystemMode
+                : id === "light"
+                  ? messages.theme.useLightMode
+                  : messages.theme.useDarkMode;
+            const inactiveTone = themeMounted
+              ? "text-muted hover:text-fg"
+              : "text-fg/65 hover:text-fg";
             return (
               <motion.button
                 key={id}
@@ -72,7 +80,11 @@ function ThemeToggleDesktop() {
                 } ${active ? "bg-card text-fg shadow-sm ring-1 ring-border" : inactiveTone}`}
                 whileTap={{ scale: 0.97 }}
               >
-                <Icon className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" strokeWidth={1.75} aria-hidden />
+                <Icon
+                  className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4"
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
                 <span className="truncate">{label}</span>
               </motion.button>
             );
@@ -118,7 +130,9 @@ function ThemeToggleMobile() {
         {segmentDefs.map(({ id, labelKey, Icon }) => {
           const active = themeMounted && mode === id;
           const label = messages.theme[labelKey];
-          const inactiveTone = themeMounted ? "text-muted active:bg-card-muted" : "text-fg/70 active:bg-card-muted";
+          const inactiveTone = themeMounted
+            ? "text-muted active:bg-card-muted"
+            : "text-fg/70 active:bg-card-muted";
           return (
             <motion.button
               key={id}
@@ -128,11 +142,17 @@ function ThemeToggleMobile() {
               aria-label={`${label}${id === "system" ? messages.theme.systemHint : ""}`}
               title={label}
               className={`flex h-9 w-9 items-center justify-center rounded-full transition-[color,background-color,box-shadow,opacity] duration-300 ease-out ${
-                active ? "bg-card-muted text-fg ring-1 ring-border-strong" : inactiveTone
+                active
+                  ? "bg-card-muted text-fg ring-1 ring-border-strong"
+                  : inactiveTone
               }`}
               whileTap={{ scale: 0.94 }}
             >
-              <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden />
+              <Icon
+                className="h-[18px] w-[18px]"
+                strokeWidth={1.75}
+                aria-hidden
+              />
             </motion.button>
           );
         })}

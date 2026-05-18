@@ -70,7 +70,12 @@ export const skillNodes: SkillNode[] = [
     title: "Design & client delivery",
     description:
       "Supporting skills for polished UI and client-facing work—Figma and Adobe tools, brand assets, and clear communication on timelines and scope.",
-    tools: ["Figma", "UI/UX", "Brand & marketing assets", "Client communication"],
+    tools: [
+      "Figma",
+      "UI/UX",
+      "Brand & marketing assets",
+      "Client communication",
+    ],
     experience: "Ongoing (select client work)",
     projects: ["Client-facing sites (see Testimonials)"],
     workspace: {
@@ -98,7 +103,10 @@ export const skillNodes: SkillNode[] = [
       "Project documentation",
     ],
     experience: "Ongoing (cross-functional)",
-    projects: ["Fishlinic (capstone)", "Multi-surface product (Trainium, Rumi)"],
+    projects: [
+      "Fishlinic (capstone)",
+      "Multi-surface product (Trainium, Rumi)",
+    ],
     workspace: {
       title: "Planning & management tools",
       tools: [

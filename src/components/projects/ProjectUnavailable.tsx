@@ -58,7 +58,12 @@ export default function ProjectUnavailable() {
             repeat: Infinity,
           }}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-8 w-8">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            className="h-8 w-8"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"

@@ -2,7 +2,13 @@
 
 import { useContext } from "react";
 import { motion } from "framer-motion";
-import { Building2, Briefcase, GraduationCap, Layers, type LucideIcon } from "lucide-react";
+import {
+  Building2,
+  Briefcase,
+  GraduationCap,
+  Layers,
+  type LucideIcon,
+} from "lucide-react";
 import { JourneyContext } from "../sections/AboutSection";
 
 const JOURNEY_ICONS: Record<string, LucideIcon> = {
@@ -61,10 +67,16 @@ export function JourneyTimeline() {
                   <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="font-mono text-[11px] uppercase tracking-wider text-subtle">{item.date}</p>
-                  <h4 className="mt-1 text-lg font-semibold text-fg">{item.title}</h4>
+                  <p className="font-mono text-[11px] uppercase tracking-wider text-subtle">
+                    {item.date}
+                  </p>
+                  <h4 className="mt-1 text-lg font-semibold text-fg">
+                    {item.title}
+                  </h4>
                   <p className="mt-1 text-sm text-muted">{item.subtitle}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">{item.description}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                    {item.description}
+                  </p>
                   <ul className="mt-4 flex flex-wrap gap-2">
                     {item.tech.map((tech) => (
                       <li

@@ -9,7 +9,11 @@ import { skillNodes } from "../skills/skillsList";
 import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
-export default function SkillsDesktop({ embedded = false }: { embedded?: boolean }) {
+export default function SkillsDesktop({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}) {
   const { messages } = useI18n();
   const [activeSkill, setActiveSkill] = useState<string>("engineering");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,7 +31,7 @@ export default function SkillsDesktop({ embedded = false }: { embedded?: boolean
   // Desktop mouse movement handler
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isMobile) return;
-    
+
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
     mouseX.set(e.clientX - rect.left);
@@ -82,8 +86,12 @@ export default function SkillsDesktop({ embedded = false }: { embedded?: boolean
             viewport={{ once: true }}
           >
             <div className="mb-4 flex items-center gap-3 font-mono">
-              <span className="text-primary/50">{messages.skills.classKeyword}</span>
-              <h2 className="text-4xl font-bold text-fg">{messages.skills.title}</h2>
+              <span className="text-primary/50">
+                {messages.skills.classKeyword}
+              </span>
+              <h2 className="text-4xl font-bold text-fg">
+                {messages.skills.title}
+              </h2>
               <span className="text-primary/50">{messages.skills.dash}</span>
               <span className="text-fg">{messages.skills.subtitle}</span>
             </div>
@@ -103,79 +111,83 @@ export default function SkillsDesktop({ embedded = false }: { embedded?: boolean
             {localizedNodes.map((node, index) => {
               const NavIcon = node.id === "engineering" ? Cpu : Palette;
               return (
-              <motion.button
-                key={node.id}
-                onClick={() => setActiveSkill(node.id)}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className={`w-full p-6 rounded-lg text-left transition-all duration-300
+                <motion.button
+                  key={node.id}
+                  onClick={() => setActiveSkill(node.id)}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`w-full p-6 rounded-lg text-left transition-all duration-300
                            border group relative overflow-hidden
                            ${
                              activeSkill === node.id
                                ? "border-primary bg-primary/10"
                                : "border-primary/20 hover:border-primary/50"
                            }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                {/* Skill Card Content */}
-                <div className="relative z-10">
-                  <div className="mb-3 flex items-center gap-4">
-                    <NavIcon className="h-8 w-8 shrink-0 text-accent" strokeWidth={1.5} aria-hidden />
-                    <div>
-                      <h3 className="text-xl text-fg font-medium">
-                        {node.title}
-                      </h3>
-                      <span className="text-primary text-sm">
-                        {node.experience}
-                      </span>
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {/* Skill Card Content */}
+                  <div className="relative z-10">
+                    <div className="mb-3 flex items-center gap-4">
+                      <NavIcon
+                        className="h-8 w-8 shrink-0 text-accent"
+                        strokeWidth={1.5}
+                        aria-hidden
+                      />
+                      <div>
+                        <h3 className="text-xl text-fg font-medium">
+                          {node.title}
+                        </h3>
+                        <span className="text-primary text-sm">
+                          {node.experience}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-muted text-sm mb-3">
+                      {node.description}
+                    </p>
+
+                    {/* Mini Tools Preview */}
+                    <div className="flex flex-wrap gap-2">
+                      {node.tools.slice(0, 3).map((tool) => (
+                        <span
+                          key={tool}
+                          className="px-2 py-1 rounded-full bg-card-muted/80 
+                                 text-xs text-primary/80"
+                        >
+                          {tool}
+                        </span>
+                      ))}
+                      {node.tools.length > 3 && (
+                        <span className="text-muted text-xs">
+                          {messages.skills.toolsMore.replace(
+                            "{count}",
+                            String(node.tools.length - 3),
+                          )}
+                        </span>
+                      )}
                     </div>
                   </div>
-                  <p className="text-muted text-sm mb-3">
-                    {node.description}
-                  </p>
 
-                  {/* Mini Tools Preview */}
-                  <div className="flex flex-wrap gap-2">
-                    {node.tools.slice(0, 3).map((tool) => (
-                      <span
-                        key={tool}
-                        className="px-2 py-1 rounded-full bg-card-muted/80 
-                                 text-xs text-primary/80"
-                      >
-                        {tool}
-                      </span>
-                    ))}
-                    {node.tools.length > 3 && (
-                      <span className="text-muted text-xs">
-                        {messages.skills.toolsMore.replace(
-                          "{count}",
-                          String(node.tools.length - 3),
-                        )}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Interactive Background Effects */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent
+                  {/* Interactive Background Effects */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent
                             opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{
-                    backgroundSize: "200% 200%",
-                  }}
-                  animate={{
-                    backgroundPosition: ["0% 0%", "100% 100%"],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
-                />
-              </motion.button>
-            );
+                    style={{
+                      backgroundSize: "200% 200%",
+                    }}
+                    animate={{
+                      backgroundPosition: ["0% 0%", "100% 100%"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                    }}
+                  />
+                </motion.button>
+              );
             })}
           </div>
 
@@ -235,7 +247,9 @@ export default function SkillsDesktop({ embedded = false }: { embedded?: boolean
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
                     >
-                      <h4 className="mb-3 text-fg">{messages.skills.featuredProjects}</h4>
+                      <h4 className="mb-3 text-fg">
+                        {messages.skills.featuredProjects}
+                      </h4>
                       <div className="flex flex-wrap gap-3">
                         {activeNode.projects.map((project) => (
                           <div
@@ -256,7 +270,9 @@ export default function SkillsDesktop({ embedded = false }: { embedded?: boolean
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4 }}
                   >
-                    <h4 className="mb-3 text-fg">{messages.skills.panelTechnologies}</h4>
+                    <h4 className="mb-3 text-fg">
+                      {messages.skills.panelTechnologies}
+                    </h4>
                     <div className="flex flex-wrap gap-2">
                       {activeNode.tools.map((tool) => (
                         <div

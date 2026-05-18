@@ -16,15 +16,15 @@ The app is **not** a generic template: routing, i18n, theme, and copy are tailor
 
 ## Stack (from `package.json`)
 
-| Area | Technology |
-|------|------------|
-| Runtime | Node **20.x** (see `engines`) |
-| Framework | **Next.js 15**, **React 18** |
-| Styling | **Tailwind CSS** 3, semantic tokens in `src/app/theme-tokens.css` and `globals.css` |
-| Motion | **Framer Motion** |
-| Icons | **lucide-react** |
-| Email (contact) | **EmailJS** (public env keys) |
-| Analytics (optional) | **@vercel/analytics**, **@vercel/speed-insights** |
+| Area                 | Technology                                                                          |
+| -------------------- | ----------------------------------------------------------------------------------- |
+| Runtime              | Node **20.x** (see `engines`)                                                       |
+| Framework            | **Next.js 15**, **React 18**                                                        |
+| Styling              | **Tailwind CSS** 3, semantic tokens in `src/app/theme-tokens.css` and `globals.css` |
+| Motion               | **Framer Motion**                                                                   |
+| Icons                | **lucide-react**                                                                    |
+| Email (contact)      | **EmailJS** (public env keys)                                                       |
+| Analytics (optional) | **@vercel/analytics**, **@vercel/speed-insights**                                   |
 
 **Not used in the current UI stack:** Three.js / React Three Fiber (older README references are obsolete).
 

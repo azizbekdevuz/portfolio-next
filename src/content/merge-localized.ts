@@ -11,7 +11,10 @@ import {
 import type { Project } from "@/models/Project";
 import { getHomeData } from "./home-data";
 
-function mergeLocalizedSite(base: HomeData["site"], o: LocalizedSiteOverride): HomeData["site"] {
+function mergeLocalizedSite(
+  base: HomeData["site"],
+  o: LocalizedSiteOverride,
+): HomeData["site"] {
   return {
     ...base,
     headlineRole: o.headlineRole,
@@ -73,7 +76,9 @@ function mergeHomeData(base: HomeData, o: LocalizedOverrides): HomeData {
   };
 }
 
-export function buildHomeDataWithOverrides(overrides: LocalizedOverrides | null): HomeData {
+export function buildHomeDataWithOverrides(
+  overrides: LocalizedOverrides | null,
+): HomeData {
   const base = getHomeData();
   if (!overrides) return base;
   return mergeHomeData(base, overrides);

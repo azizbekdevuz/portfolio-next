@@ -13,7 +13,13 @@ import type { MainSectionId } from "@/lib/nav-sections";
 import { consumeShellAfterLocaleSwitch } from "@/lib/locale-switch-persistence";
 
 /** Primary home surface: proof cockpit vs full-viewport deep panels. */
-export type HomeShellView = "cockpit" | "projects" | "about" | "skills" | "contact" | "in-progress";
+export type HomeShellView =
+  | "cockpit"
+  | "projects"
+  | "about"
+  | "skills"
+  | "contact"
+  | "in-progress";
 
 export function navSectionToShell(id: MainSectionId): HomeShellView {
   return id === "hero" ? "cockpit" : id;
@@ -48,8 +54,15 @@ export function HomeShellProvider({ children }: { children: ReactNode }) {
 
   const goCockpit = useCallback(() => setShell("cockpit"), [setShell]);
 
-  const value = useMemo(() => ({ shell, setShell, goCockpit }), [shell, setShell, goCockpit]);
-  return <HomeShellContext.Provider value={value}>{children}</HomeShellContext.Provider>;
+  const value = useMemo(
+    () => ({ shell, setShell, goCockpit }),
+    [shell, setShell, goCockpit],
+  );
+  return (
+    <HomeShellContext.Provider value={value}>
+      {children}
+    </HomeShellContext.Provider>
+  );
 }
 
 export function useHomeShell() {

@@ -20,7 +20,9 @@ export function TechStack() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const keys = Object.keys(techStack);
   const activeKey =
-    selectedCategory && keys.includes(selectedCategory) ? selectedCategory : (keys[0] ?? "");
+    selectedCategory && keys.includes(selectedCategory)
+      ? selectedCategory
+      : (keys[0] ?? "");
 
   if (Object.keys(techStack).length === 0) {
     return (
@@ -67,7 +69,11 @@ export function TechStack() {
               whileTap={{ scale: 0.99 }}
             >
               <div className="flex items-center gap-3">
-                <CatIcon className="h-5 w-5 shrink-0 text-accent" strokeWidth={1.75} aria-hidden />
+                <CatIcon
+                  className="h-5 w-5 shrink-0 text-accent"
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
                 <span className="font-medium text-fg">{category.title}</span>
               </div>
             </motion.button>
@@ -101,7 +107,9 @@ export function TechStack() {
                   <div className="mb-3 flex items-center justify-center">
                     <TechIconTile iconId={tech.iconId} size="lg" />
                   </div>
-                  <h4 className="text-center text-sm font-semibold text-fg">{tech.name}</h4>
+                  <h4 className="text-center text-sm font-semibold text-fg">
+                    {tech.name}
+                  </h4>
                   {tech.level != null ? (
                     <>
                       <div className="mt-2 h-1 overflow-hidden rounded-full bg-card-muted">
@@ -113,10 +121,14 @@ export function TechStack() {
                           transition={{ duration: 0.8, delay: index * 0.05 }}
                         />
                       </div>
-                      <p className="mt-1 text-center text-xs text-muted">{tech.level}%</p>
+                      <p className="mt-1 text-center text-xs text-muted">
+                        {tech.level}%
+                      </p>
                     </>
                   ) : (
-                    <p className="mt-2 text-center text-[11px] text-subtle">In use</p>
+                    <p className="mt-2 text-center text-[11px] text-subtle">
+                      In use
+                    </p>
                   )}
                 </motion.div>
               ))}

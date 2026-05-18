@@ -2,7 +2,13 @@
 
 import { useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { locales, localeLabels, LOCALE_COOKIE, type Locale, isLocale } from "@/i18n/config";
+import {
+  locales,
+  localeLabels,
+  LOCALE_COOKIE,
+  type Locale,
+  isLocale,
+} from "@/i18n/config";
 import { useProofBrowse } from "@/components/brand/ProofBrowseContext";
 import { useHomeShell } from "@/components/shell/HomeShellContext";
 import { stashStateBeforeLocaleSwitch } from "@/lib/locale-switch-persistence";
@@ -79,7 +85,9 @@ export function LanguageSwitcher() {
                     : "px-1 text-[9px]"
                 } ${active ? "bg-card text-fg shadow-sm ring-1 ring-border" : "text-muted hover:text-fg"}`}
               >
-                <span className="block leading-tight">{localeLabels[code].short}</span>
+                <span className="block leading-tight">
+                  {localeLabels[code].short}
+                </span>
               </button>
             );
           })}
@@ -90,7 +98,11 @@ export function LanguageSwitcher() {
 }
 
 /** Compact row for mobile drawer / header. */
-export function LanguageSwitcherInline({ className = "" }: { className?: string }) {
+export function LanguageSwitcherInline({
+  className = "",
+}: {
+  className?: string;
+}) {
   const { locale, messages } = useI18n();
   const switchTo = useLocaleSwitch();
 
@@ -109,7 +121,9 @@ export function LanguageSwitcherInline({ className = "" }: { className?: string 
             onClick={() => switchTo(code)}
             aria-pressed={active}
             className={`rounded-full px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
-              active ? "bg-card-muted text-fg ring-1 ring-border-strong" : "text-muted"
+              active
+                ? "bg-card-muted text-fg ring-1 ring-border-strong"
+                : "text-muted"
             }`}
           >
             {localeLabels[code].short}

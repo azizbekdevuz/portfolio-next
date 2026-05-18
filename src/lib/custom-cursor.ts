@@ -6,6 +6,8 @@ export type CustomCursorEventDetail = { suppress: boolean };
 export function setCustomCursorSuppressed(suppress: boolean) {
   if (typeof window === "undefined") return;
   window.dispatchEvent(
-    new CustomEvent<CustomCursorEventDetail>(CUSTOM_CURSOR_EVENT, { detail: { suppress } }),
+    new CustomEvent<CustomCursorEventDetail>(CUSTOM_CURSOR_EVENT, {
+      detail: { suppress },
+    }),
   );
 }

@@ -15,7 +15,8 @@ export const siteProfile = {
   positioningParagraph:
     "I am strongest when separate services have to read as one product—locales, streaming, sockets, payment and identity flows, and maintainable full-stack code. Titles are secondary to shipped systems you can run and reason about.",
   location: "Seoul, South Korea",
-  availability: "Selective full-time or substantial contract (subject to work authorization for the role and location)",
+  availability:
+    "Selective full-time or substantial contract (subject to work authorization for the role and location)",
   email: "azizbek.dev.uz@gmail.com",
   resumeUrl: null as string | null,
   links: {
